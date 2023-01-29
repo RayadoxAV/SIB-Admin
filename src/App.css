@@ -1,0 +1,5 @@
+.App {
+  background-color: var(--surface-color);
+  height: 100%;
+  border-radius: 0.5rem;
+}

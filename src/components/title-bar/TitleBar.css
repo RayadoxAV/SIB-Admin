@@ -1,0 +1,56 @@
+.title-bar {
+  background-color: var(--surface-color);
+  border-radius: 0.5rem 0.5rem 0rem 0rem;
+  height: 2rem;
+  display: flex;
+  flex-direction: row;
+}
+
+.title-bar div {
+  height: 2rem;
+}
+
+.title-bar .icon {
+  width: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-color);
+  font-size: 14px;
+}
+
+.title-bar .title-container {
+  font-weight: 400;
+  font-size: 14px;
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  user-select: none;
+  pointer-events: none;
+}
+
+.title-bar .window-controls-container {
+  margin-left: auto;
+}
+
+.window-controls-container .window-control {
+  width: 46px;
+  height: 2rem;
+  outline: none;
+  border: none;
+  background-color: var(--surface-color);
+  transition: all 150ms ease;
+}
+
+.window-control:hover {
+  background-color: var(--surface-hover-color);
+}
+
+.window-control.close-button {
+  border-radius: 0rem 0.5rem 0rem 0rem;
+}
+
+.window-control.close-button:hover {
+  background-color: var(--close-button-color);
+  color: var(--on-close-button-color);
+}

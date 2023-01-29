@@ -1,0 +1,14 @@
+:root {
+  --surface-color: #FFFFFF;
+  --surface-hover-color: #E2E2E2;
+
+  /* Misc */
+  --close-button-color: #e81123;
+  --on-close-button-color: #FFFFFF;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --surface-color: #FFFFFF;
+  }
+}
