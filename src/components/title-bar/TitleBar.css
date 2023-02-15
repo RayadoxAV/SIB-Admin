@@ -17,6 +17,7 @@
   justify-content: center;
   color: var(--text-color);
   font-size: 14px;
+  pointer-events: none;
 }
 
 .title-bar .title-container {
@@ -39,7 +40,7 @@
   outline: none;
   border: none;
   background-color: var(--surface-color);
-  transition: all 150ms ease;
+  transition: all 100ms cubic-bezier(0.2, 0, 0, 1);
 }
 
 .window-control:hover {

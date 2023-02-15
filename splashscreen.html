@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/x-icon" href="/img/icon.ico">
+  <link rel="stylesheet" href="fa/all.min.css">
   <title>Document</title>
   <style>
     :root {
@@ -26,7 +28,7 @@
       font-weight: 400;
       font-style: italic;
     }
-    
+
     @font-face {
       font-family: Roboto;
       src: url('fonts/roboto/Roboto-Black.ttf');
@@ -128,9 +130,9 @@
       padding: 0;
     }
 
-    .container img {
-      width: 64px;
-      height: 64px;
+    .container i {
+      font-size: 40px;
+      text-align: center;
       margin-top: auto;
       margin-left: auto;
       margin-bottom: 1rem;
@@ -185,14 +187,14 @@
         /* transform: translate(100%); */
       }
     }
-
   </style>
 </head>
+
 <body>
   <div data-tauri-drag-region class="container">
     <span class="title">SI</span>
-    <span class="version">Versión <span>0.0.0</span></span>
-    <img src="img/icon.ico" alt="Logo de pantera">
+    <span class="version">Versión <span>1.0.0</span></span>
+    <i class="fa-solid fa-bookmark" style="color: #0c58d0"></i>
     <div class="loading-container">
       <div class="progress-bar-container">
         <div class="progress-bar"></div>
@@ -200,4 +202,5 @@
     </div>
   </div>
 </body>
+
 </html>

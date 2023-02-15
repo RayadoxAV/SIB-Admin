@@ -1,16 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Tauri + React + TS</title>
-    <link rel="stylesheet" href="fonts/codicons/codicon.css">
-    <link rel="stylesheet" href="fa/all.min.css">
-  </head>
 
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SI</title>
+  <link rel="stylesheet" href="/fonts/codicons/codicon.css">
+  <link rel="stylesheet" href="/fa/all.min.css">
+</head>
+
+<body>
+  <div id="root"></div>
+  <!-- <script>
+    String.prototype.reverse = function () {
+      const string = this;
+      let newString = '';
+
+      const splitString = this.split('');
+
+      for (let i = splitString.length - 1; i >= 0; i--) {
+        newString += splitString[i];
+      }
+      return newString;
+    }
+  </script> -->
+  <script type="module">
+    import { invoke } from "@tauri-apps/api";
+
+    invoke('load_settings').then((settingsString) => {
+      globalThis.settings = JSON.parse(settingsString);
+      invoke('close_splashscreen');
+    });
+
+  </script>
+  <script type="module" src="/src/main.tsx"></script>
+</body>
+
 </html>

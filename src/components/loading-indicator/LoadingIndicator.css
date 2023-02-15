@@ -1,0 +1,32 @@
+.loading-indicator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.loading-indicator .loading-text {
+  color: var(--text-color);
+  font-weight: 600;
+  margin-top: 1rem;
+  user-select: none;
+}
+
+.loading-indicator .spinner {
+  border: 0.25rem solid var(--secondary-surface-color);
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  border-left-color: var(--primary-color);
+  animation: spin 1s infinite;
+  animation-timing-function: cubic-bezier(0.2, 0, 0, 1);
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}

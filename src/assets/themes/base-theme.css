@@ -1,10 +1,51 @@
 :root {
+  --primary-color: #0B57D0;
+  --primary-hover-color: #1E64D4;
+  --primary-active-color: #1B5DC5;
+
   --surface-color: #FFFFFF;
   --surface-hover-color: #E2E2E2;
 
+  --secondary-surface-color: #EFEFEF;
+  --secondary-surface-hover-color: #E2E2E2;
+  --secondary-surface-active-color: #D5D5D5;
+
+  --tertiary-surface-color: #dcdcf0;
+  --tertiary-surface-hover-color: #E2E2EE;
+  --tertiary-surface-active-color: #d4d4e4;
+
+  --on-surface-color: #292929;
+  --on-surface-color-dim: #323232;
+
+  --on-primary-color: #FFFFFF;
+  --on-tertiary-color: #636b76;
+
+  --success-color: #58e77b;
+
+  --warning-color: #ffb347;
+
+  --error-color: #FF0020;
+  --error-hover-color: #ff1230;
+  --error-active-color: #fb000f;
+
+  --on-success-color: #16803a;
+
+  --on-warning-color: #8b4800;
+
+  --on-error-color: #ffe6e9;
+
+
+  /* Specific colors */
+
+  /* Input */
+  --input-background-color: #EFEFEF;
+  --input-focus-background-color: #E0E0E0;
+
   /* Misc */
-  --close-button-color: #e81123;
+  --close-button-color: #E81123;
   --on-close-button-color: #FFFFFF;
+
+  --window-border-color: #CCCCCC;
 }
 
 @media (prefers-color-scheme: dark) {

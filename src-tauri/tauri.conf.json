@@ -28,7 +28,7 @@
         "icons/icon.icns",
         "icons/icon.ico"
       ],
-      "identifier": "com.tauri.dev",
+      "identifier": "sib",
       "longDescription": "",
       "macOS": {
         "entitlements": null,
@@ -58,16 +58,19 @@
         "center": true,
         "focus": true,
         "decorations": false,
-        "height": 600,
         "resizable": true,
         "title": "SI",
+        "height": 600,
         "width": 800,
+        "minHeight": 400,
+        "minWidth": 450,
         "visible": false,
         "transparent": true
       },
       {
         "width": 500,
         "height": 300,
+        "focus": true,
         "decorations": false,
         "url": "splashscreen.html",
         "label": "splashscreen",

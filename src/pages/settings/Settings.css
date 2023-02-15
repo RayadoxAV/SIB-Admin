@@ -1,0 +1,113 @@
+.settings-container {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  max-height: 81vh;
+  overflow: hidden;
+}
+
+.settings-container>.categories {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  gap: 0.5rem;
+  width: 20%;
+  overflow: auto;
+  padding-right: 1rem;
+}
+
+.settings-container>.categories>.setting-category {
+  padding: 0.75rem;
+  display: flex;
+  flex-direction: row;
+  outline: none;
+  border: none;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  opacity: 0;
+  background-color: var(--surface-color);
+  transition: all 150ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+.settings-container>.categories>.setting-category:hover {
+  background-color: var(--secondary-surface-color);
+}
+
+.settings-container>.categories>.setting-category.active {
+  background-color: var(--tertiary-surface-color);
+}
+
+.settings-container>.categories>.setting-category.active>i,
+.settings-container>.categories>.setting-category.active>.setting-name {
+  color: var(--primary-color);
+}
+
+.setting-category>i {
+  color: var(--on-surface-color);
+  user-select: none;
+}
+
+.setting-category>.setting-name {
+  color: var(--on-surface-color);
+  font-weight: 500;
+  user-select: none;
+  font-size: 15px;
+}
+
+.settings-container>.display {
+  flex-shrink: 0;
+  width: 80%;
+  overflow: auto;
+  display: flex;
+  padding: 0rem 1rem;
+  border-left: 1px solid var(--tertiary-surface-color);
+  flex-direction: column;
+  opacity: 0;
+}
+
+.settings-container>.display>.title {
+  user-select: none;
+  font-size: 24px;
+  font-weight: 900;
+}
+
+.settings-container>.display>.description {
+  user-select: none;
+}
+
+.settings-container>.display>.setting {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 0rem;
+}
+
+.settings-container>.display>.setting>.setting-name {
+  font-weight: 500;
+}
+
+.settings-container>.display>.no-category {
+  display: flex;
+  height: 100%;
+  font-size: 14px;
+  font-weight: 500;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (max-width: 900px) {
+  .settings-container>.display {
+    flex-grow: 4;
+  }
+}
+
+@media (max-width: 700px) {
+  .settings-container>.categories {
+    display: none;
+  }
+
+  .settings-container>.display {
+    border-left: none;
+  }
+}

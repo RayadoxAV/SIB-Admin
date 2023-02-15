@@ -1,0 +1,144 @@
+.fade-in {
+  animation-name: fadeIn;
+  animation-duration: 300ms;
+  animation-timing-function: cubic-bezier(0.2, 0, 0, 1);
+  animation-fill-mode: forwards;
+}
+
+.fade-in-up {
+  animation-name: fadeInUp;
+  animation-duration: 300ms;
+  animation-timing-function: cubic-bezier(0.2, 0, 0, 1);
+  animation-fill-mode: forwards;
+}
+
+.fade-in-right {
+  animation-name: fadeInRight;
+  animation-duration: 300ms;
+  animation-timing-function: cubic-bezier(0.2, 0, 0, 1);
+  animation-fill-mode: forwards;
+}
+
+.scale-in {
+  animation-name: scaleIn;
+  animation-duration: 300ms;
+  animation-timing-function: cubic-bezier(0.2, 0, 0, 1);
+  animation-fill-mode: forwards;
+}
+
+.slide-in-up {
+  animation-name: slideInUp;
+  animation-duration: 500ms;
+  animation-timing-function: cubic-bezier(0.05, 0.7, 0.1, 1.0);
+  animation-fill-mode: forwards;
+}
+
+.slide-out-down {
+  animation-name: slideOutDown;
+  animation-duration: 5s;
+  animation-timing-function: cubic-bezier(0.05, 0.7, 0.1, 1.0);
+  animation-fill-mode: forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}
+
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0px);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(80%);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(100%);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInUp {
+  from {
+    transform: translateY(100px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0px);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOutDown {
+  0% {
+    transform: translateY(0px);
+  }
+  100% {
+    transform: translateY(10px);
+  }
+}
+
+.delay-1 {
+  animation-delay: 10ms;
+}
+
+.delay-2 {
+  animation-delay: 20ms;
+}
+
+.delay-3 {
+  animation-delay: 30ms;
+}
+
+.delay-4 {
+  animation-delay: 40ms;
+}
+
+.delay-5 {
+  animation-delay: 50ms;
+}
+
+.delay-6 {
+  animation-delay: 60ms;
+}
+
+.delay-7 {
+  animation-delay: 70ms;
+}
+
+.delay-8 {
+  animation-delay: 80ms;
+}
+
+.delay-9 {
+  animation-delay: 90ms;
+}

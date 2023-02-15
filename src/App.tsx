@@ -1,52 +1,109 @@
-import React, { useState } from "react";
-import "./App.css";
-import TitleBar from "./components/title-bar/TitleBar";
+import React, { useContext, useEffect, useState } from 'react';
+import { Outlet } from 'react-router-dom';
+
+import TitleBar from './components/title-bar/TitleBar';
+
+import { SERVER_IP } from './util/util';
+
+import './main.css';
+import './App.css';
+
+import { appWindow } from '@tauri-apps/api/window';
+import { Navigate } from 'react-router-dom';
+import LoadingIndicator from './components/loading-indicator/LoadingIndicator';
+import NoServerError from './components/no-server-error/NoServerError';
+import { AppContext } from './State';
 
 function App() {
-  // const [greetMsg, setGreetMsg] = useState("");
-  // const [name, setName] = useState("");
 
-  // async function greet() {
-  //   // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
-  //   setGreetMsg(await invoke("greet", { name }));
-  // }
+  const [appContext, dispatch] = useContext(AppContext);
+
+  const [loading, setLoading] = useState(false);
+  const [redirectError, setRedirectError] = useState(false);
+  const [redirect, setRedirect] = useState(false);
+
+
+  useEffect(() => {
+
+    if (!appContext.settings.categories) {
+      alert('aa');
+      dispatch({ type: 'setSettings', settings: globalThis.settings });
+    }
+
+    setLoading(true);
+    if (localStorage.getItem('token')) {
+      const token = localStorage.getItem('token');
+      const requestOptions = {
+        method: 'POST',
+        body: JSON.stringify({ token }),
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        }
+      };
+
+      fetch(`${SERVER_IP}/validate_user_token`, requestOptions).then((res) => res.json()).then((response) => {
+        setLoading(false);
+        if (response) {
+          if (!response.isTokenValid) {
+            setRedirect(true);
+          } else {
+            appWindow.setResizable(true);
+          }
+        }
+      }).catch((error) => {
+        console.log(error);
+        setLoading(false);
+        setRedirectError(true);
+      });
+
+    }
+  }, []);
+
+  if (!localStorage.getItem('token')) {
+    return (
+      <Navigate to="/login" replace={true} />
+    );
+  }
+
+  if (redirect) {
+    return (
+      <Navigate to="/login" replace={true} />
+    );
+  }
+
+  if (redirectError) {
+    return (
+      <div className='App'>
+        <TitleBar title={'SI Error'} />
+        <div className='main-container'>
+          <NoServerError />
+        </div>
+      </div>
+    );
+  }
+
+  if (loading) {
+    return (
+      // 
+      <div className='App'>
+        <TitleBar title={'SI'} />
+        <div className='main-container'>
+          <div style={{ backgroundColor: 'var(--surface-color)', borderRadius: '0.5rem', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+            <LoadingIndicator />
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="App">
-      <TitleBar />
-      <div>holi</div>
+      <TitleBar title={'SI'} />
+      <div className='main-container'>
+        <Outlet />
+      </div>
     </div>
-    // <div className="container">
-    //   <h1>Welcome to Tauri!</h1>
-
-    //   <div className="row">
-    //     <a href="https://vitejs.dev" target="_blank">
-    //       <img src="/vite.svg" className="logo vite" alt="Vite logo" />
-    //     </a>
-    //     <a href="https://tauri.app" target="_blank">
-    //       <img src="/tauri.svg" className="logo tauri" alt="Tauri logo" />
-    //     </a>
-    //     <a href="https://reactjs.org" target="_blank">
-    //       <img src={reactLogo} className="logo react" alt="React logo" />
-    //     </a>
-    //   </div>
-
-    //   <p>Click on the Tauri, Vite, and React logos to learn more.</p>
-
-    //   <div className="row">
-    //     <div>
-    //       <input
-    //         id="greet-input"
-    //         onChange={(e) => setName(e.currentTarget.value)}
-    //         placeholder="Enter a name..."
-    //       />
-    //       <button type="button" onClick={() => greet()}>
-    //         Greet
-    //       </button>
-    //     </div>
-    //   </div>
-    //   <p>{greetMsg}</p>
-    // </div>
   );
 }
 

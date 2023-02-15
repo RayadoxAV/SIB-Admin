@@ -1,7 +1,6 @@
 :root {
   font-family: Roboto;
   font-size: 16px;
-
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -14,10 +13,16 @@
   font-family: Roboto;
 }
 
+html {
+  overscroll-behavior-x: none;
+}
+
 body {
   margin: 0;
   padding: 0;
   height: 100vh;
+  overflow: hidden;
+  overscroll-behavior-x: none;
 }
 
 #root {
