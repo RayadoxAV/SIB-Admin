@@ -1,6 +1,8 @@
-# Tauri + React + Typescript
+# SIB
 
-This template should help get you started developing with Tauri, React and Typescript in Vite.
+## Admin
+
+Programa de administración del Sistema Integral para la Escuela Secundaria Estatal 3024
 
 ## Recommended IDE Setup
 
