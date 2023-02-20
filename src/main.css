@@ -171,6 +171,34 @@
   background-color: var(--secondary-surface-active-color);
 }
 
+.button-filled {
+  background-color: var(--tertiary-surface-color);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--on-surface-color);
+  padding: 0rem 1.5rem;
+  border: none;
+  outline: none;
+  height: 2.5rem;
+  border-radius: 1.25rem;
+  transition: all 150ms cubic-bezier(0.2, 0, 0, 1);
+  cursor: pointer;
+  user-select: none;
+}
+
+.button-filled .icon {
+  margin-right: 0.5rem;
+  margin-left: -0.75rem;
+}
+
+.button-filled:hover {
+  background-color: var(--tertiary-surface-hover-color);
+}
+
+.button-filled:focus {
+  background-color: var(--tertiary-surface-active-color);
+}
+
 .container {
   display: flex;
   flex-direction: column;
@@ -227,9 +255,24 @@
 .container .c-body {
   flex-grow: 1;
 }
-/* 
-.container .c-footer {
-} */
+
+.option-button {
+  display: flex;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 15px;
+  font-weight: 500;
+  background-color: var(--surface-color);
+  border-radius: 0.5rem;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  transition: all 150ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+.option-button:hover {
+  background-color: var(--surface-hover-color);
+}
 
 @media (max-width: 400px) {
   .header {
@@ -247,6 +290,12 @@
   }
 
   .button-toned {
+    height: 3rem;
+    padding: 0rem 2rem;
+    border-radius: 1.5rem;
+  }
+
+  .button-filled {
     height: 3rem;
     padding: 0rem 2rem;
     border-radius: 1.5rem;

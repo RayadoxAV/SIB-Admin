@@ -26,7 +26,6 @@ function App() {
   useEffect(() => {
 
     if (!appContext.settings.categories) {
-      alert('aa');
       dispatch({ type: 'setSettings', settings: globalThis.settings });
     }
 

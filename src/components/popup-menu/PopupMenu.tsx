@@ -1,4 +1,4 @@
-import React, { RefObject, ReactElement } from 'react';
+import React, { RefObject, ReactElement, useEffect, useState, HTMLAttributes } from 'react';
 
 import './PopupMenu.css';
 
@@ -9,9 +9,18 @@ interface PopupMenuProps {
 }
 
 const PopupMenu: React.FC<PopupMenuProps> = ({ parent, options, actions }) => {
+
+
+  // const style = { top: 0 };
+  useEffect(() => {
+    // style.top = '100px';
+      // style.top = `${position.top + position.height + 80}px`;
+    
+  }, [parent]);
+
   return (
     <div className='popup'>
-      {JSON.stringify(parent.current?.getBoundingClientRect())}
+      
     </div>
   );
 };

@@ -12,6 +12,13 @@
   animation-fill-mode: forwards;
 }
 
+.fade-out-down {
+  animation-name: fadeOutDown;
+  animation-duration: 300ms;
+  animation-timing-function: cubic-bezier(0.2, 0, 0, 1);
+  animation-fill-mode: forwards;
+}
+
 .fade-in-right {
   animation-name: fadeInRight;
   animation-duration: 300ms;
@@ -59,6 +66,18 @@
   to {
     opacity: 1;
     transform: translateY(0px);
+  }
+}
+
+@keyframes fadeOutDown {
+  from {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+
+  to {
+    /* opacity: 0; */
+    transform: translateY(100px);
   }
 }
 

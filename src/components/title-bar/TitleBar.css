@@ -1,6 +1,5 @@
 .title-bar {
   background-color: var(--surface-color);
-  border-radius: 0.5rem 0.5rem 0rem 0rem;
   height: 2rem;
   display: flex;
   flex-direction: row;
@@ -47,9 +46,9 @@
   background-color: var(--surface-hover-color);
 }
 
-.window-control.close-button {
+/* .window-control.close-button {
   border-radius: 0rem 0.5rem 0rem 0rem;
-}
+} */
 
 .window-control.close-button:hover {
   background-color: var(--close-button-color);

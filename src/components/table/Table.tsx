@@ -119,8 +119,10 @@ const Table: React.FC<TableProps> = ({ headers, data, className, onSelectionChan
   function formatRole(role: number): string {
     switch (role) {
       case 0:
-        return 'Administrador';
+        return 'Raiz';
       case 1:
+        return 'Administrador';
+      case 2:
         return 'Usuario';
       case 5:
         return 'Invitado';
@@ -137,7 +139,7 @@ const Table: React.FC<TableProps> = ({ headers, data, className, onSelectionChan
             <button className='button-toned'>Buscar</button>
             <button className='button-primary' style={{ marginLeft: 'auto' }}>
               <i className='fa-solid fa-add icon'></i>
-              Agregar estudiante
+              Agregar
             </button>
           </div>) :
           (null)}

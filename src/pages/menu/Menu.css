@@ -31,6 +31,32 @@
   color: var(--text-color);
 }
 
+.menu-header .log-out {
+  height: 2rem;
+  width: 2rem;
+  padding: 0;
+  outline: none;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  border: none;
+  font-size: 16px;
+  background-color: var(--surface-color);
+  border-radius: 0.5rem;
+  color: var(--on-surface-color);
+  cursor: pointer;
+  transition: all 150ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+.menu-header .log-out:hover {
+  background-color: var(--surface-hover-color);
+}
+
+.menu-header .log-out:active {
+  background-color: var(--surface-active-color);
+}
+
+
 .menu .item-container {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
