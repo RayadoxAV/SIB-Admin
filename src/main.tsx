@@ -20,6 +20,8 @@ import Student from "./pages/students/Student";
 import Users from "./pages/users/Users";
 import Settings from "./pages/settings/Settings";
 import { GlobalSettings } from "./util/util";
+import AddUser from "./pages/users/AddUser";
+import Test from "./pages/test/Test";
 
 // emit('settings-loaded', { message: 'holli' });
 // for (let i = 0; i < 10000; i++) {
@@ -61,6 +63,14 @@ const router = createBrowserRouter([
       {
         path: '/users',
         element: <Users />
+      },
+      {
+        path: '/add-user',
+        element: <AddUser />
+      },
+      {
+        path: '/studies',
+        element: <Test />
       },
       {
         path: '/settings',

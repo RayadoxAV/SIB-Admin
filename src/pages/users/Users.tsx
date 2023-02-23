@@ -35,7 +35,7 @@ const Users: React.FC = () => {
   const [appContext, dispatch] = useContext(AppContext);
 
   const [loading, setLoading] = useState(true);
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState([] as any[]);
 
   const [redirect, setRedirect] = useState(false);
   const [redirectLogin, setRedirectLogin] = useState(false);
@@ -70,8 +70,8 @@ const Users: React.FC = () => {
             user.nombre = `${user.nombres} ${user.pApellido} ${user.sApellido}`;
           }
 
-          dispatch({ type: 'setUsers', users: queryUsers });
-          setUsers(queryUsers);
+          dispatch({ type: 'setUsers', users: [...queryUsers] });
+          setUsers([...queryUsers]);
           setLoading(false);
         } else if (response.queryStatusCode === 1) {
           console.log('Manejar el error');
@@ -82,12 +82,54 @@ const Users: React.FC = () => {
 
     } else {
       setLoading(false);
-      setUsers(appContext.users);
+      setUsers([...appContext.users]);
     }
   }, []);
 
   function handleClick() {
     setRedirect(true);
+  }
+
+  function deleteUsers(rows: Set<number>) {
+
+    const deleteRows = Array.from(rows);
+    deleteRows.sort((a, b) => (
+      b - a
+    ));
+
+    const tempUsers = [...users];
+    const deleteIds = [] as number[];
+    deleteRows.forEach((value: number) => {
+      deleteIds.push(users[value].idUsuario);
+      tempUsers.splice(value, 1);
+    });
+
+    const token = localStorage.getItem('token');
+    if (!token) {
+      setRedirectLogin(true);
+      return;
+    }
+
+    const requestOptions = {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify({
+        ids: deleteIds
+      })
+    };
+
+    fetch(`${SERVER_IP}/users`, requestOptions).then((res) => (res.json())).then((response) => {
+      if (response.deleteStatusCode === 0) {
+        setUsers(tempUsers);
+        dispatch({ type: 'setUsers', users: tempUsers });
+      }
+    }).catch((error) => {
+      console.log(error);
+    });
   }
 
   if (redirect) {
@@ -116,11 +158,16 @@ const Users: React.FC = () => {
             (
               <Table
                 headers={headers}
-                data={users}
+                data={appContext.users}
                 selectable={true}
                 searchable={true}
+                editable={true}
                 searchParams={['idUsuario', 'nombreUsuario', 'nombre', 'role:', 'estado:']}
+                addUrl='/add-user'
+                performDelete={deleteUsers}
+                // reloadData={() => { alert('recargar datos') }}
               />
+             
             )
         }
       </div>

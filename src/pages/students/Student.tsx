@@ -164,7 +164,7 @@ const Student: React.FC = () => {
           <Clock className='fade-in-up' />
           <span className='title fade-in-up'>Estudiante</span>
         </div>
-        <div className='c-body'>
+        <div className='c-body spaced'>
           <div style={{ display: 'flex', alignItems: 'flex-start' }}>
             <div style={{ display: 'flex', flexDirection: 'column', marginRight: '1rem' }}>
               <span className='name fade-in-up delay-3'>{student.nombre}</span>
