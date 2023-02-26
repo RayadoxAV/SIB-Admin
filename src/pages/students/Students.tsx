@@ -154,7 +154,8 @@ const Students: React.FC = () => {
                 searchable={true}
                 clickable={true}
                 selectable={true}
-                searchParams={['nombre', 'matricula', 'CURP', 'grado:', 'grupo:', 'estado:']} />
+                searchParams={['nombre', 'matricula', 'CURP', 'grado:', 'grupo:', 'estado:']}
+                addUrl='/add-student' />
             )
         }
       </div>

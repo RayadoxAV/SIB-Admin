@@ -110,7 +110,7 @@ const AddUser: React.FC = () => {
             initialValues={initialValues}
             validationSchema={validationSchema}
             onSubmit={handleSubmit}>
-            {({ values, errors, touched, handleChange, handleBlur, handleSubmit, setFieldValue }) => (
+            {({ values, errors, touched, handleChange, handleBlur, setFieldValue }) => (
               <Form className='form'>
                 <div className='form-body fade-in-up delay-3'>
                   <div className='input-column'>

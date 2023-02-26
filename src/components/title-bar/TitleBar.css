@@ -38,17 +38,13 @@
   height: 2rem;
   outline: none;
   border: none;
-  background-color: var(--surface-color);
+  background-color: transparent;
   transition: all 100ms cubic-bezier(0.2, 0, 0, 1);
 }
 
 .window-control:hover {
   background-color: var(--surface-hover-color);
 }
-
-/* .window-control.close-button {
-  border-radius: 0rem 0.5rem 0rem 0rem;
-} */
 
 .window-control.close-button:hover {
   background-color: var(--close-button-color);

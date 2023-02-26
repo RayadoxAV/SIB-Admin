@@ -22,6 +22,7 @@ import Settings from "./pages/settings/Settings";
 import { GlobalSettings } from "./util/util";
 import AddUser from "./pages/users/AddUser";
 import Test from "./pages/test/Test";
+import AddInformation from "./pages/students/add-information/AddInformation";
 
 // emit('settings-loaded', { message: 'holli' });
 // for (let i = 0; i < 10000; i++) {
@@ -32,20 +33,21 @@ declare global {
   var settings: GlobalSettings
 };
 
-document.addEventListener('DOMContentLoaded', async () => {
-  // invoke('close_splashscreen');
-  // invoke('funcion');
-  const unlisten = await listen('loaded-students', (event) => {
-    console.log(event);
-  });
-  // emit('lola', 'ano');
-});
+// document.addEventListener('DOMContentLoaded', async () => {
+//   // invoke('close_splashscreen');
+//   // invoke('funcion');
+//   const unlisten = await listen('loaded-students', (event) => {
+//     console.log(event);
+//   });
+//   // emit('lola', 'ano');
+// });
 
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <App />,
+    errorElement: <div>valio madres</div>,
     children: [
       {
         path: '/',
@@ -54,11 +56,14 @@ const router = createBrowserRouter([
       {
         path: '/students',
         element: <Students />,
-        errorElement: <div>valio madres</div>
       },
       {
         path: '/student/:id',
         element: <Student />,
+      },
+      {
+        path: '/add-student',
+        element: <div>hola</div>
       },
       {
         path: '/users',
@@ -67,6 +72,10 @@ const router = createBrowserRouter([
       {
         path: '/add-user',
         element: <AddUser />
+      },
+      {
+        path: '/add-information/:type/:id',
+        element: <AddInformation />
       },
       {
         path: '/studies',

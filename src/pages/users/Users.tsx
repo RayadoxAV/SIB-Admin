@@ -165,7 +165,6 @@ const Users: React.FC = () => {
                 searchParams={['idUsuario', 'nombreUsuario', 'nombre', 'role:', 'estado:']}
                 addUrl='/add-user'
                 performDelete={deleteUsers}
-                // reloadData={() => { alert('recargar datos') }}
               />
              
             )

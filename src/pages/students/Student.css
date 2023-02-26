@@ -1,13 +1,14 @@
-.c-body .name {
+.c-body > div > div > .name {
   font-size: 2rem;
   font-weight: 900;
   opacity: 0;
 }
 
-.c-body .matricula {
+.c-body > div > div > .matricula {
   font-weight: 500;
   font-size: 15px;
   margin-bottom: 1rem;
+  line-height: 2.375rem;
   opacity: 0;
 }
 

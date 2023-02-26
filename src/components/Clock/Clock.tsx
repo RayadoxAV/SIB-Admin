@@ -1,12 +1,12 @@
 import React from 'react';
-import { useDate } from '../../hooks/useDate';
+import { useTime } from '../../hooks/useDate';
 
 interface ClockProps {
   className?: string;
 };
 
 const Clock: React.FC<ClockProps> = ({ className }) => {
-  const date = useDate();
+  const date = useTime();
 
   return (
     <span className={`clock ${className}`}>{date}</span>

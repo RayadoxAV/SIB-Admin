@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-export function useDate(): string {
+export function useTime(): string {
   const [date, setDate] = useState(new Date()); 
 
   useEffect(() => {
@@ -23,3 +23,23 @@ export function useDate(): string {
   
   return `${hoursString}:${minutesString}`;
 };
+
+export function useDate(): string {
+  const [date, setDate] = useState(new Date());
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setDate(new Date());
+    }, 900 * 1000);
+
+    return () => {
+      clearInterval(timer);
+    };
+  }, []);
+
+  const days = date.getDate();
+  const months = date.getMonth() + 1;
+  const year = date.getFullYear();
+
+  return `${days < 10 ? '0' : ''}${days}/${months < 10 ? '0' : ''}${months}/${year}`;
+}

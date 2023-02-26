@@ -47,6 +47,9 @@
   --on-close-button-color: #FFFFFF;
 
   --window-border-color: #CCCCCC;
+
+  --elevation-level-0: none;
+  --elevation-level-1: 0px 0px 30px 1px rgb(58, 58, 58, 0.2);
 }
 
 @media (prefers-color-scheme: dark) {

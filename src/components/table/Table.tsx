@@ -25,7 +25,6 @@ interface TableProps {
   editable?: boolean;
   addUrl?: string;
   performDelete?: Function;
-  reloadData?: Function;
 }
 
 const Table: React.FC<TableProps> =
@@ -41,8 +40,7 @@ const Table: React.FC<TableProps> =
     clickable,
     editable = false,
     addUrl,
-    performDelete,
-    reloadData
+    performDelete
   }) => {
 
     const navigate = useNavigate();

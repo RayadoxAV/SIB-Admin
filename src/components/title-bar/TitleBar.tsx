@@ -32,7 +32,7 @@ const TitleBar: React.FC<TitleBarProps> = ({ title }) => {
   }
 
   return (
-    <div data-tauri-drag-region className='title-bar' style={{ borderRadius: maximized ? '0rem' : '0.5rem 0.5rem 0rem 0rem' }}>
+    <div id='title-bar' data-tauri-drag-region className='title-bar' style={{ borderRadius: maximized ? '0rem' : '0.5rem 0.5rem 0rem 0rem' }}>
       <div className='icon'>
         <i className='fa-solid fa-bookmark' style={{ color: '#0c58d0' }}></i>
       </div>
