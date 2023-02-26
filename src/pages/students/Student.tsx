@@ -1,5 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { Navigate, useParams } from 'react-router-dom';
+
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
+
 import Clock from '../../components/Clock/Clock';
 import LoadingIndicator from '../../components/loading-indicator/LoadingIndicator';
 import PopupMenu from '../../components/popup-menu/PopupMenu';
@@ -17,6 +19,8 @@ const Student: React.FC = () => {
   const { id } = useParams();
   const [loading, setLoading] = useState(true);
 
+  const navigate = useNavigate();
+
   const [dialogVisible, setDialogVisible] = useState(false);
 
   const addInformationButton = useRef<HTMLButtonElement>(null);
@@ -25,8 +29,6 @@ const Student: React.FC = () => {
     setLoading(true);
     dispatch({ type: 'setTitle', title: 'SI Estudiante' });
     const students = appContext.students;
-
-
 
     for (let i = 0; i < students.length; i++) {
       const tempStudent = students[i];
@@ -106,7 +108,7 @@ const Student: React.FC = () => {
   function addInformationOption(index: number) {
     switch (index) {
       case 0: {
-        alert('Reporte');
+        navigate(`/add-information/report/${id}`);
         break;
       }
       
@@ -164,7 +166,7 @@ const Student: React.FC = () => {
           <Clock className='fade-in-up' />
           <span className='title fade-in-up'>Estudiante</span>
         </div>
-        <div className='c-body'>
+        <div className='c-body spaced'>
           <div style={{ display: 'flex', alignItems: 'flex-start' }}>
             <div style={{ display: 'flex', flexDirection: 'column', marginRight: '1rem' }}>
               <span className='name fade-in-up delay-3'>{student.nombre}</span>

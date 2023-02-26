@@ -1,0 +1,50 @@
+.report {
+  display: flex;
+  flex-direction: column;
+}
+
+.report > .report-header {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 1rem;
+}
+
+.report-header > .identification {
+  display: flex;
+  flex-direction: column;
+}
+
+.report-header > .identification > .name {
+  font-size: 32px;
+  font-weight: 900;
+  line-height: 2.375rem;
+  opacity: 0;
+  user-select: none;
+}
+
+.report-header > .identification > .matricula {
+  font-weight: 500;
+  font-size: 15px;
+  opacity: 0;
+  user-select: none;
+}
+
+.report-header > .identification > .grado-grupo {
+  display: flex;
+  opacity: 0;
+}
+
+.report-header > .identification > .grado-grupo .grado,
+.report-header > .identification > .grado-grupo .grupo {
+  font-weight: 500;
+  font-size: 15px;
+}
+
+.report-header > .date {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 2.375rem;
+  margin-left: auto;
+  opacity: 0;
+  user-select: none;
+}

@@ -92,6 +92,18 @@
   background-color: var(--tertiary-surface-active-color);
 }
 
+.actions .action.inactive {
+  opacity: 0.5;
+}
+
+.actions .action.inactive:hover,
+.actions .action.inactive:active {
+  background-color: var(--tertiary-surface-color);
+  cursor: not-allowed;
+}
+
+
+
 
 .actions .action.delete {
   background-color: var(--error-color);

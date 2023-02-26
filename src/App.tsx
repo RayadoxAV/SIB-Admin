@@ -22,6 +22,13 @@ function App() {
   const [redirectError, setRedirectError] = useState(false);
   const [redirect, setRedirect] = useState(false);
 
+  function handleScroll(event: any) {
+    if (event.target.scrollTop > 20) {
+      document.getElementsByClassName('c-header')[0].classList.add('scrolled');
+    } else {
+      document.getElementsByClassName('c-header')[0].classList.remove('scrolled');
+    }
+  }
 
   useEffect(() => {
 
@@ -99,7 +106,7 @@ function App() {
   return (
     <div className="App">
       <TitleBar title={'SI'} />
-      <div className='main-container'>
+      <div className='main-container' onScroll={handleScroll}>
         <Outlet />
       </div>
     </div>
