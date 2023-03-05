@@ -1,10 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
+
 import { Navigate } from 'react-router-dom';
-import Clock from '../../components/Clock/Clock';
+
+import Header from '../../components/Header/Header';
 import LoadingIndicator from '../../components/loading-indicator/LoadingIndicator';
 import Table from '../../components/table/Table';
-import { useDate } from '../../hooks/useDate';
-import { AppContext, AppContextProvider } from '../../State';
+import { AppContext } from '../../State';
 import { SERVER_IP } from '../../util/util';
 
 const headers = [
@@ -37,7 +38,6 @@ const Users: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [users, setUsers] = useState([] as any[]);
 
-  const [redirect, setRedirect] = useState(false);
   const [redirectLogin, setRedirectLogin] = useState(false);
 
   useEffect(() => {
@@ -86,10 +86,6 @@ const Users: React.FC = () => {
     }
   }, []);
 
-  function handleClick() {
-    setRedirect(true);
-  }
-
   function deleteUsers(rows: Set<number>) {
 
     const deleteRows = Array.from(rows);
@@ -132,21 +128,11 @@ const Users: React.FC = () => {
     });
   }
 
-  if (redirect) {
-    return (
-      <Navigate to="/" />
-    );
-  }
-
   return (
     <div className='container'>
-      <div className='c-header'>
-        <button className='back-button fade-in-right' onClick={handleClick}>
-          <i className='fa-solid fa-arrow-left'></i>
-        </button>
-        <Clock className='fade-in-right delay-3' />
-        <span className='title fade-in-right delay-3'>Usuarios</span>
-      </div>
+      <Header
+        title='Usuarios'
+        backButtonRoute='/' />
       <div className='c-body'>
         {
           loading ?
@@ -166,7 +152,7 @@ const Users: React.FC = () => {
                 addUrl='/add-user'
                 performDelete={deleteUsers}
               />
-             
+
             )
         }
       </div>

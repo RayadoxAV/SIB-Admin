@@ -13,6 +13,7 @@ import { Navigate } from 'react-router-dom';
 import LoadingIndicator from './components/loading-indicator/LoadingIndicator';
 import NoServerError from './components/no-server-error/NoServerError';
 import { AppContext } from './State';
+import { applySetting } from './misc/SettingsDispatcher';
 
 function App() {
 
@@ -24,9 +25,9 @@ function App() {
 
   function handleScroll(event: any) {
     if (event.target.scrollTop > 20) {
-      document.getElementsByClassName('c-header')[0].classList.add('scrolled');
+      document.getElementsByClassName('c-header')[0]?.classList.add('scrolled');
     } else {
-      document.getElementsByClassName('c-header')[0].classList.remove('scrolled');
+      document.getElementsByClassName('c-header')[0]?.classList.remove('scrolled');
     }
   }
 
@@ -65,6 +66,13 @@ function App() {
 
     }
   }, []);
+
+  useEffect(() => {
+    if (appContext.changedSetting.settingName) {
+      const changedSetting = appContext.changedSetting;
+      applySetting(changedSetting);
+    }
+  }, [appContext.settings]);
 
   if (!localStorage.getItem('token')) {
     return (

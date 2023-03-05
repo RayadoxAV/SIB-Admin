@@ -15,6 +15,7 @@
 .login-form .header {
   margin: 0.5rem;
   opacity: 0;
+  color: var(--on-surface-color);
 }
 
 .login-form .input-column {

@@ -1,6 +1,7 @@
 .c-body > div > div > .name {
   font-size: 2rem;
   font-weight: 900;
+  color: var(--on-surface-color);
   opacity: 0;
 }
 
@@ -10,6 +11,7 @@
   margin-bottom: 1rem;
   line-height: 2.375rem;
   opacity: 0;
+  color: var(--on-surface-color-dim);
 }
 
 .c-body .information-container {
@@ -48,12 +50,14 @@
   text-overflow: ellipsis;
   padding: 0rem 1rem;
   font-size: 14px;
+  color: var(--on-surface-color-dim);
 }
 
 .column .value {
   text-align: end;
   padding: 0rem 1rem;
   font-size: 14px;
+  color: var(--on-surface-color-dimmer);
 }
 
 .actions-container {

@@ -1,14 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react';
 
-import { Navigate, useNavigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import LoadingIndicator from '../../components/loading-indicator/LoadingIndicator';
 import Table from '../../components/table/Table';
 
-import { useDate } from '../../hooks/useDate';
 import { SERVER_IP } from '../../util/util';
 
 import { AppContext } from '../../State';
-import Clock from '../../components/Clock/Clock';
+import Header from '../../components/Header/Header';
 
 const headers = [
   {
@@ -41,25 +40,14 @@ const headers = [
   }
 ];
 
-// const mockData = [
-//   {
-//     header1: 'tal',
-//     header2: 'cual',
-//     header3: 'lo',
-//     header4: 'que',
-//     header5: 'te',
-
-//   }
-// ];
-
 const Students: React.FC = () => {
 
   const [appContext, dispatch] = useContext(AppContext);
 
   const [loading, setLoading] = useState(true);
   const [students, setStudents] = useState([]);
+  const [documents, setDocuments] = useState([]);
 
-  const [redirect, setRedirect] = useState(false);
   const [redirectLogin, setRedirectLogin] = useState(false);
 
   useEffect(() => {
@@ -97,7 +85,42 @@ const Students: React.FC = () => {
           }
           dispatch({ type: 'setStudents', students: queryStudents });
           setStudents(queryStudents);
-          setLoading(false);
+
+          if (appContext.documents.length === 0) {
+            const documentsRequestOptions = {
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'Authorization': `Bearer ${token}`
+              }
+            };
+
+            fetch(`${SERVER_IP}/documents`, documentsRequestOptions).then((res) => (res.json()).then((response) => {
+              if (response.queryStatusCode === 0) {
+                const queryDocuments = response.result;
+
+                for (let i = 0; i < queryDocuments.length; i++) {
+                  let document = queryDocuments[i];
+                  const information = JSON.parse(document.informacion);
+                  document.informacion = information;
+
+                  queryDocuments[i] = document;
+                }
+
+                dispatch({ type: 'setDocuments', documents: queryDocuments });
+                setDocuments(queryDocuments);
+                setLoading(false);
+              } else if (response.queryStatusCode === 1) {
+                console.log('manejar el error');
+              }
+            }));
+
+          } else {
+            setLoading(false);
+            setDocuments(appContext.documents);
+          }
+          // setLoading(false);
         } else if (response.queryStatusCode === 1) {
           console.log('manejar error');
         }
@@ -113,16 +136,6 @@ const Students: React.FC = () => {
     // console.log(appContext);
   }, []);
 
-  function handleClick() {
-    setRedirect(true);
-  }
-
-  if (redirect) {
-    return (
-      <Navigate to="/" />
-    );
-  }
-
   if (redirectLogin) {
     return (
       <Navigate to="/login" />
@@ -131,13 +144,9 @@ const Students: React.FC = () => {
 
   return (
     <div className='container'>
-      <div className='c-header'>
-        <button className='back-button fade-in-right' onClick={handleClick}>
-          <i className='fa-solid fa-arrow-left'></i>
-        </button>
-        <Clock className='fade-in-right delay-3' />
-        <span className='title fade-in-right delay-5'>Estudiantes</span>
-      </div>
+      <Header 
+        title='Estudiantes'
+        backButtonRoute='/' />
       <div className='c-body'>
         {
           loading ?
@@ -154,6 +163,7 @@ const Students: React.FC = () => {
                 searchable={true}
                 clickable={true}
                 selectable={true}
+                editable={true}
                 searchParams={['nombre', 'matricula', 'CURP', 'grado:', 'grupo:', 'estado:']}
                 addUrl='/add-student' />
             )

@@ -3,14 +3,20 @@ import React, { createContext, useReducer } from 'react';
 interface InitialAppState {
   title: string;
   settings: object;
+  changedSetting: { settingName: string, value: any };
   students: any[];
+  reloadStudents: boolean;
+  documents: any[];
   users: any[];
 }
 
 const initialState: InitialAppState = {
   title: '',
   settings: {},
+  changedSetting: { settingName: '', value: '' },
   students: [],
+  reloadStudents: false,
+  documents: [],
   users: []
 };
 
@@ -24,8 +30,17 @@ const reducer = (state: any, action: any) => {
     case 'setSettings':
       return { ...state, settings: action.settings };
 
+    case 'setChangedSetting':
+      return { ...state, changedSetting: action.changedSetting };
+
     case 'setStudents':
       return { ...state, students: action.students };
+
+    case 'setReloadStudents':
+      return { ...state, reloadStudents: action.reloadStudents }
+
+    case 'setDocuments':
+      return { ...state, documents: action.documents };
 
     case 'setUsers':
       return { ...state, users: action.users };

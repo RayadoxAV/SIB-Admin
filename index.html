@@ -30,8 +30,70 @@
 
     invoke('load_settings').then((settingsString) => {
       globalThis.settings = JSON.parse(settingsString);
+      globalThis.getSettingValue = getSettingValue;
+      globalThis.setSetting = setSetting;
+
+      applyInitialSettings();
       invoke('close_splashscreen');
     });
+
+    function getSettingValue(name) {
+      const categories = globalThis.settings.categories;
+
+      const [categoryName, settingName] = name.split('.');
+
+      let value = '';
+
+      for (let i = 0; i < categories.length; i++) {
+        const category = categories[i];
+
+        if (category.name === categoryName) {
+          for (let j = 0; j < category.settings.length; j++) {
+            const setting = category.settings[j];
+            if (setting.name === settingName) {
+              value = setting.value;
+              break;
+            }
+          }
+          break;
+        }
+      }
+      return value;
+    }
+
+    function setSetting(key, value) {
+      const categories = globalThis.settings.categories;
+
+      const [categoryName, settingName] = key.split('.');
+
+      for (let i = 0; i < categories.length; i++) {
+        const category = categories[i];
+
+        if (category.name === categoryName) {
+          for (let j = 0; j < category.settings.length; j++) {
+            const setting = category.settings[j];
+            if (setting.name === settingName) {
+              setting.value = value;
+              break;
+            }
+          }
+          break;
+        }
+      }
+    }
+
+    function applyInitialSettings() {
+
+      applyTheme();
+
+      function applyTheme() {
+        const theme = globalThis.getSettingValue('appearance.selectedTheme');
+        const link = 
+        `<link id="theme" rel="stylesheet" href="./src/assets/themes/${theme}.css">`;
+        document.head.insertAdjacentHTML('beforeend', link);
+      }
+
+    }
 
   </script>
   <script type="module" src="/src/main.tsx"></script>

@@ -9,6 +9,7 @@ import FormError from '../../components/form-error/FormError';
 import { SERVER_IP } from '../../util/util';
 import Dialog from '../../components/Dialog/Dialog';
 import { AppContext } from '../../State';
+import Header from '../../components/Header/Header';
 
 interface FormValues {
   username: string;
@@ -27,13 +28,8 @@ const rolOptions = [
 
 const AddUser: React.FC = () => {
 
-  const [redirect, setRedirect] = useState(false);
   const [successDialogVisible, setSuccessDialogVisible] = useState(false);
   const [_, dispatch] = useContext(AppContext);
-
-  function handleBackButton() {
-    setRedirect(true);
-  }
 
   const initialValues: FormValues = {
     username: '',
@@ -89,22 +85,12 @@ const AddUser: React.FC = () => {
     });
   }
 
-  if (redirect) {
-    return (
-      <Navigate to="/users" />
-    );
-  }
-
   return (
     <>
       <div className='container'>
-        <div className='c-header'>
-          <button className='back-button fade-in-up' onClick={handleBackButton}>
-            <i className='fa-solid fa-arrow-left'></i>
-          </button>
-          <Clock className='fade-in-up' />
-          <span className='title fade-in-up'>Agregar usuario</span>
-        </div>
+        <Header
+          title='Agregar usuario'
+          backButtonRoute='/users' />
         <div className='c-body spaced'>
           <Formik
             initialValues={initialValues}
@@ -113,43 +99,47 @@ const AddUser: React.FC = () => {
             {({ values, errors, touched, handleChange, handleBlur, setFieldValue }) => (
               <Form className='form'>
                 <div className='form-body fade-in-up delay-3'>
-                  <div className='input-column'>
-                    <span className='input-label'>Nombre de usuario</span>
-                    <input className='input' type='text' name='username' id='username' autoComplete='off' onChange={handleChange} onBlur={handleBlur} value={values.username} />
-                    <FormError text={errors.username} touched={touched.username} />
+                  <div className='form-column'>
+                    <div className='input-column no-pad'>
+                      <span className='input-label'>Nombre de usuario</span>
+                      <input className='input' type='text' name='username' id='username' autoComplete='off' onChange={handleChange} onBlur={handleBlur} value={values.username} />
+                      <FormError text={errors.username} touched={touched.username} />
+                    </div>
+                    <div className='input-column no-pad'>
+                      <span className='input-label'>Contraseña</span>
+                      <input className='input' type='password' name='password' id='password' autoComplete='off' onChange={handleChange} onBlur={handleBlur} value={values.password} />
+                      <FormError text={errors.password} touched={touched.password} />
+                    </div>
+                    <div className='input-column no-pad'>
+                      <span className='input-label'>Nombres</span>
+                      <input className='input' type='text' name='nombres' id='nombres' autoComplete='off' onChange={handleChange} onBlur={handleBlur} value={values.nombres} />
+                      <FormError text={errors.nombres} touched={touched.nombres} />
+                    </div>
                   </div>
-                  <div className='input-column'>
-                    <span className='input-label'>Contraseña</span>
-                    <input className='input' type='password' name='password' id='password' autoComplete='off' onChange={handleChange} onBlur={handleBlur} value={values.password} />
-                    <FormError text={errors.password} touched={touched.password} />
-                  </div>
-                  <div className='input-column'>
-                    <span className='input-label'>Nombres</span>
-                    <input className='input' type='text' name='nombres' id='nombres' autoComplete='off' onChange={handleChange} onBlur={handleBlur} value={values.nombres} />
-                    <FormError text={errors.nombres} touched={touched.nombres} />
-                  </div>
-                  <div className='input-column'>
-                    <span className='input-label'>Primer apellido</span>
-                    <input className='input' type='text' name='pApellido' id='pApellido' autoComplete='off' onChange={handleChange} onBlur={handleBlur} value={values.pApellido} />
-                    <FormError text={errors.pApellido} touched={touched.pApellido} />
-                  </div>
-                  <div className='input-column'>
-                    <span className='input-label'>Segundo apellido</span>
-                    <input className='input' type='text' name='sApellido' id='sApellido' autoComplete='off' onChange={handleChange} onBlur={handleBlur} value={values.sApellido} />
-                    <FormError text={errors.sApellido} touched={touched.sApellido} />
-                  </div>
-                  <div className='input-column'>
-                    <span className='input-label'>Rol</span>
-                    <ReactSelect
-                      className='react-select'
-                      required={true}
-                      options={rolOptions}
-                      styles={selectStyle}
-                      value={rolOptions.find(option => option.value === values.rol)}
-                      onChange={(option: any) => {
-                        setFieldValue('rol', `${option.value}`);
-                      }} />
-                    <FormError text={errors.rol} touched={touched.rol} />
+                  <div className='form-column'>
+                    <div className='input-column no-pad'>
+                      <span className='input-label'>Primer apellido</span>
+                      <input className='input' type='text' name='pApellido' id='pApellido' autoComplete='off' onChange={handleChange} onBlur={handleBlur} value={values.pApellido} />
+                      <FormError text={errors.pApellido} touched={touched.pApellido} />
+                    </div>
+                    <div className='input-column no-pad'>
+                      <span className='input-label'>Segundo apellido</span>
+                      <input className='input' type='text' name='sApellido' id='sApellido' autoComplete='off' onChange={handleChange} onBlur={handleBlur} value={values.sApellido} />
+                      <FormError text={errors.sApellido} touched={touched.sApellido} />
+                    </div>
+                    <div className='input-column no-pad'>
+                      <span className='input-label'>Rol</span>
+                      <ReactSelect
+                        className='react-select'
+                        required={true}
+                        options={rolOptions}
+                        styles={selectStyle}
+                        value={rolOptions.find(option => option.value === values.rol)}
+                        onChange={(option: any) => {
+                          setFieldValue('rol', `${option.value}`);
+                        }} />
+                      <FormError text={errors.rol} touched={touched.rol} />
+                    </div>
                   </div>
                 </div>
                 <div className='form-footer fade-in-up delay-5'>
@@ -166,7 +156,7 @@ const AddUser: React.FC = () => {
         closable={true}
         onConfirm={() => { setSuccessDialogVisible(false); }}
         onClose={() => { setSuccessDialogVisible(false); }}
-        onCancel={() => { setSuccessDialogVisible(false); } }
+        onCancel={() => { setSuccessDialogVisible(false); }}
         prompt={true}
       >
         Usuario agregado exitosamente

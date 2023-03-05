@@ -10,13 +10,22 @@ import { useDate } from '../../hooks/useDate';
 import { AppContext } from '../../State';
 
 import './Student.css';
+import { formatDate } from '../../util/util';
+import Header from '../../components/Header/Header';
 
 const Student: React.FC = () => {
 
   const [appContext, dispatch] = useContext(AppContext);
+
   const [student, setStudent] = useState(undefined as any);
+  const [documents, setDocuments] = useState([] as any[]);
+  const [grades, setGrades] = useState([] as any[]);
+
   const [redirect, setRedirect] = useState(false);
+  const [redirectLogin, setRedirectLogin] = useState(false);
+
   const { id } = useParams();
+
   const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate();
@@ -35,7 +44,24 @@ const Student: React.FC = () => {
 
       if (tempStudent.id == id) {
         setStudent(tempStudent);
+
+        const tempDocuments = [];
+
+        const tempGrades = [];
+
+        for (let j = 0; j < appContext.documents.length; j++) {
+          if (appContext.documents[i].idAlumno === tempStudent.id) {
+            tempDocuments.push(appContext.documents[j]);
+
+            if (appContext.documents[j].tipo === 1) {
+              tempGrades.push(...appContext.documents[j].informacion);
+            }
+          }
+        }
+
         setLoading(false);
+        setDocuments(tempDocuments);
+        setGrades(tempGrades);
         break;
       }
     }
@@ -104,24 +130,24 @@ const Student: React.FC = () => {
     }
     return '';
   }
-  
+
   function addInformationOption(index: number) {
     switch (index) {
       case 0: {
         navigate(`/add-information/report/${id}`);
         break;
       }
-      
+
       case 1: {
-        alert('Calificaciones');
+        navigate(`/add-information/grade/${id}`);
         break;
       }
-      
+
       case 2: {
         alert('Otra cosa');
         break;
       }
-      
+
       default: {
         console.log('Bad index');
       }
@@ -135,19 +161,21 @@ const Student: React.FC = () => {
   if (redirect) {
     return (
       <Navigate to="/students" />
-    )
+    );
+  }
+
+  if (redirectLogin) {
+    return (
+      <Navigate to="/login" />
+    );
   }
 
   if (loading) {
     return (
       <div className='container'>
-        <div className='c-header'>
-          <button className='back-button fade-in-up' onClick={handleClick}>
-            <i className='fa-solid fa-arrow-left'></i>
-          </button>
-          <Clock className='fade-in-up' />
-          <span className='title fade-in-up'>Estudiante</span>
-        </div>
+        <Header
+          title='Estudiante'
+          backButtonRoute='/students' />
         <div className='c-body'>
           <LoadingIndicator />
         </div>
@@ -159,13 +187,9 @@ const Student: React.FC = () => {
   return (
     <>
       <div className='container'>
-        <div className='c-header'>
-          <button className='back-button fade-in-up' onClick={handleClick}>
-            <i className='fa-solid fa-arrow-left'></i>
-          </button>
-          <Clock className='fade-in-up' />
-          <span className='title fade-in-up'>Estudiante</span>
-        </div>
+        <Header
+          title='Estudiante'
+          backButtonRoute='/students' />
         <div className='c-body spaced'>
           <div style={{ display: 'flex', alignItems: 'flex-start' }}>
             <div style={{ display: 'flex', flexDirection: 'column', marginRight: '1rem' }}>
@@ -192,7 +216,7 @@ const Student: React.FC = () => {
                 </div>
                 <div className='column'>
                   <span className='value'>{student.CURP}</span>
-                  <span className='value'>{student.fechaNac.split('T')[0].replace(/-/g, '/')}</span>
+                  <span className='value'>{formatDate(student.fechaNac)}</span>
                   <span className='value'>{student.direccion}, {student.colonia}, {student.localidad}</span>
                   <span className='value'>{student.telefono}</span>
                 </div>
@@ -207,12 +231,87 @@ const Student: React.FC = () => {
                 <div className='column'>
                   <span className='data-name'>Grado</span>
                   <span className='data-name'>Grupo</span>
-                  <span className='data-name'>Calificaciones</span>
                 </div>
                 <div className='column'>
                   <span className='value'>{student.grado}</span>
                   <span className='value'>{student.grupo}</span>
-                  <span className='value'>{student.promedio}</span>
+                </div>
+              </div>
+              <div className='card-footer'></div>
+            </div>
+            <div className='card'>
+              <div className='card-header'>
+                <span className='card-title'>Reportes</span>
+              </div>
+              <div className='card-body'>
+                {documents.map((document: any, index: number) => {
+                  if (document.tipo === 0) {
+                    return (
+                      <div className='row' key={index}>
+                        <div className='column'>
+                          <span className='data-name'>Motivo</span>
+                          <span className='data-name'>Profesor</span>
+                          <span className='data-name'>Asignatura</span>
+                          <span className='data-name'>Fecha</span>
+                        </div>
+                        <div className='column'>
+                          <span className='value'>{document.informacion.motivoReporte}</span>
+                          <span className='value'>{document.informacion.profesor}</span>
+                          <span className='value'>{document.informacion.asignatura}</span>
+                          <span className='value'>{formatDate(document.fecha)}</span>
+                        </div>
+                      </div>
+                    );
+                  } else {
+                    return null;
+                  }
+                })}
+              </div>
+              <div className='card-footer'></div>
+            </div>
+            <div className='card'>
+              <div className='card-header'>
+                <span className='card-title'>Calificaciones</span>
+              </div>
+              <div className='card-body'>
+                {/* {grades.map((grade: any, index: number) => {
+                    const data: JSX.Element[] = [];
+                    const values: JSX.Element[] = [];
+
+                    for (let i = 0; i < document.informacion.length; i++) {
+                      data.push(<span className='data-name' key={i}>{document.informacion[i].asignatura}</span>);
+                      values.push(<span className='value' key={i}>{document.informacion[i].calificacion}</span>);
+                    }
+
+                    return <div className='row' key={index}>
+                      <div className='column'>
+                        {data}
+                      </div>
+                      <div className='column'>
+                        {values}
+                      </div>
+                    </div>;
+                  
+                })} */}
+                <div className='row'>
+                  <div className='column'>
+                    {
+                      grades.map((grade: any, index: number) => {
+                        return (
+                          <span key={index} className='data-name'>{grade.asignatura}</span>
+                        );
+                      })
+                    }
+                  </div>
+                  <div className='column'>
+                    {
+                      grades.map((grade: any, index: number) => {
+                        return (
+                          <span key={index} className='value'>{grade.calificacion}</span>
+                        );
+                      })
+                    }
+                  </div>
                 </div>
               </div>
               <div className='card-footer'></div>
@@ -321,7 +420,8 @@ const Student: React.FC = () => {
                 <span className='value'>{format(student.estadoVivienda)}</span>
               </div>
             </div>
-            <div className='card-footer'></div>
+            <div className='card-footer'>
+            </div>
           </div>
         </div>
       </div>
@@ -333,10 +433,10 @@ const Student: React.FC = () => {
         onClose={() => { setDialogVisible(false); }}
         onCancel={() => { setDialogVisible(false); }}
         prompt={false}>
-          <button className='option-button' onClick={() => { addInformationOption(0); }}>Reporte</button>
-          <button className='option-button' onClick={() => { addInformationOption(1); }}>Calificaciones</button>
-          <button className='option-button' onClick={() => { addInformationOption(2); }}>Otra cosa</button>
-        </Dialog>
+        <button className='option-button' onClick={() => { addInformationOption(0); }}>Reporte</button>
+        <button className='option-button' onClick={() => { addInformationOption(1); }}>Calificaciones</button>
+        <button className='option-button' onClick={() => { addInformationOption(2); }}>Otra cosa</button>
+      </Dialog>
     </>
   );
 };

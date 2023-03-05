@@ -41,6 +41,7 @@
 
 .selection-action-center .information .pill {
   background-color: var(--tertiary-surface-color);
+  color: var(--on-tertiary-color);
   width: 2rem;
   font-size: 13px;
   font-weight: 600;

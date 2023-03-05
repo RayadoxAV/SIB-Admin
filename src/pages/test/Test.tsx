@@ -1,25 +1,29 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import Header from '../../components/Header/Header';
+import { AppContext } from '../../State';
 
 const Test: React.FC = () => {
 
-  const [users, setUsers] = useState([] as any);
+  const [appContext, dispatch] = useContext(AppContext);
 
   useEffect(() => {
-    const tempUsers = [1, 2, 3, 4];
-    setUsers(tempUsers);
-  }, []);
+    alert('holi');
+  }, [appContext.settings]);
 
-  function deleteUsers() {
+  function updateCount() {
     // const tempUsers = [];
     // setUsers(tempUsers);
+    const count = appContext.count;
+    dispatch({ type: 'setCount', count: count + 1 });
   }
 
   return (
-    <div>
-      <button onClick={deleteUsers}>hola</button>
-      {users.map((user: any, index: number) => (
-        <div key={index}>hola</div>
-      ))}
+    <div className='container'>
+      <Header
+        title='Test'
+        backButtonRoute='/' />
+      <button onClick={updateCount}>Add 1</button>
+      <span>{appContext.count}</span>
     </div>
   );
 

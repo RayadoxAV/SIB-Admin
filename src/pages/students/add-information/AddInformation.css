@@ -20,6 +20,7 @@
   line-height: 2.375rem;
   opacity: 0;
   user-select: none;
+  color: var(--on-surface-color);
 }
 
 .report-header > .identification > .matricula {
@@ -27,17 +28,20 @@
   font-size: 15px;
   opacity: 0;
   user-select: none;
+  color: var(--on-surface-color-dim);
 }
 
 .report-header > .identification > .grado-grupo {
   display: flex;
   opacity: 0;
+  user-select: none;
 }
 
 .report-header > .identification > .grado-grupo .grado,
 .report-header > .identification > .grado-grupo .grupo {
   font-weight: 500;
   font-size: 15px;
+  color: var(--on-surface-color-dimmer);
 }
 
 .report-header > .date {
@@ -47,4 +51,121 @@
   margin-left: auto;
   opacity: 0;
   user-select: none;
+  color: var(--on-surface-color);
+}
+
+.grade {
+  display: flex;
+  flex-direction: column;
+}
+
+.grade > .grade-header {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 1rem;
+}
+
+.grade-header > .identification {
+  display: flex;
+  flex-direction: column;
+}
+
+.grade-header > .identification > .name {
+  font-size: 32px;
+  font-weight: 900;
+  line-height: 2.375rem;
+  opacity: 0;
+  user-select: none;
+  color: var(--on-surface-color);
+}
+
+.grade-header > .identification > .matricula {
+  font-weight: 500;
+  font-size: 15px;
+  opacity: 0;
+  user-select: none;
+  color: var(--on-surface-color-dim);
+}
+
+.grade-header > .identification > .grado-grupo {
+  display: flex;
+  opacity: 0;
+}
+
+.grade-header > .identification > .grado-grupo .grado,
+.grade-header > .identification > .grado-grupo .grupo {
+  font-weight: 500;
+  font-size: 15px;
+  color: var(--on-surface-color-dimmer);
+  user-select: none;
+}
+
+.grade-header > .date {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 2.375rem;
+  margin-left: auto;
+  color: var(--on-surface-color);
+}
+
+.grade-body > .grades {
+  display: flex;
+  max-height: 35vh;
+  gap: 0.5rem;
+  overflow: auto;
+  margin-top: 1rem;
+  flex-direction: column;
+}
+
+.grade-body > .grades > .grade {
+  display: flex;
+  flex-direction: row;
+  background-color: var(--secondary-surface-color);
+  gap: 0.5rem;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+}
+
+.grades > .grade .asignatura {
+  font-size: 14px;
+  font-weight: 500;
+  user-select: none;
+  color: var(--on-surface-color-dim);
+}
+
+.grades > .grade .calificacion {
+  font-size: 18px;
+  font-weight: 900;
+  color: var(--primary-color);
+  user-select: none;
+}
+
+.grades > .grade > .delete-grade {
+  margin-left: auto;
+  height: 2rem;
+  width: 2rem;
+  background-color: transparent;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  color: var(--on-surface-color);
+  border-radius: 0.5rem;
+  transition: all 150ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+.grades > .grade > .delete-grade:hover {
+  background-color: var(--error-color);
+  color: var(--on-error-color);
+}
+
+.grade-footer {
+  padding: 1rem;
+  margin-top: 1rem;
+  display: flex;
+  opacity: 0;
+}
+
+.grade-footer > button {
+  margin: auto;
 }

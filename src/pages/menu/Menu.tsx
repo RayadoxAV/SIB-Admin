@@ -28,17 +28,17 @@ const Menu: React.FC = () => {
   return (
     <div className='menu'>
       <div className='menu-header'>
-        <Clock className="fade-in-up" />
+        <Clock className='fade-in-up' />
         <span className='header fade-in-up'>Bienvenido</span>
         <button className='log-out' onClick={handleLogout}><i className='fa-solid fa-sign-out'></i></button>
       </div>
       <div className='item-container'>
-        <MenuItem className="scale-in" text="Acciones" icon="fa-diagram-successor" route="/" />
-        <MenuItem className="scale-in delay-1" text="Estudiantes" icon="fa-graduation-cap" route="/students" />
-        <MenuItem className="scale-in delay-3" text="Usuarios" icon="fa-users" route="/users" />
-        <MenuItem className="scale-in delay-5" text="Estudios socioeconómicos" icon="fa-dollar-sign" route="/studies" />
-        <MenuItem className="scale-in delay-7" text="Reportes" icon="fa-chart-line" route="" />
-        <MenuItem className="scale-in delay-9" text="Configuración" icon="fa-gears" route="/settings" />
+        <MenuItem className='scale-in' text='Controles' icon='fa-folder-tree' route='/' />
+        <MenuItem className='scale-in delay-1' text='Estudiantes' icon='fa-graduation-cap' route='/students' />
+        <MenuItem className='scale-in delay-3' text='Usuarios' icon='fa-users' route='/users' />
+        <MenuItem className='scale-in delay-5' text='Acciones' icon='fa-diagram-successor' route='/studies' />
+        <MenuItem className='scale-in delay-7' text='Reportes' icon='fa-chart-line' route='' />
+        <MenuItem className='scale-in delay-9' text='Configuración' icon='fa-gears' route='/settings' />
       </div>
     </div>
   );

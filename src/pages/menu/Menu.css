@@ -21,14 +21,14 @@
   top: 1rem;
   left: 1rem;
   line-height: 14px;
-  color: var(--text-color);
+  color: var(--on-surface-color);
   opacity: 0;
   letter-spacing: -0.5px;
 }
 
 .menu-header .header {
   margin: 2rem auto 2rem auto;
-  color: var(--text-color);
+  color: var(--on-surface-color);
 }
 
 .menu-header .log-out {
@@ -55,7 +55,6 @@
 .menu-header .log-out:active {
   background-color: var(--surface-active-color);
 }
-
 
 .menu .item-container {
   display: grid;
@@ -89,6 +88,7 @@
 .menu-item .icon {
   font-size: 3rem;
   transition: all 150ms ease;
+  color: var(--on-surface-color-dimmer);
 }
 
 .menu-item:hover .icon {
@@ -102,6 +102,7 @@
   width: 100%;
   align-items: center;
   margin-top: 1rem;
+  color: var(--on-surface-color);
 }
 
 .menu-item .information .title {

@@ -13,20 +13,16 @@
           "name": "selectedTheme",
           "displayName": "Tema",
           "description": "El tema de colores para mostrar la aplicación.",
-          "value": "base-theme",
+          "value": "default",
           "type": "list",
           "possibleValues": [
             {
-              "displayName": "Medio",
-              "value": "base-theme"
+              "displayName": "Por defecto",
+              "value": "default"
             },
             {
-              "displayName": "Papel",
-              "value": "paper-like"
-            },
-            {
-              "displayName": "Colorido",
-              "value": "colorful"
+              "displayName": "Por defecto (Oscuro)",
+              "value": "default-dark"
             }
           ]
         }

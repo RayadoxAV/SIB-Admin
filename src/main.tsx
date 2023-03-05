@@ -4,25 +4,28 @@ import App from "./App";
 
 import "./style.css";
 import './assets/styles/font.css';
-import './assets/themes/base-theme.css';
 import './assets/animations/animations.css';
 
 import { invoke } from "@tauri-apps/api";
 import { emit, listen } from "@tauri-apps/api/event";
 
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import Login from "./pages/login/Login";
+
 import { AppContextProvider } from "./State";
+import { GlobalSettings } from "./util/util";
+
+import Login from "./pages/login/Login";
 import Menu from "./pages/menu/Menu";
 import Students from "./pages/students/Students";
 import TitleBar from "./components/title-bar/TitleBar";
 import Student from "./pages/students/Student";
 import Users from "./pages/users/Users";
 import Settings from "./pages/settings/Settings";
-import { GlobalSettings } from "./util/util";
 import AddUser from "./pages/users/AddUser";
 import Test from "./pages/test/Test";
 import AddInformation from "./pages/students/add-information/AddInformation";
+import AddStudent from "./pages/students/AddStudent";
+import Header from "./components/Header/Header";
 
 // emit('settings-loaded', { message: 'holli' });
 // for (let i = 0; i < 10000; i++) {
@@ -30,7 +33,9 @@ import AddInformation from "./pages/students/add-information/AddInformation";
 // }
 
 declare global {
-  var settings: GlobalSettings
+  var settings: GlobalSettings;
+  var getSettingValue: Function;
+  var setSettingValue: Function;
 };
 
 // document.addEventListener('DOMContentLoaded', async () => {
@@ -63,7 +68,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/add-student',
-        element: <div>hola</div>
+        element: <AddStudent />
       },
       {
         path: '/users',

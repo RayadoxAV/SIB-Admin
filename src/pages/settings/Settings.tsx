@@ -2,9 +2,10 @@ import React, { useContext, useEffect, useState, ReactElement } from 'react';
 import { Navigate } from 'react-router-dom';
 import ReactSelect from 'react-select';
 import Clock from '../../components/Clock/Clock';
+import Header from '../../components/Header/Header';
 import { useDate } from '../../hooks/useDate';
 import { AppContext } from '../../State';
-import { SettingObject, SettingsCategory, SettingValueType } from '../../util/util';
+import { GlobalSettings, parseBoolean, SettingObject, SettingsCategory, SettingValueType } from '../../util/util';
 
 import './Settings.css';
 
@@ -29,7 +30,33 @@ const Settings: React.FC = () => {
     setSelectedCategory(tempCategory);
   }
 
-  function getSettingInput(setting: SettingObject) {
+  function handleChange(value: any, changedSetting: SettingObject, categoryName: string) {
+    const tempSettings = {...appContext.settings as GlobalSettings};
+    const categories = tempSettings.categories;
+    const settingName = changedSetting.name;
+
+    for (let i = 0; i < categories.length; i++) {
+      const category = categories[i];
+
+      if (category.name === categoryName) {
+        for (let j = 0; j < category.settings.length; j++) {
+          const setting = category.settings[j];
+          if (setting.name === settingName) {
+            setting.value = value;
+            dispatch({ type: 'setChangedSetting', changedSetting: { settingName: `${categoryName}.${settingName}`, value: setting.value } });
+            dispatch({ type: 'setSettings', settings: tempSettings });
+
+            break;
+          }
+        }
+        break;
+      }
+    }
+
+    // dispatch()
+  }
+
+  function getSettingInput(categoryName: string, setting: SettingObject) {
     let input: ReactElement;
 
     switch (setting.type) {
@@ -47,7 +74,7 @@ const Settings: React.FC = () => {
 
         input =
           (
-            <select className='select-input' name={setting.name} id={setting.name} defaultValue={setting.value}>
+            <select className='select-input' name={setting.name} id={setting.name} defaultValue={setting.value} onChange={(event) => { handleChange(event.target.value, setting, categoryName); }}>
               {options}
             </select>
           );
@@ -57,7 +84,7 @@ const Settings: React.FC = () => {
       case SettingValueType.Boolean: {
         input =
         (
-          <select className='select-input' name={setting.name} id={setting.name} defaultValue={setting.value}>
+          <select className='select-input' name={setting.name} id={setting.name} defaultValue={setting.value} onChange={(event) => { handleChange(parseBoolean(event.target.value), setting, categoryName); }}>
             <option value="true">Activado</option>
             <option value="false">Desactivado</option>
           </select>
@@ -81,14 +108,10 @@ const Settings: React.FC = () => {
 
   return (
     <div className='container'>
-      <div className='c-header'>
-        <button className='back-button fade-in-right' onClick={handleClick}>
-          <i className='fa-solid fa-arrow-left'></i>
-        </button>
-        <Clock className='fade-in-right delay-3' />
-        <span className='title fade-in-right delay-3'>Configuración</span>
-      </div>
-      <div className='c-body'>
+      <Header 
+        title='Configuraciones'
+        backButtonRoute='/'/>
+      <div className='c-body spaced'>
         <div className='settings-container'>
           <div className='categories'>
             {appContext.settings.categories.map((category: SettingsCategory, index: number) => (
@@ -109,7 +132,7 @@ const Settings: React.FC = () => {
                       <div className='setting' key={`setting-${index}`}>
                         <span className='setting-name'>{setting.displayName}</span>
                         <span className='setting-description info-text' style={{ marginBottom: '0.5rem' }}>{setting.description}</span>
-                        {getSettingInput(setting)}
+                        {getSettingInput(selectedCategory.name, setting)}
                       </div>
                     ))}
                   </>
