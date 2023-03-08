@@ -12,7 +12,7 @@ interface TitleBarProps {
 const TitleBar: React.FC<TitleBarProps> = ({ title }) => {
 
   const [state, _] = useContext(AppContext);
-  const [maximized, setMaximized] = useState(true);
+  const [maximized, setMaximized] = useState(false);
 
   function handleMinimize() {
     appWindow.minimize();

@@ -1,0 +1,51 @@
+:root {
+  --primary-color: #3075E4;
+  --primary-hover-color: #3779e4;
+  --primary-active-color: #1765e4;
+
+  --surface-color: #000000;
+  --surface-hover-color: #1D1D1D;
+  --surface-active-color: #3A3A3A;
+
+  --secondary-surface-color: #101010;
+  --secondary-surface-hover-color: #1D1D1D;
+  --secondary-surface-active-color: #2A2A2A;
+
+  --tertiary-surface-color: #202023;
+  --tertiary-surface-hover-color: #2d2d31;
+  --tertiary-surface-active-color: #19191c;
+
+  --on-surface-color: #EEEEEE;
+  --on-surface-color-dim: #CCCCCC;
+  --on-surface-color-dimmer: #AAAAAA;
+
+  --on-primary-color: #FFFFFF;
+  --on-tertiary-color: #878794;
+
+  --success-color: #58e77b;
+
+  --warning-color: #ffb347;
+
+  --error-color: #ff3b48;
+
+  --on-success-color: #16803a;
+
+  --on-warning-color: #8b4800;
+
+  --on-error-color: #ffe6e9;
+
+  /* Specific colors */
+
+  /* Input */
+  --input-background-color: #101010;
+  --input-focus-background-color: #1F1F1F;
+
+  /* Misc */
+  --close-button-color: #E81123;
+  --on-close-button-color: #FFFFFF;
+
+  --window-border-color: #000000;
+
+  --elevation-level-0: none;
+  --elevation-level-1: 0px 0px 30px 1px rgb(58, 58, 58, 0.2);
+}

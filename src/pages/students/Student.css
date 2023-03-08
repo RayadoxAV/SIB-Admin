@@ -1,5 +1,5 @@
 .c-body > div > div > .name {
-  font-size: 2rem;
+  font-size: 32px;
   font-weight: 900;
   color: var(--on-surface-color);
   opacity: 0;

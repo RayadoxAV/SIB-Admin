@@ -10,8 +10,9 @@ import { useDate } from '../../hooks/useDate';
 import { AppContext } from '../../State';
 
 import './Student.css';
-import { formatDate } from '../../util/util';
+import { formatDate, formatoEscolaridad, formatoEstadoCivil, format } from '../../util/util';
 import Header from '../../components/Header/Header';
+import { printStudent } from '../../util/printing';
 
 const Student: React.FC = () => {
 
@@ -71,66 +72,6 @@ const Student: React.FC = () => {
     setRedirect(true);
   }
 
-  function format(type: any): string {
-    switch (type) {
-      case 'pequena':
-        return 'Pequeña';
-      case 'numerosa':
-        return 'Numerosa';
-      case 'mixta':
-        return 'Mixta';
-      case 'integrada':
-        return 'Integrada';
-      case 'desintegrada':
-        return 'Desintegrada';
-      case 'ladrillo':
-        return 'Ladrillo';
-      case 'adobe':
-        return 'Adobe';
-      case 'block':
-        return 'Block';
-      case 'madera':
-        return 'Madera';
-      case 'propia':
-        return 'Propia';
-      case 'rentada':
-        return 'Rentada';
-      case 'prestada':
-        return 'Prestada';
-      case 'pagandose':
-        return 'Pagándose';
-    }
-
-    return '';
-  }
-
-  function formatoEstadoCivil(estadoCivil: string): string {
-    switch (estadoCivil) {
-      case '0':
-        return 'Soltero(a)';
-      case '1':
-        return 'Casado(a)';
-      case '2':
-        return 'Unión libre';
-    }
-    return '';
-  }
-  function formatoEscolaridad(escolaridad: string): string {
-    switch (escolaridad) {
-      case '0':
-        return 'Primaria';
-      case '1':
-        return 'Secundaria';
-      case '2':
-        return 'Bachillerato';
-      case '3':
-        return 'Licenciatura';
-      case '4':
-        return 'Posgrado';
-    }
-    return '';
-  }
-
   function addInformationOption(index: number) {
     switch (index) {
       case 0: {
@@ -155,7 +96,9 @@ const Student: React.FC = () => {
   }
 
   function print() {
-    window.print();
+    // console.log('Generate page and print');
+    printStudent(student, documents);
+    // window.print();
   }
 
   if (redirect) {
@@ -182,7 +125,6 @@ const Student: React.FC = () => {
       </div>
     );
   }
-
 
   return (
     <>

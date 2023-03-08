@@ -17,7 +17,7 @@ export function applySetting(setting: { settingName: string, value: any }) {
 function changeTheme(newTheme: string) {
   document.getElementById('theme')?.remove();
   const link =
-  `<link id="theme" rel="stylesheet" href="./src/assets/themes/${newTheme}.css">`;
+  `<link id="theme" rel="stylesheet" href="/themes/${newTheme}.css">`;
   document.head.insertAdjacentHTML('beforeend', link);
 }
 

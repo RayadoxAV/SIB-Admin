@@ -66,7 +66,7 @@ const Table: React.FC<TableProps> =
 
     useEffect(() => {
       generatePages();
-    }, [searchRows]);
+    }, [searchRows, pageSize]);
 
     function handleSelection(checked: boolean, index: number) {
       const tempSelectedRows = selectedRows;

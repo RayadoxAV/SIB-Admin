@@ -89,7 +89,7 @@
       function applyTheme() {
         const theme = globalThis.getSettingValue('appearance.selectedTheme');
         const link = 
-        `<link id="theme" rel="stylesheet" href="./src/assets/themes/${theme}.css">`;
+        `<link id="theme" rel="stylesheet" href="/themes/${theme}.css">`;
         document.head.insertAdjacentHTML('beforeend', link);
       }
 

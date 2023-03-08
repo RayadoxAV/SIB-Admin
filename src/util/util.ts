@@ -1,4 +1,68 @@
+
 export const SERVER_IP = 'http://localhost:3000';
+
+
+export function format(type: any): string {
+  switch (type) {
+    case 'pequena':
+      return 'Pequeña';
+    case 'numerosa':
+      return 'Numerosa';
+    case 'mixta':
+      return 'Mixta';
+    case 'integrada':
+      return 'Integrada';
+    case 'desintegrada':
+      return 'Desintegrada';
+    case 'ladrillo':
+      return 'Ladrillo';
+    case 'adobe':
+      return 'Adobe';
+    case 'block':
+      return 'Block';
+    case 'madera':
+      return 'Madera';
+    case 'propia':
+      return 'Propia';
+    case 'rentada':
+      return 'Rentada';
+    case 'prestada':
+      return 'Prestada';
+    case 'pagandose':
+      return 'Pagándose';
+  }
+
+  return '';
+}
+
+
+export function formatoEstadoCivil(estadoCivil: string): string {
+  switch (estadoCivil) {
+    case '0':
+      return 'Soltero(a)';
+    case '1':
+      return 'Casado(a)';
+    case '2':
+      return 'Unión libre';
+  }
+  return '';
+}
+
+export function formatoEscolaridad(escolaridad: string): string {
+  switch (escolaridad) {
+    case '0':
+      return 'Primaria';
+    case '1':
+      return 'Secundaria';
+    case '2':
+      return 'Bachillerato';
+    case '3':
+      return 'Licenciatura';
+    case '4':
+      return 'Posgrado';
+  }
+  return '';
+}
 
 export function formatDate(unformattedDate: string): string {
   const splitDate = unformattedDate.split('T')[0].split('-');

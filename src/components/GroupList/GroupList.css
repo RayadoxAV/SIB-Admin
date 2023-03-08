@@ -1,0 +1,87 @@
+.group-list-container {
+  display: flex;
+  flex-direction: row;
+  align-items: start;
+}
+
+.group-list-container > .filter {
+  margin: 1rem;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  align-items: center;
+  background-color: var(--surface-color);
+  display: flex;
+  width: 30%;
+  border: 2px solid var(--window-border-color);
+}
+
+.group-list-container > .filter > .input-column {
+  width: 33%;
+}
+
+.group-list-container > .list {
+  margin: 1rem 1rem 1rem 0rem;
+  height: 100%;
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+}
+
+.group-list-container > .list > .list-header {
+  display: flex;
+  flex-direction: column;
+}
+
+.group-list-container > .list > .list-header > .list-head {
+  display: flex;
+  align-items: center;
+}
+
+.list-head > .title {
+  font-weight: 900;
+  font-size: 28px;
+  user-select: none;
+}
+
+.list-head > .date {
+  margin-left: auto;
+  margin-right: 1rem;
+  font-size: 15px;
+  font-weight: 600;
+  user-select: none;
+}
+
+.list-header > .grado-grupo {
+  font-weight: 600;
+  user-select: none;
+}
+
+.group-list-container > .list > .list-body {
+  margin-top: 0.5rem;
+  overflow: auto;
+  max-height: 66vh;
+}
+
+.group-list-container > .list > .list-body > .list-item {
+  user-select: none;
+  font-size: 15px;
+  height: 1.5rem;
+  align-items: center;
+  display: flex;
+  gap: 0.25rem;
+}
+
+.group-list-container > .list > .list-body > .list-item > .number {
+  width: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.group-list-container > .list > .list-body > .list-item > .matricula {
+  width: 4.5rem;
+  font-size: 14px;
+  font-weight: 600;
+}

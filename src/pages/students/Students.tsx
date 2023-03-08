@@ -8,6 +8,8 @@ import { SERVER_IP } from '../../util/util';
 
 import { AppContext } from '../../State';
 import Header from '../../components/Header/Header';
+import TabPanel from '../../components/TabPanel/TabPanel';
+import GroupList from '../../components/GroupList/GroupList';
 
 const headers = [
   {
@@ -144,30 +146,46 @@ const Students: React.FC = () => {
 
   return (
     <div className='container'>
-      <Header 
+      <Header
         title='Estudiantes'
         backButtonRoute='/' />
       <div className='c-body'>
-        {
-          loading ?
-            (
-              <div style={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-                <LoadingIndicator />
-              </div>
-            ) :
-            (
-              <Table
-                headers={headers}
-                data={students}
-                informationRoute='/student'
-                searchable={true}
-                clickable={true}
-                selectable={true}
-                editable={true}
-                searchParams={['nombre', 'matricula', 'CURP', 'grado:', 'grupo:', 'estado:']}
-                addUrl='/add-student' />
-            )
-        }
+        <TabPanel
+          tabs={['Concentrado', 'Listas', 'Otros']}>
+          {
+            loading ?
+              (
+                <div style={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                  <LoadingIndicator />
+                </div>
+              ) :
+              (
+                <Table
+                  headers={headers}
+                  data={students}
+                  informationRoute='/student'
+                  searchable={true}
+                  clickable={true}
+                  selectable={true}
+                  editable={true}
+                  pageSize={8}
+                  searchParams={['nombre', 'matricula', 'CURP', 'grado:', 'grupo:', 'estado:']}
+                  addUrl='/add-student' />
+              )
+          }
+          {
+            loading ?
+              (
+                <div style={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                  <LoadingIndicator />
+                </div>
+              ) :
+              (
+                <GroupList />
+              )
+          }
+        </TabPanel>
+
       </div>
       <div className='c-footer'></div>
     </div>

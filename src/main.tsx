@@ -47,6 +47,9 @@ declare global {
 //   // emit('lola', 'ano');
 // });
 
+window.addEventListener('beforeprint', (event) => {
+  event.preventDefault();
+})
 
 const router = createBrowserRouter([
   {
