@@ -23,6 +23,7 @@ function App() {
   const [redirectError, setRedirectError] = useState(false);
   const [redirect, setRedirect] = useState(false);
 
+  // Función para agregar una clase al header cuando se hace scroll
   function handleScroll(event: any) {
     if (event.target.scrollTop > 20) {
       document.getElementsByClassName('c-header')[0]?.classList.add('scrolled');
@@ -33,11 +34,14 @@ function App() {
 
   useEffect(() => {
 
+    // Si no existen las configuraciones, cargarlas en el state a partir del globalThis
     if (!appContext.settings.categories) {
       dispatch({ type: 'setSettings', settings: globalThis.settings });
     }
 
     setLoading(true);
+
+    // Validar el token del usuario para confirmar su identidad de ser necesario
     if (localStorage.getItem('token')) {
       const token = localStorage.getItem('token');
       const requestOptions = {
@@ -53,13 +57,14 @@ function App() {
         setLoading(false);
         if (response) {
           if (!response.isTokenValid) {
+            // Redirigir al login
             setRedirect(true);
           } else {
             appWindow.setResizable(true);
           }
         }
       }).catch((error) => {
-        console.log(error);
+        // Redirigir a la pantalla que indica que no hay un servidor disponible
         setLoading(false);
         setRedirectError(true);
       });
@@ -67,6 +72,7 @@ function App() {
     }
   }, []);
 
+  // Aplicar las configuraciones reaccionando al cambio de estado de las configuraciones
   useEffect(() => {
     if (appContext.changedSetting.settingName) {
       const changedSetting = appContext.changedSetting;
@@ -99,7 +105,6 @@ function App() {
 
   if (loading) {
     return (
-      // 
       <div className='App'>
         <TitleBar title={'SI'} />
         <div className='main-container'>

@@ -73,7 +73,7 @@ const Students: React.FC = () => {
         }
       };
 
-      fetch(`${SERVER_IP}/students`, requestOptions).then((res) => (res.json()).then((response) => {
+      fetch(`${SERVER_IP}/students`, requestOptions).then((res) => (res.json())).then((response) => {
         if (response.queryStatusCode === 0) {
           const queryStudents = response.result;
 
@@ -126,7 +126,7 @@ const Students: React.FC = () => {
         } else if (response.queryStatusCode === 1) {
           console.log('manejar error');
         }
-      })).catch((error) => {
+      }).catch((error) => {
         console.log('manejar el error');
       });
     } else {
@@ -151,7 +151,7 @@ const Students: React.FC = () => {
         backButtonRoute='/' />
       <div className='c-body'>
         <TabPanel
-          tabs={['Concentrado', 'Listas', 'Otros']}>
+          tabs={['Concentrado', 'Listas']}>
           {
             loading ?
               (

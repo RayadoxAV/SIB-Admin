@@ -12,32 +12,24 @@
 
 <body>
   <div id="root"></div>
-  <!-- <script>
-    String.prototype.reverse = function () {
-      const string = this;
-      let newString = '';
-
-      const splitString = this.split('');
-
-      for (let i = splitString.length - 1; i >= 0; i--) {
-        newString += splitString[i];
-      }
-      return newString;
-    }
-  </script> -->
   <script type="module">
     import { invoke } from "@tauri-apps/api";
 
+    // Cargar las configuraciones obtenidas del archivo de configuraciones y cargarlas en el objeto global
     invoke('load_settings').then((settingsString) => {
       globalThis.settings = JSON.parse(settingsString);
       globalThis.getSettingValue = getSettingValue;
       globalThis.setSetting = setSetting;
 
+      // Aplicar las configuraciones iniciales 
       applyInitialSettings();
+
+      // Cerrar la pantalla de splash
       invoke('close_splashscreen');
     });
 
     function getSettingValue(name) {
+      // Iterar sobre las categorias y posteriormente las configuraciones para obtener el valor de la configuración deseada y cambiar su valor
       const categories = globalThis.settings.categories;
 
       const [categoryName, settingName] = name.split('.');
@@ -62,6 +54,7 @@
     }
 
     function setSetting(key, value) {
+      // Iterar sobre las categorias y posteriormente las configuraciones para obtener la configuración deseada y cambiar su valor
       const categories = globalThis.settings.categories;
 
       const [categoryName, settingName] = key.split('.');
@@ -86,7 +79,9 @@
 
       applyTheme();
 
+      // Aplicar un tema de estilo
       function applyTheme() {
+        // Obtener el tema y generar el elemento <link /> para insertarlo al final del <head /> del documento
         const theme = globalThis.getSettingValue('appearance.selectedTheme');
         const link = 
         `<link id="theme" rel="stylesheet" href="/themes/${theme}.css">`;

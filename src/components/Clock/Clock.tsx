@@ -5,6 +5,7 @@ interface ClockProps {
   className?: string;
 };
 
+// Componente que usa el hook personalizado `useTime` para mostrar la hora en tiempo real
 const Clock: React.FC<ClockProps> = ({ className }) => {
   const date = useTime();
 

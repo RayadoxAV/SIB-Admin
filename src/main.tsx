@@ -25,41 +25,29 @@ import AddUser from "./pages/users/AddUser";
 import Test from "./pages/test/Test";
 import AddInformation from "./pages/students/add-information/AddInformation";
 import AddStudent from "./pages/students/AddStudent";
-import Header from "./components/Header/Header";
+import Controls from "./pages/controls/Controls";
 
-// emit('settings-loaded', { message: 'holli' });
-// for (let i = 0; i < 10000; i++) {
-//   console.log('a');
-// }
-
+// Declarar variables globales para las configuraciones iniciales
 declare global {
   var settings: GlobalSettings;
   var getSettingValue: Function;
   var setSettingValue: Function;
 };
 
-// document.addEventListener('DOMContentLoaded', async () => {
-//   // invoke('close_splashscreen');
-//   // invoke('funcion');
-//   const unlisten = await listen('loaded-students', (event) => {
-//     console.log(event);
-//   });
-//   // emit('lola', 'ano');
-// });
-
-window.addEventListener('beforeprint', (event) => {
-  event.preventDefault();
-})
-
+// Crear las rutas de la aplicación
 const router = createBrowserRouter([
   {
     path: '/',
     element: <App />,
-    errorElement: <div>valio madres</div>,
+    errorElement: <div style={{ backgroundColor: 'red' }}>valio madres</div>,
     children: [
       {
         path: '/',
         element: <Menu />
+      },
+      {
+        path: '/controls',
+        element: <Controls />
       },
       {
         path: '/students',
@@ -107,8 +95,10 @@ const router = createBrowserRouter([
   }
 ]);
 
+// Inicializar React en modo estricto con el ContextProvider para tener acceso al State global
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <AppContextProvider>
+    {/* TODO: Quitar el StrictMode aunque el build lo quita de manera automática */}
     <React.StrictMode>
       <RouterProvider router={router} />
     </React.StrictMode>

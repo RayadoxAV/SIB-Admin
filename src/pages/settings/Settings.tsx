@@ -1,9 +1,6 @@
 import React, { useContext, useEffect, useState, ReactElement } from 'react';
 import { Navigate } from 'react-router-dom';
-import ReactSelect from 'react-select';
-import Clock from '../../components/Clock/Clock';
 import Header from '../../components/Header/Header';
-import { useDate } from '../../hooks/useDate';
 import { AppContext } from '../../State';
 import { GlobalSettings, parseBoolean, SettingObject, SettingsCategory, SettingValueType } from '../../util/util';
 
@@ -31,7 +28,7 @@ const Settings: React.FC = () => {
   }
 
   function handleChange(value: any, changedSetting: SettingObject, categoryName: string) {
-    const tempSettings = {...appContext.settings as GlobalSettings};
+    const tempSettings = { ...appContext.settings as GlobalSettings };
     const categories = tempSettings.categories;
     const settingName = changedSetting.name;
 
@@ -83,12 +80,12 @@ const Settings: React.FC = () => {
 
       case SettingValueType.Boolean: {
         input =
-        (
-          <select className='select-input' name={setting.name} id={setting.name} defaultValue={setting.value} onChange={(event) => { handleChange(parseBoolean(event.target.value), setting, categoryName); }}>
-            <option value="true">Activado</option>
-            <option value="false">Desactivado</option>
-          </select>
-        );
+          (
+            <select className='select-input' name={setting.name} id={setting.name} defaultValue={setting.value} onChange={(event) => { handleChange(parseBoolean(event.target.value), setting, categoryName); }}>
+              <option value="true">Activado</option>
+              <option value="false">Desactivado</option>
+            </select>
+          );
         break;
       }
       default: {
@@ -108,12 +105,20 @@ const Settings: React.FC = () => {
 
   return (
     <div className='container'>
-      <Header 
+      <Header
         title='Configuraciones'
-        backButtonRoute='/'/>
+        backButtonRoute='/' />
       <div className='c-body spaced'>
         <div className='settings-container'>
           <div className='categories'>
+            {appContext.settings.categories.map((category: SettingsCategory, index: number) => (
+              <button className={`setting-category fade-in-up delay-${(index + 1) * 2} ${selectedCategory === category ? 'active' : ''}`} key={index} onClick={() => { categorySelection(index); }}>
+                <i className={`fa-solid ${category.icon}`}></i>
+                <span className='setting-name'>{category.displayName}</span>
+              </button>
+            ))}
+          </div>
+          <div className='categories-small'>
             {appContext.settings.categories.map((category: SettingsCategory, index: number) => (
               <button className={`setting-category fade-in-up delay-${(index + 1) * 2} ${selectedCategory === category ? 'active' : ''}`} key={index} onClick={() => { categorySelection(index); }}>
                 <i className={`fa-solid ${category.icon}`}></i>

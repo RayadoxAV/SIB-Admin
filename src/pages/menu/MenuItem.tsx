@@ -12,6 +12,7 @@ interface MenuItemProps {
 const MenuItem: React.FC<MenuItemProps> = ({ text, icon, route, className }) => {
   const navigate = useNavigate();
 
+  // Navegar a la ruta especificada por el Menu
   function onClick() {
     if (route) {
       navigate(`${route}`);

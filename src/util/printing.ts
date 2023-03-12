@@ -10,7 +10,7 @@ export function printStudent(student: any, documents: any) {
 
     for (let i = 0; i < student.miembrosFamilia.length; i++) {
       const miembro = student.miembrosFamilia[i];
-      
+
 
       miembros.push(
         [
@@ -117,7 +117,7 @@ export function printStudent(student: any, documents: any) {
                 style: 'key'
               },
               {
-                text: `${Intl.NumberFormat('en-US').format(miembro.ingresoMiembro) }`,
+                text: `${Intl.NumberFormat('en-US').format(miembro.ingresoMiembro)}`,
                 alignment: 'right',
                 style: 'value'
               }
@@ -132,7 +132,7 @@ export function printStudent(student: any, documents: any) {
                 style: 'key'
               },
               {
-                text: `${Intl.NumberFormat('en-US').format(miembro.aporteMiembro) }`,
+                text: `${Intl.NumberFormat('en-US').format(miembro.aporteMiembro)}`,
                 alignment: 'right',
                 style: 'value'
               }
@@ -538,7 +538,7 @@ export function printStudent(student: any, documents: any) {
             style: 'key'
           },
           {
-            text: `$${Intl.NumberFormat('en-US').format(student.alimentacion) }`,
+            text: `$${Intl.NumberFormat('en-US').format(student.alimentacion)}`,
             alignment: 'right',
             style: 'value'
           }
@@ -553,7 +553,7 @@ export function printStudent(student: any, documents: any) {
             style: 'key'
           },
           {
-            text: `$${Intl.NumberFormat('en-US').format(student.medicamentos) }`,
+            text: `$${Intl.NumberFormat('en-US').format(student.medicamentos)}`,
             alignment: 'right',
             style: 'value'
           }
@@ -568,7 +568,7 @@ export function printStudent(student: any, documents: any) {
             style: 'key'
           },
           {
-            text: `$${Intl.NumberFormat('en-US').format(student.transporte) }`,
+            text: `$${Intl.NumberFormat('en-US').format(student.transporte)}`,
             alignment: 'right',
             style: 'value'
           }
@@ -583,7 +583,7 @@ export function printStudent(student: any, documents: any) {
             style: 'key'
           },
           {
-            text: `$${Intl.NumberFormat('en-US').format(student.gasolina) }`,
+            text: `$${Intl.NumberFormat('en-US').format(student.gasolina)}`,
             alignment: 'right',
             style: 'value'
           }
@@ -598,7 +598,7 @@ export function printStudent(student: any, documents: any) {
             style: 'key'
           },
           {
-            text: `$${Intl.NumberFormat('en-US').format(student.educacion) }`,
+            text: `$${Intl.NumberFormat('en-US').format(student.educacion)}`,
             alignment: 'right',
             style: 'value'
           }
@@ -613,7 +613,7 @@ export function printStudent(student: any, documents: any) {
             style: 'key'
           },
           {
-            text: `$${Intl.NumberFormat('en-US').format(student.abono) }`,
+            text: `$${Intl.NumberFormat('en-US').format(student.abono)}`,
             alignment: 'right',
             style: 'value'
           }
@@ -628,7 +628,7 @@ export function printStudent(student: any, documents: any) {
             style: 'key'
           },
           {
-            text: `$${Intl.NumberFormat('en-US').format(student.celulares) }`,
+            text: `$${Intl.NumberFormat('en-US').format(student.celulares)}`,
             alignment: 'right',
             style: 'value'
           }
@@ -643,7 +643,7 @@ export function printStudent(student: any, documents: any) {
             style: 'key'
           },
           {
-            text: `$${Intl.NumberFormat('en-US').format(student.servicioMedico) }`,
+            text: `$${Intl.NumberFormat('en-US').format(student.servicioMedico)}`,
             alignment: 'right',
             style: 'value'
           }
@@ -658,7 +658,7 @@ export function printStudent(student: any, documents: any) {
             style: 'key'
           },
           {
-            text: `$${Intl.NumberFormat('en-US').format(student.agua) }`,
+            text: `$${Intl.NumberFormat('en-US').format(student.agua)}`,
             alignment: 'right',
             style: 'value'
           }
@@ -673,7 +673,7 @@ export function printStudent(student: any, documents: any) {
             style: 'key'
           },
           {
-            text: `$${Intl.NumberFormat('en-US').format(student.gasCilindro) }`,
+            text: `$${Intl.NumberFormat('en-US').format(student.gasCilindro)}`,
             alignment: 'right',
             style: 'value'
           }
@@ -688,7 +688,7 @@ export function printStudent(student: any, documents: any) {
             style: 'key'
           },
           {
-            text: `$${Intl.NumberFormat('en-US').format(student.energiaElectrica) }`,
+            text: `$${Intl.NumberFormat('en-US').format(student.energiaElectrica)}`,
             alignment: 'right',
             style: 'value'
           }
@@ -703,7 +703,7 @@ export function printStudent(student: any, documents: any) {
             style: 'key'
           },
           {
-            text: `$${Intl.NumberFormat('en-US').format(student.telefonoInternet) }`,
+            text: `$${Intl.NumberFormat('en-US').format(student.telefonoInternet)}`,
             alignment: 'right',
             style: 'value'
           }
@@ -718,7 +718,7 @@ export function printStudent(student: any, documents: any) {
             style: 'key'
           },
           {
-            text: `$${Intl.NumberFormat('en-US').format(student.cable) }`,
+            text: `$${Intl.NumberFormat('en-US').format(student.cable)}`,
             alignment: 'right',
             style: 'value'
           }
@@ -733,7 +733,7 @@ export function printStudent(student: any, documents: any) {
             style: 'key'
           },
           {
-            text: `$${Intl.NumberFormat('en-US').format(student.otros) }`,
+            text: `$${Intl.NumberFormat('en-US').format(student.otros)}`,
             alignment: 'right',
             style: 'value'
           }
@@ -748,7 +748,7 @@ export function printStudent(student: any, documents: any) {
             style: 'key'
           },
           {
-            text: `$${Intl.NumberFormat('en-US').format(student.totalEgresos) }`,
+            text: `$${Intl.NumberFormat('en-US').format(student.totalEgresos)}`,
             alignment: 'right',
             style: 'value'
           }
@@ -768,7 +768,7 @@ export function printStudent(student: any, documents: any) {
             style: 'key'
           },
           {
-            text: `${format(student.materialVivienda) }`,
+            text: `${format(student.materialVivienda)}`,
             alignment: 'right',
             style: 'value'
           }
@@ -783,7 +783,7 @@ export function printStudent(student: any, documents: any) {
             style: 'key'
           },
           {
-            text: `${format(student.estadoVivienda) }`,
+            text: `${format(student.estadoVivienda)}`,
             alignment: 'right',
             style: 'value'
           }
@@ -797,15 +797,42 @@ export function printStudent(student: any, documents: any) {
           {
             text: '20/12/2023',
             alignment: 'left',
-            style: 'small'
+            style: 'small',
+            margin: [40, 0, 0, 0],
           },
           {
             text: `${currentPage} de ${pageCount}`,
             alignment: 'right',
-            style: 'small'
+            style: 'small',
+            margin: [0, 0, 40, 0],
           },
         ]
       };
+    },
+    header: {
+      columns: [
+        {
+          stack: [
+            {
+              text: 'Escuela secundaria Estatal 3024',
+              margin: [40, 16, 0, 0],
+              style: 'small',
+            },
+            {
+              text: 'Clave Federal 08EES0164 R',
+              margin: [40, 0, 0, 0],
+              style: 'small'
+            }
+          ],
+          alignment: 'left'
+        },
+        {
+          text: 'Ciclo escolar 2022 - 2023',
+          margin: [0, 16, 40, 0],
+          style: 'small',
+          alignment: 'right'
+        }
+      ]
     },
     styles: {
       title: {
@@ -850,6 +877,7 @@ export function printStudent(student: any, documents: any) {
 
   //@ts-ignore
   pdfMake.createPdf(docDefinition).print();
+
 }
 
 export function printList(students: any[], grado: string, grupo: string) {
@@ -921,6 +949,31 @@ export function printList(students: any[], grado: string, grupo: string) {
         }
       }
     ],
+    header: {
+      columns: [
+        {
+          stack: [
+            {
+              text: 'Escuela secundaria Estatal 3024',
+              margin: [40, 16, 0, 0],
+              style: 'small',
+            },
+            {
+              text: 'Clave Federal 08EES0164 R',
+              margin: [40, 0, 0, 0],
+              style: 'small'
+            }
+          ],
+          alignment: 'left'
+        },
+        {
+          text: 'Ciclo escolar 2022 - 2023',
+          margin: [0, 16, 40, 0],
+          style: 'small',
+          alignment: 'right'
+        }
+      ]
+    },
     footer: (currentPage: any, pageCount: any) => {
       return {
         columns: [

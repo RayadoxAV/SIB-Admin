@@ -1,5 +1,9 @@
+/* 
+  Hooks personalizados para mostrar horas y fechas de manera periódica
+*/
 import { useState, useEffect } from 'react';
 
+// Función que retorna un hook que actualiza la hora del día cada 5 segundos
 export function useTime(): string {
   const [date, setDate] = useState(new Date()); 
 
@@ -24,6 +28,7 @@ export function useTime(): string {
   return `${hoursString}:${minutesString}`;
 };
 
+// Función que retorna un hook que actualiza la fecha cada 15 minutos
 export function useDate(): string {
   const [date, setDate] = useState(new Date());
 

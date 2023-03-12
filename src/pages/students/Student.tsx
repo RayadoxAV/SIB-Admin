@@ -10,7 +10,7 @@ import { useDate } from '../../hooks/useDate';
 import { AppContext } from '../../State';
 
 import './Student.css';
-import { formatDate, formatoEscolaridad, formatoEstadoCivil, format } from '../../util/util';
+import { formatDate, formatoEscolaridad, formatoEstadoCivil, format, SERVER_IP } from '../../util/util';
 import Header from '../../components/Header/Header';
 import { printStudent } from '../../util/printing';
 
@@ -38,32 +38,132 @@ const Student: React.FC = () => {
   useEffect(() => {
     setLoading(true);
     dispatch({ type: 'setTitle', title: 'SI Estudiante' });
-    const students = appContext.students;
 
-    for (let i = 0; i < students.length; i++) {
-      const tempStudent = students[i];
+    if (appContext.students.length === 0) {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        setRedirectLogin(true);
+        return;
+      }
 
-      if (tempStudent.id == id) {
-        setStudent(tempStudent);
+      const requestOptions = {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': `Bearer ${token}`
+        }
+      };
 
-        const tempDocuments = [];
+      fetch(`${SERVER_IP}/students`, requestOptions).then((res) => (res.json())).then((response) => {
+        if (response.queryStatusCode === 0) {
+          const queryStudents = response.result;
 
-        const tempGrades = [];
+          for (let i = 0; i < queryStudents.length; i++) {
+            let student = queryStudents[i];
+            student.nombre = `${student.nombres} ${student.pApellido} ${student.sApellido}`;
+            const informacion = JSON.parse(student.informacion);
+            student = { ...student, ...informacion };
 
-        for (let j = 0; j < appContext.documents.length; j++) {
-          if (appContext.documents[i].idAlumno === tempStudent.id) {
-            tempDocuments.push(appContext.documents[j]);
+            queryStudents[i] = student;
+          }
+          dispatch({ type: 'setStudents', students: queryStudents });
 
-            if (appContext.documents[j].tipo === 1) {
-              tempGrades.push(...appContext.documents[j].informacion);
+          if (appContext.documents.length === 0) {
+            const documentsRequestOptions = {
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'Authorization': `Bearer ${token}`
+              }
+            };
+
+            fetch(`${SERVER_IP}/documents`, documentsRequestOptions).then((res) => (res.json()).then((response) => {
+              if (response.queryStatusCode === 0) {
+                const queryDocuments = response.result;
+
+                for (let i = 0; i < queryDocuments.length; i++) {
+                  let document = queryDocuments[i];
+                  const information = JSON.parse(document.informacion);
+                  document.informacion = information;
+
+                  queryDocuments[i] = document;
+                }
+
+                dispatch({ type: 'setDocuments', documents: queryDocuments });
+
+                const students = queryStudents;
+
+                for (let i = 0; i < students.length; i++) {
+                  const tempStudent = students[i];
+
+                  if (tempStudent.id == id) {
+                    setStudent(tempStudent);
+
+                    const tempDocuments = [];
+
+                    const tempGrades = [];
+
+                    for (let j = 0; j < queryDocuments.length; j++) {
+                      if (queryDocuments[i].idAlumno === tempStudent.id) {
+                        tempDocuments.push(queryDocuments[j]);
+
+                        if (queryDocuments[j].tipo === 1) {
+                          tempGrades.push(...queryDocuments[j].informacion);
+                        }
+                      }
+                    }
+
+                    setLoading(false);
+                    setDocuments(tempDocuments);
+                    setGrades(tempGrades);
+                    break;
+                  }
+                }
+
+                // setDocuments(queryDocuments);
+                setLoading(false);
+              } else if (response.queryStatusCode === 1) {
+                console.log('manejar el error');
+              }
+            }));
+          }
+        } else if (response.queryStatusCode === 1) {
+          console.log('Manejar el error');
+        }
+      }).catch((error) => {
+        console.log('Manejar el error peor');
+      });
+
+    } else {
+      const students = appContext.students;
+
+      for (let i = 0; i < students.length; i++) {
+        const tempStudent = students[i];
+
+        if (tempStudent.id == id) {
+          setStudent(tempStudent);
+
+          const tempDocuments = [];
+
+          const tempGrades = [];
+
+          for (let j = 0; j < appContext.documents.length; j++) {
+            if (appContext.documents[i].idAlumno === tempStudent.id) {
+              tempDocuments.push(appContext.documents[j]);
+
+              if (appContext.documents[j].tipo === 1) {
+                tempGrades.push(...appContext.documents[j].informacion);
+              }
             }
           }
-        }
 
-        setLoading(false);
-        setDocuments(tempDocuments);
-        setGrades(tempGrades);
-        break;
+          setLoading(false);
+          setDocuments(tempDocuments);
+          setGrades(tempGrades);
+          break;
+        }
       }
     }
   }, []);
