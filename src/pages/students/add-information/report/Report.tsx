@@ -8,8 +8,11 @@ import { useDate } from '../../../../hooks/useDate';
 import FormError from '../../../../components/form-error/FormError';
 import { selectStyle } from '../../../../util/reactSelectStyle';
 
+import { SERVER_IP } from '../../../../util/util';
+
 interface ReportProps {
   student: any;
+  onSuccess: Function
 };
 
 const reportPerformanceOptions = [
@@ -36,7 +39,7 @@ interface ReportValues {
   acuerdos: string;
 };
 
-const initialValues = {
+const initialValues: ReportValues = {
   motivoReporte: '',
   rendimientoAcademico: '1',
   cumplimientoTareas: '1',
@@ -70,23 +73,49 @@ const validationSchema = Yup.object({
   acuerdos: Yup.string().required('Escriba los acuerdos')
 });
 
-const Report: React.FC<ReportProps> = ({ student }) => {
+const Report: React.FC<ReportProps> = ({ student, onSuccess }) => {
 
   const date = useDate();
 
-  function handleSubmit() {
+  function handleSubmit(values: ReportValues, { resetForm }: any) {
+    const requestOptions = {
+      method: 'PUT',
+      body: JSON.stringify({
+        type: 0,
+        information: JSON.stringify({ ...values })
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
+    };
 
+    fetch(`${SERVER_IP}/students/add-information/${student.id}`, requestOptions).then((res) => res.json()).then((response) => {
+      if (response.requestStatus === 'ERROR') {
+        alert('Error al agregar la información. Inténtelo de nuevo más tarde.');
+        return;
+      }
+
+      if (response.updateStatusCode === 1) {
+        alert('Error al agregar la información. Datos inválidos.');
+        return;
+      }
+
+      resetForm();
+      onSuccess();
+    });
   }
 
   return (
     <div className='report'>
       <div className='report-header'>
         <div className='identification'>
-          <span className='name fade-in-up delay-3'>{student.nombre}</span>
+          <span className='name fade-in-up delay-3'>{student.nombres} {student.pApellido} {student.sApellido}</span>
           <span className='matricula fade-in-up delay-3'>Matrícula: {student.matricula}</span>
           <div className='grado-grupo fade-in-up delay-5'>
-            <span className='grado'>Grado: {student.grado}°</span>
-            <span className='grupo'>{student.grupo}</span>
+            <span className='grado'>Grado: {student.informacion.grado}°</span>
+            <span className='grupo'>{student.informacion.grupo}</span>
           </div>
         </div>
         <span className='date fade-in-up delay-3'>{date}</span>

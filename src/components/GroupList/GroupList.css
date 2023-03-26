@@ -8,15 +8,11 @@
   margin: 1rem;
   padding: 0.5rem;
   border-radius: 0.5rem;
-  align-items: center;
   background-color: var(--surface-color);
   display: flex;
+  justify-content: end;
+  flex-direction: column;
   width: 30%;
-  border: 2px solid var(--window-border-color);
-}
-
-.group-list-container > .filter > .input-column {
-  width: 33%;
 }
 
 .group-list-container > .list {

@@ -56,7 +56,6 @@ const Table: React.FC<TableProps> =
     const [rows, setRows] = useState([] as any);
     const [searchRows, setSearchRows] = useState([] as any);
     const [pages, setPages] = useState([] as any);
-    const [pageButtons, setPageButtons] = useState(undefined as any);
     const [currentPageIndex, setCurrentPageIndex] = useState(0);
 
     useEffect(() => {
@@ -113,6 +112,7 @@ const Table: React.FC<TableProps> =
       }
     }
 
+    // TODO: Fix nested search params
     function determineElegibility(dataRow: any, searchValue: string): boolean {
       let elegible = false;
       for (let i = 0; i < searchParams.length; i++) {
@@ -245,7 +245,12 @@ const Table: React.FC<TableProps> =
                   );
                 } else {
                   return (
-                    <td className='td' key={`${index}:${cellIndex}`}>{(dataRow[header.name] === undefined || dataRow[header.name] === '') ? '-' : dataRow[header.name]}</td>
+                    <td className='td' key={`${index}:${cellIndex}`}>
+                      {(dataRow[header.name] === undefined || dataRow[header.name] === '')
+                        ? header.nested ? 
+                          dataRow[header.parent][header.name] : '-'
+                        : dataRow[header.name]}
+                    </td>
                   );
                 }
               })

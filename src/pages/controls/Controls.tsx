@@ -10,7 +10,7 @@ const Controls: React.FC = () => {
         backButtonRoute='/' />
       <div className='c-body'>
         <TabPanel
-          tabs={['Becas alimenticias', 'Enfermos', 'Ver bien', 'Situación especial']}>
+          tabs={['Becas alimenticias', 'Control de enfermos', 'Ver bien para aprender mejor', 'Situación especial']}>
 
         </TabPanel>
       </div>

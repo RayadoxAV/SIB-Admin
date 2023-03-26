@@ -95,7 +95,6 @@ function App() {
   if (redirectError) {
     return (
       <div className='App'>
-        <TitleBar title={'SI Error'} />
         <div className='main-container'>
           <NoServerError />
         </div>
@@ -106,7 +105,6 @@ function App() {
   if (loading) {
     return (
       <div className='App'>
-        <TitleBar title={'SI'} />
         <div className='main-container'>
           <div style={{ backgroundColor: 'var(--surface-color)', borderRadius: '0.5rem', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             <LoadingIndicator />
@@ -118,7 +116,6 @@ function App() {
 
   return (
     <div className="App">
-      <TitleBar title={'SI'} />
       <div className='main-container' onScroll={handleScroll}>
         <Outlet />
       </div>

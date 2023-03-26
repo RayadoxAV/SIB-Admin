@@ -24,7 +24,7 @@ import Settings from "./pages/settings/Settings";
 import AddUser from "./pages/users/AddUser";
 import Test from "./pages/test/Test";
 import AddInformation from "./pages/students/add-information/AddInformation";
-import AddStudent from "./pages/students/AddStudent";
+import AddStudent from "./pages/students/add-student/AddStudent";
 import Controls from "./pages/controls/Controls";
 
 // Declarar variables globales para las configuraciones iniciales
@@ -75,6 +75,10 @@ const router = createBrowserRouter([
       },
       {
         path: '/studies',
+        element: <Test />
+      },
+      {
+        path: '/reports',
         element: <Test />
       },
       {

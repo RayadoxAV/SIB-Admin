@@ -57,15 +57,13 @@
         "fullscreen": false,
         "center": true,
         "focus": true,
-        "decorations": false,
         "resizable": true,
         "title": "SI",
         "height": 600,
         "width": 800,
         "minHeight": 400,
         "minWidth": 450,
-        "visible": false,
-        "transparent": true
+        "visible": false
       },
       {
         "width": 500,

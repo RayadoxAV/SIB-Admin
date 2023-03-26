@@ -2,11 +2,15 @@ import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { format, formatDate, formatoEscolaridad, formatoEstadoCivil } from './util';
 
-export function printStudent(student: any, documents: any) {
+/* export function printStudent(student: any, documents: any) {
 
 
   function generateFamily() {
     const miembros = [];
+
+    if (!student.informacion.estudioSoc) {
+      return [];
+    }
 
     for (let i = 0; i < student.miembrosFamilia.length; i++) {
       const miembro = student.miembrosFamilia[i];
@@ -117,7 +121,7 @@ export function printStudent(student: any, documents: any) {
                 style: 'key'
               },
               {
-                text: `${Intl.NumberFormat('en-US').format(miembro.ingresoMiembro)}`,
+                text: `$${Intl.NumberFormat('en-US').format(miembro.ingresoMiembro)}`,
                 alignment: 'right',
                 style: 'value'
               }
@@ -132,7 +136,7 @@ export function printStudent(student: any, documents: any) {
                 style: 'key'
               },
               {
-                text: `${Intl.NumberFormat('en-US').format(miembro.aporteMiembro)}`,
+                text: `$${Intl.NumberFormat('en-US').format(miembro.aporteMiembro)}`,
                 alignment: 'right',
                 style: 'value'
               }
@@ -483,7 +487,7 @@ export function printStudent(student: any, documents: any) {
             style: 'key'
           },
           {
-            text: `${student.miembrosFamilia.length + 1} miembros`,
+            text: `${student.miembrosFamilia.length || + 1} miembros`,
             alignment: 'right',
             style: 'value'
           },
@@ -879,7 +883,7 @@ export function printStudent(student: any, documents: any) {
   pdfMake.createPdf(docDefinition).print();
 
 }
-
+ */
 export function printList(students: any[], grado: string, grupo: string) {
 
   students.sort((a, b) => {
@@ -939,11 +943,6 @@ export function printList(students: any[], grado: string, grupo: string) {
               { text: 'Matrícula', style: 'tableHeader' },
               { text: 'Nombre', style: 'tableHeader' },
             ],
-            [
-              { text: '1', style: 'tableItemBold' },
-              { text: '00000000', style: 'tableItemBold' },
-              { text: 'Paz Valverde Raymundo', style: 'tableItem' }
-            ],
             ...generateStudentRows()
           ]
         }
@@ -979,12 +978,14 @@ export function printList(students: any[], grado: string, grupo: string) {
         columns: [
           {
             text: '20/12/2023',
+            margin: [40, 0, 0, 0],
             alignment: 'left',
-            style: 'small'
+            style: 'small',
           },
           {
             text: `${currentPage} de ${pageCount}`,
             alignment: 'right',
+            margin: [0, 0, 40, 0],
             style: 'small'
           },
         ]
@@ -1023,5 +1024,9 @@ export function printList(students: any[], grado: string, grupo: string) {
 
   //@ts-ignore
   pdfMake.createPdf(docDefinition).print();
+
+}
+
+export function printStudent(student: any, documents: any) {
 
 }

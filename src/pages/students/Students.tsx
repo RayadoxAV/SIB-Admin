@@ -30,11 +30,15 @@ const headers = [
   },
   {
     name: 'grado',
-    displayName: 'Grado'
+    displayName: 'Grado',
+    nested: true,
+    parent: 'informacion'
   },
   {
     name: 'grupo',
-    displayName: 'grupo'
+    displayName: 'grupo',
+    nested: true,
+    parent: 'informacion'
   },
   {
     name: 'estado',
@@ -78,13 +82,11 @@ const Students: React.FC = () => {
           const queryStudents = response.result;
 
           for (let i = 0; i < queryStudents.length; i++) {
-            let student = queryStudents[i];
-            student.nombre = `${student.nombres} ${student.pApellido} ${student.sApellido}`;
-            const informacion = JSON.parse(student.informacion);
-            student = { ...student, ...informacion };
-
+            const student = queryStudents[i];
+            student.informacion = JSON.parse(student.informacion);
             queryStudents[i] = student;
           }
+          
           dispatch({ type: 'setStudents', students: queryStudents });
           setStudents(queryStudents);
 
@@ -169,7 +171,7 @@ const Students: React.FC = () => {
                   selectable={true}
                   editable={true}
                   pageSize={8}
-                  searchParams={['nombre', 'matricula', 'CURP', 'grado:', 'grupo:', 'estado:']}
+                  searchParams={['nombres', 'pApellido', 'sApellido', 'matricula', 'CURP', 'grado:', 'grupo:', 'estado:']}
                   addUrl='/add-student' />
               )
           }

@@ -59,7 +59,7 @@ const GroupList: React.FC = () => {
 
     for (let i = 0; i < appContext.students.length; i++) {
       const student = { ...appContext.students[i] };
-      if (student.grado === values.grado && student.grupo.toUpperCase() === values.grupo) {
+      if (student.informacion.grado === values.grado && student.informacion.grupo.toUpperCase() === values.grupo) {
         tempStudents.push(student);
       }
 
@@ -69,6 +69,15 @@ const GroupList: React.FC = () => {
     }
     setGrado(values.grado);
     setGrupo(values.grupo);
+
+    tempStudents.sort((a, b) => {
+      const textA = a.pApellido.toLowerCase();
+      const textB = b.pApellido.toLowerCase();
+  
+      return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+    });
+  
+
     setFilteredStudents(tempStudents);
   }
 
@@ -83,7 +92,7 @@ const GroupList: React.FC = () => {
         validationSchema={validationSchema}
         onSubmit={handleSubmit}>
         {({ values, errors, touched, handleChange, handleBlur, setFieldValue }) => (
-          <Form className='filter'>
+          <Form className='filter fade-in-up delay-3' style={{ opacity: '0' }}>
             <div className='input-column'>
               <span className='input-label'>Grado</span>
               <ReactSelect
@@ -120,12 +129,12 @@ const GroupList: React.FC = () => {
           </Form>
         )}
       </Formik>
-      <div className='list'>
+      <div className='list fade-in-up delay-3' style={{ opacity: '0' }}>
         {
           filteredStudents.length > 0 ?
             (
               <>
-                <div className='list-header'>
+                <div className='list-header fade-in-up'>
                   <div className='list-head'>
                     <span className='title'>Lista de alumnos</span>
                     <span className='date'>{date}</span>
@@ -136,13 +145,13 @@ const GroupList: React.FC = () => {
                   </div>
                   <span className='grado-grupo'>Grupo: {grado}°{grupo}</span>
                 </div>
-                <div className='list-body'>
+                <div className='list-body fade-in-up'>
                   {
                     filteredStudents.map((student: any, index: number) => (
                       <div className='list-item' key={index}>
                         <span className='number'>{index + 1}</span>
                         <span className='matricula'>{student.matricula}</span>
-                        <span className='name'>{student.nombre}</span>
+                        <span className='name'>{student.pApellido} {student.sApellido} {student.nombres}</span>
                       </div>
                     ))
                   }
