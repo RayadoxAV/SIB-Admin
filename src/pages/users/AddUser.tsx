@@ -10,6 +10,7 @@ import { SERVER_IP } from '../../util/util';
 import Dialog from '../../components/Dialog/Dialog';
 import { AppContext } from '../../State';
 import Header from '../../components/Header/Header';
+import Breadcrumb from '../../components/Breadcrumb/Breadcrumb';
 
 interface FormValues {
   username: string;
@@ -91,6 +92,9 @@ const AddUser: React.FC = () => {
         <Header
           title='Agregar usuario'
           backButtonRoute='/users' />
+        <Breadcrumb
+          crumbs={['Inicio', 'Usuarios', 'Agregar usuario']}
+          routes={['/', '/users', '/add-user']} />
         <div className='c-body spaced'>
           <Formik
             initialValues={initialValues}

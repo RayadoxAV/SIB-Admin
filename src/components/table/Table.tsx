@@ -12,6 +12,12 @@ interface TableHeader {
   name: string;
 }
 
+interface TableSearchParam {
+  name: string;
+  nested?: boolean;
+  parent?: string;
+}
+
 interface TableProps {
   headers: TableHeader[];
   data: any[];
@@ -19,7 +25,7 @@ interface TableProps {
   onSelectionChange?: Function;
   informationRoute?: string;
   searchable?: boolean;
-  searchParams?: string[];
+  searchParams?: TableSearchParam[];
   selectable?: boolean;
   clickable?: boolean;
   editable?: boolean;
@@ -112,25 +118,107 @@ const Table: React.FC<TableProps> =
       }
     }
 
-    // TODO: Fix nested search params
     function determineElegibility(dataRow: any, searchValue: string): boolean {
+
       let elegible = false;
-      for (let i = 0; i < searchParams.length; i++) {
-        const searchParam = searchParams[i];
-        if (!searchParam.includes(':')) {
-          elegible = `${dataRow[`${searchParam}`]}`.toLowerCase().includes(searchValue);
-          if (elegible) {
-            return true;
+
+      if (searchValue.includes(':')) {
+        for (let i = 0; i < searchParams.length; i++) {
+          const searchParam = searchParams[i];
+          if (searchParam.name.includes(':')) {
+            if (searchParam.nested) {
+              elegible = `${searchParam.name}${dataRow[searchParam.parent!!][searchParam.name.split(':')[0]]}`.toLowerCase().includes(searchValue);
+              if (elegible) {
+                break;
+              }
+            } else {
+              elegible = `${searchParam.name}${dataRow[searchParam.name.split(':')[0]]}`.toLowerCase().includes(searchValue);
+              if (elegible) {
+                break;
+              }
+            }
           }
-        } else {
-          const param = searchValue.split(':')[0];
-          let elegible = `${searchParam.split(':')[0]}:${`${dataRow[param]}`.toLowerCase()}`.includes(searchValue);
-          if (elegible) {
-            return true;
+        }
+      } else {
+        for (let i = 0; i < searchParams.length; i++) {
+          const searchParam = searchParams[i];
+          if (!searchParam.name.includes(':')) {
+            if (searchParam.nested) {
+              // Determinar la elegibilidad accediendo al padre y al valor del hijo.
+              // Para poder usar toLowerCase tiene que ser una string, por eso lo tenemos todo envuelto en una interpolacion.
+              elegible = `${dataRow[searchParam.parent!!][searchParam.name]}`.toLowerCase().includes(searchValue);
+              if (elegible) {
+                break;
+              }
+            } else {
+              // Determinar la elegibilidad.
+              // Para poder usar toLowerCase tiene que ser una string, por eso lo tenemos todo envuelto en una interpolacion.
+              elegible = `${dataRow[searchParam.name]}`.toLowerCase().includes(searchValue);
+              if (elegible) {
+                break;
+              }
+            }
           }
         }
       }
-      return false;
+
+      return elegible;
+
+      // let elegible = false;
+      // for (let i = 0; i < searchParams.length; i++) {
+      //   const searchParam = searchParams[i];
+      //   if (searchValue.includes(':')) {
+      //     elegible = false;
+      //   } else {
+      //     console.log(searchParam);
+      //     if (searchParam.nested) {
+      //       elegible = false;
+      //     } else {
+      //       // console.log(dataRow[searchParam.name]);
+      //       // elegible = `${dataRow[searchParam.name]}`.toLowerCase().includes(searchValue);
+      //       elegible = true;
+      //     }
+      //   }
+
+        // if (searchParam.name.includes(':')) {
+        //   elegible = false;
+        // } else {
+        //   if (searchParam.nested) {
+        //     elegible = false;
+        //   } else {
+        //     // let elegible = 
+        //     return true;
+        //   }
+        // }
+
+        // if (!searchParam.name.includes(':')) {
+        //   if (searchParam.nested) {
+        //     elegible = `${dataRow[`${searchParam.parent}`][`${searchParam.name}`]}`.toLowerCase().includes(searchValue);
+        //   } else {
+        //     elegible = `${dataRow[`${searchParam.name}`]}`.toLowerCase().includes(searchValue);
+        //     if (elegible) {
+        //       return true;
+        //     }
+        //   }
+
+        // } else {
+        //   if (searchParam.nested) {
+        //     // const param = searchValue.split(':')[0];
+        //     let elegible = `${searchParam.name.split(':')[0]}:${`${dataRow[`${searchParam.parent}`][`${searchParam.name}`]}`.toLowerCase()}`.includes(searchValue);
+        //     if (elegible) {
+        //       return true;
+        //     }
+        //   } else {
+        //     const param = searchValue.split(':')[0];
+        //     let elegible = `${searchParam.name.split(':')[0]}:${`${dataRow[param]}`.toLowerCase()}`.includes(searchValue);
+        //     if (elegible) {
+        //       return true;
+        //     }
+        //   }
+        // }
+      // }
+      // return false;
+      // return true;
     }
 
     function removeSelection() {
@@ -198,19 +286,9 @@ const Table: React.FC<TableProps> =
           </React.Fragment>
         tempPages.push(page);
       }
-      // const tempButtons = generateButtons(tempPages);
 
-      // setPageButtons(tempButtons);
       setPages(tempPages);
     }
-
-    // function generateButtons(tempPages: JSX.Element[]) {
-
-    //   const buttons =
-
-
-    //   return buttons;
-    // }
 
     function goToPage(pageIndex: number) {
       setCurrentPageIndex(pageIndex);

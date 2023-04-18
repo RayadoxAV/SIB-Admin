@@ -7,6 +7,7 @@ import LoadingIndicator from '../../components/loading-indicator/LoadingIndicato
 import Table from '../../components/table/Table';
 import { AppContext } from '../../State';
 import { SERVER_IP } from '../../util/util';
+import Breadcrumb from '../../components/Breadcrumb/Breadcrumb';
 
 const headers = [
   {
@@ -133,6 +134,9 @@ const Users: React.FC = () => {
       <Header
         title='Usuarios'
         backButtonRoute='/' />
+      <Breadcrumb
+        crumbs={['Inicio', 'Usuarios']}
+        routes={['/', '/users']} />
       <div className='c-body'>
         {
           loading ?
@@ -148,7 +152,27 @@ const Users: React.FC = () => {
                 selectable={true}
                 searchable={true}
                 editable={true}
-                searchParams={['idUsuario', 'nombreUsuario', 'nombre', 'role:', 'estado:']}
+                searchParams={
+                  [
+                    {
+                      name: 'idUsuario'
+                    },
+                    {
+                      name: 'nombreUsuario'
+                    },
+                    {
+                      name: 'nombre'
+                    },
+                    {
+                      name: 'role:',
+                      nested: false
+                    },
+                    {
+                      name: 'estado:',
+                      nested: false
+                    }
+                  ]
+                }
                 addUrl='/add-user'
                 performDelete={deleteUsers}
               />

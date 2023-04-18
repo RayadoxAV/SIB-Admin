@@ -10,6 +10,7 @@ import { AppContext } from '../../State';
 import Header from '../../components/Header/Header';
 import TabPanel from '../../components/TabPanel/TabPanel';
 import GroupList from '../../components/GroupList/GroupList';
+import Breadcrumb from '../../components/Breadcrumb/Breadcrumb';
 
 const headers = [
   {
@@ -86,7 +87,7 @@ const Students: React.FC = () => {
             student.informacion = JSON.parse(student.informacion);
             queryStudents[i] = student;
           }
-          
+
           dispatch({ type: 'setStudents', students: queryStudents });
           setStudents(queryStudents);
 
@@ -151,6 +152,9 @@ const Students: React.FC = () => {
       <Header
         title='Estudiantes'
         backButtonRoute='/' />
+      <Breadcrumb
+        crumbs={['Inicio', 'Estudiantes']}
+        routes={['/', '/students']} />
       <div className='c-body'>
         <TabPanel
           tabs={['Concentrado', 'Listas']}>
@@ -171,7 +175,40 @@ const Students: React.FC = () => {
                   selectable={true}
                   editable={true}
                   pageSize={8}
-                  searchParams={['nombres', 'pApellido', 'sApellido', 'matricula', 'CURP', 'grado:', 'grupo:', 'estado:']}
+                  // searchParams={['nombres', 'pApellido', 'sApellido', 'matricula', 'CURP', 'grado:', 'grupo:', 'estado:']}
+                  searchParams={
+                    [
+                      {
+                        name: 'nombres'
+                      },
+                      {
+                        name: 'pApellido'
+                      },
+                      {
+                        name: 'sApellido'
+                      },
+                      {
+                        name: 'matricula'
+                      },
+                      {
+                        name: 'CURP'
+                      },
+                      {
+                        name: 'grado:',
+                        nested: true,
+                        parent: 'informacion'
+                      },
+                      {
+                        name: 'grupo:',
+                        nested: true,
+                        parent: 'informacion'
+                      },
+                      {
+                        name: 'estado:',
+                        nested: false
+                      }
+                    ]
+                  }
                   addUrl='/add-student' />
               )
           }

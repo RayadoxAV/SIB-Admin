@@ -26,6 +26,7 @@ import Test from "./pages/test/Test";
 import AddInformation from "./pages/students/add-information/AddInformation";
 import AddStudent from "./pages/students/add-student/AddStudent";
 import Controls from "./pages/controls/Controls";
+import NotFound from "./components/NotFound/NotFound";
 
 // Declarar variables globales para las configuraciones iniciales
 declare global {
@@ -39,7 +40,7 @@ const router = createBrowserRouter([
   {
     path: '/',
     element: <App />,
-    errorElement: <div style={{ backgroundColor: 'red' }}>valio madres</div>,
+    errorElement: <NotFound />,
     children: [
       {
         path: '/',
@@ -91,7 +92,6 @@ const router = createBrowserRouter([
     path: '/login',
     element:
       <div className='App'>
-        <TitleBar title={'SI'} />
         <div className='main-container'>
           <Login />
         </div>

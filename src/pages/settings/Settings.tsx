@@ -5,6 +5,7 @@ import { AppContext } from '../../State';
 import { GlobalSettings, parseBoolean, SettingObject, SettingsCategory, SettingValueType } from '../../util/util';
 
 import './Settings.css';
+import Breadcrumb from '../../components/Breadcrumb/Breadcrumb';
 
 const Settings: React.FC = () => {
 
@@ -106,8 +107,11 @@ const Settings: React.FC = () => {
   return (
     <div className='container'>
       <Header
-        title='Configuraciones'
+        title='Configuración'
         backButtonRoute='/' />
+      <Breadcrumb
+        crumbs={['Inicio', 'Configuración']}
+        routes={['/', '/settings']} />
       <div className='c-body spaced'>
         <div className='settings-container'>
           <div className='categories'>

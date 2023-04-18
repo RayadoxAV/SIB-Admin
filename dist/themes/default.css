@@ -1,0 +1,59 @@
+:root {
+  --primary-color: #0b57d0;
+  --primary-hover-color: #1E64D4;
+  --primary-active-color: #1B5DC5;
+
+  --primary-color-8p-op: #0B57D014;
+  --primary-color-12p-op: #0B57D01F;
+
+  --surface-color: #FFFFFF;
+  --surface-hover-color: #E2E2E2;
+  --surface-active-color: #C5C5C5;
+
+  --secondary-surface-color: #EFEFEF;
+  --secondary-surface-hover-color: #E2E2E2;
+  --secondary-surface-active-color: #D5D5D5;
+
+  --tertiary-surface-color: #dcdcf0;
+  --tertiary-surface-hover-color: #E2E2EE;
+  --tertiary-surface-active-color: #d4d4e4;
+
+  --on-surface-color: #292929;
+  --on-surface-color-dim: #323232;
+  --on-surface-color-dimmer: #404040;
+
+  --on-primary-color: #FFFFFF;
+  --on-tertiary-color: #636b76;
+
+  --success-color: #58e77b;
+
+  --warning-color: #ffb347;
+
+  --error-color: #FF0020;
+  --error-hover-color: #ff1230;
+  --error-active-color: #fb000f;
+
+  --error-color-8p-op: #FF002014;
+
+  --on-success-color: #16803a;
+
+  --on-warning-color: #8b4800;
+
+  --on-error-color: #ffe6e9;
+
+
+  /* Specific colors */
+
+  /* Input */
+  --input-background-color: #EFEFEF;
+  --input-focus-background-color: #E0E0E0;
+
+  /* Misc */
+  --close-button-color: #E81123;
+  --on-close-button-color: #FFFFFF;
+
+  --window-border-color: #CCCCCC;
+
+  --elevation-level-0: none;
+  --elevation-level-1: 0px 0px 30px 1px rgb(58, 58, 58, 0.2);
+}

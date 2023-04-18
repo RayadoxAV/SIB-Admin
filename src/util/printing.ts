@@ -1,5 +1,5 @@
 import pdfMake from 'pdfmake/build/pdfmake';
-import pdfFonts from 'pdfmake/build/vfs_fonts';
+import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import { format, formatDate, formatoEscolaridad, formatoEstadoCivil } from './util';
 
 /* export function printStudent(student: any, documents: any) {
@@ -977,7 +977,7 @@ export function printList(students: any[], grado: string, grupo: string) {
       return {
         columns: [
           {
-            text: '20/12/2023',
+            text: new Date().toLocaleDateString(),
             margin: [40, 0, 0, 0],
             alignment: 'left',
             style: 'small',

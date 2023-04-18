@@ -12,6 +12,7 @@ import Report from './report/Report';
 import './AddInformation.css';
 import Dialog from '../../../components/Dialog/Dialog';
 import Grade from './grade/Grade';
+import Breadcrumb from '../../../components/Breadcrumb/Breadcrumb';
 
 
 const AddInformation: React.FC = () => {
@@ -23,7 +24,7 @@ const AddInformation: React.FC = () => {
   const [redirect, setRedirect] = useState(false);
   const [loading, setLoading] = useState(true);
   const [student, setStudent] = useState(undefined as any);
-  
+
   const [successDialogVisible, setSuccessDialogVisible] = useState(false);
 
   useEffect(() => {
@@ -44,7 +45,7 @@ const AddInformation: React.FC = () => {
         break;
       }
     }
-    
+
   }, []);
 
   function determineTitle(type: string | undefined): string {
@@ -80,18 +81,18 @@ const AddInformation: React.FC = () => {
 
     switch (type) {
       case 'report': {
-        component = 
-          <Report 
+        component =
+          <Report
             student={student}
-            onSuccess={() => { setSuccessDialogVisible(true); }}/>;
+            onSuccess={() => { setSuccessDialogVisible(true); }} />;
         break;
       }
 
       case 'grade': {
         component =
-          <Grade 
+          <Grade
             student={student}
-            onSuccess={() => { setSuccessDialogVisible(true); }}/>;
+            onSuccess={() => { setSuccessDialogVisible(true); }} />;
         break;
       }
 
@@ -99,7 +100,7 @@ const AddInformation: React.FC = () => {
         component = <div>hola</div>;
         break;
       }
-      
+
       default: {
         component = <div>Not implemented</div>
         break;
@@ -134,11 +135,14 @@ const AddInformation: React.FC = () => {
         <Header
           title={`Agregar ${determineTitle(type)}`}
           backButtonRoute={`/student/${id}`} />
+        <Breadcrumb
+          crumbs={['Inicio', 'Estudiantes', 'Estudiante', `Agregar ${determineTitle(type)}`]}
+          routes={['/', '/students', `/student/${id}`, '/add-information']} />
         <div className='c-body spaced'>
           {getComponent(type)}
         </div>
       </div>
-      <Dialog 
+      <Dialog
         visible={successDialogVisible}
         title='Información agregada'
         closable={true}

@@ -10,6 +10,7 @@ import './Student.css';
 import { formatDate, formatoEscolaridad, formatoEstadoCivil, format, SERVER_IP } from '../../util/util';
 import Header from '../../components/Header/Header';
 import { printStudent } from '../../util/printing';
+import Breadcrumb from '../../components/Breadcrumb/Breadcrumb';
 
 const Student: React.FC = () => {
 
@@ -230,6 +231,9 @@ const Student: React.FC = () => {
         <Header
           title='Estudiante'
           backButtonRoute='/students' />
+        <Breadcrumb
+          crumbs={['Inicio', 'Estudiantes', 'Estudiante']}
+          routes={['/', '/students', '/student']} />
         <div className='c-body spaced'>
           <div style={{ display: 'flex', alignItems: 'flex-start' }}>
             <div style={{ display: 'flex', flexDirection: 'column', marginRight: '1rem' }}>
@@ -345,7 +349,7 @@ const Student: React.FC = () => {
                     {
                       grades.map((grade: any, index: number) => {
                         return (
-                          <span className='value'>{grade.calificacion}</span>
+                          <span key={index} className='value'>{grade.calificacion}</span>
                         );
                       })
                     }

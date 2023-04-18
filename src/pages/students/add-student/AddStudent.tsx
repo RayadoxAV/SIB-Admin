@@ -9,6 +9,7 @@ import './AddStudent.css';
 import FormError from '../../../components/form-error/FormError';
 import { SERVER_IP } from '../../../util/util';
 import Dialog from '../../../components/Dialog/Dialog';
+import Breadcrumb from '../../../components/Breadcrumb/Breadcrumb';
 
 interface AddStudentValues {
   nombres: string;
@@ -107,6 +108,9 @@ const AddStudent: React.FC = () => {
         <Header
           title='Agregar estudiante'
           backButtonRoute='/students' />
+        <Breadcrumb 
+          crumbs={['Inicio', 'Estudiantes', 'Agregar estudiante']}
+          routes={['/', '/students', '/add-student']} />
         <div className='c-body spaced'>
           <Formik
             initialValues={initialValues}
