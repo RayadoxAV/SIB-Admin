@@ -1,7 +1,6 @@
 import { FastField } from 'formik';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import CheckBox from '../Checkbox/CheckBox';
 import Dialog from '../Dialog/Dialog';
 import SelectionActionCenter from '../selection-action-center/SelectionActionCenter';
 
@@ -73,7 +72,7 @@ const Table: React.FC<TableProps> =
       generatePages();
     }, [searchRows, pageSize]);
 
-    function handleSelection(checked: boolean, index: number) {
+    function handleSelection(index: number) {
       const tempSelectedRows = selectedRows;
       if (tempSelectedRows.has(index)) {
         tempSelectedRows.delete(index);
@@ -90,6 +89,8 @@ const Table: React.FC<TableProps> =
       setSelectedRows(tempSelectedRows);
 
       document.getElementById(`row-${index}`)?.classList.toggle('selected');
+      document.getElementById(`checkbox-${index}`)?.classList.toggle('checked');
+
     }
 
     function handleAdd() {
@@ -226,6 +227,7 @@ const Table: React.FC<TableProps> =
 
       tempSelectedRows.forEach((index: any) => {
         document.getElementById(`row-${index}`)?.classList.remove('selected');
+        document.getElementById(`checkbox-${index}`)?.classList.remove('checked');
       });
 
       tempSelectedRows.clear();
@@ -302,7 +304,10 @@ const Table: React.FC<TableProps> =
               selectable ?
                 (
                   <td className='td'>
-                    <CheckBox key={`${resetPulse}`} onChange={(checked: boolean) => handleSelection(checked, index)} />
+                    {/* <CheckBox key={`${resetPulse}`} onChange={(checked: boolean) => handleSelection(checked, index)} /> */}
+                    <button id={`checkbox-${index}`} className='table-checkbox' onClick={() => { handleSelection(index) }}>
+                      <i className='fa-solid fa-check'></i>
+                    </button>
                   </td>
                 ) :
                 (null)

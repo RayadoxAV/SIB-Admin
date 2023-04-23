@@ -1,0 +1,13 @@
+.not-found {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--surface-color);
+  height: 100vh;
+}
+
+.not-found > .title {
+  font-size: 48px;
+  font-weight: 900;
+}

@@ -1,19 +1,17 @@
 import React, { useContext, useEffect, useState } from 'react';
+
 import { Outlet } from 'react-router-dom';
-
-import TitleBar from './components/title-bar/TitleBar';
-
 import { SERVER_IP } from './util/util';
-
-import './main.css';
-import './App.css';
 
 import { appWindow } from '@tauri-apps/api/window';
 import { Navigate } from 'react-router-dom';
 import LoadingIndicator from './components/loading-indicator/LoadingIndicator';
 import NoServerError from './components/no-server-error/NoServerError';
 import { AppContext } from './State';
-import { applySetting } from './misc/SettingsDispatcher';
+import { applySetting } from './misc/settings/SettingsDispatcher';
+
+import './main.css';
+import './App.css';
 
 function App() {
 

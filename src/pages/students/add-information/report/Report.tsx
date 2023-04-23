@@ -120,7 +120,7 @@ const Report: React.FC<ReportProps> = ({ student, onSuccess }) => {
         </div>
         <span className='date fade-in-up delay-3'>{date}</span>
       </div>
-      <div className='report-body'>
+      <div className='report-body fade-in-up delay-5'>
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}

@@ -2,17 +2,13 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 
-import "./style.css";
-import './assets/styles/font.css';
-import './assets/animations/animations.css';
-
 import { invoke } from "@tauri-apps/api";
 import { emit, listen } from "@tauri-apps/api/event";
 
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import { AppContextProvider } from "./State";
-import { GlobalSettings } from "./util/util";
+import { Flags, GlobalSettings } from "./util/util";
 
 import Login from "./pages/login/Login";
 import Menu from "./pages/menu/Menu";
@@ -28,12 +24,22 @@ import AddStudent from "./pages/students/add-student/AddStudent";
 import Controls from "./pages/controls/Controls";
 import NotFound from "./components/NotFound/NotFound";
 
+import "./style.css";
+import './assets/styles/font.css';
+import './assets/animations/animations.css';
+import PrintingSettingsDispatcher from "./misc/settings/PrintingSettingsDispatcher";
+import Reports from "./pages/students/reports/Reports";
+
 // Declarar variables globales para las configuraciones iniciales
 declare global {
   var settings: GlobalSettings;
   var getSettingValue: Function;
   var setSettingValue: Function;
+  var flags: Map<string, number | boolean | string>
 };
+
+globalThis.flags = new Map();
+PrintingSettingsDispatcher.setupFlags();
 
 // Crear las rutas de la aplicación
 const router = createBrowserRouter([
@@ -59,6 +65,14 @@ const router = createBrowserRouter([
         element: <Student />,
       },
       {
+        path: '/add-information/:type/:id',
+        element: <AddInformation />
+      },
+      {
+        path: '/student/reports/:id',
+        element: <Reports />
+      },
+      {
         path: '/add-student',
         element: <AddStudent />
       },
@@ -69,10 +83,6 @@ const router = createBrowserRouter([
       {
         path: '/add-user',
         element: <AddUser />
-      },
-      {
-        path: '/add-information/:type/:id',
-        element: <AddInformation />
       },
       {
         path: '/studies',

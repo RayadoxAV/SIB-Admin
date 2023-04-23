@@ -167,10 +167,6 @@ const Student: React.FC = () => {
     }
   }, []);
 
-  function handleClick() {
-    setRedirect(true);
-  }
-
   function addInformationOption(index: number) {
     switch (index) {
       case 0: {
@@ -286,79 +282,115 @@ const Student: React.FC = () => {
             <div className='card'>
               <div className='card-header'>
                 <span className='card-title'>Reportes</span>
-                <button className='card-button' onClick={() => {
-                  const tempEditingReports = isEditingReports;
-                  setEditingReports(!tempEditingReports);
-                }}>
-                  <i className={`fa-solid ${isEditingReports ? 'fa-close' : 'fa-pencil'}`}></i>
-                </button>
+                <div style={{ display: 'flex', marginLeft: 'auto' }}>
+                  <button className='card-button' onClick={() => {
+                    const tempEditingReports = isEditingReports;
+                    setEditingReports(!tempEditingReports);
+                  }}>
+                    <i className={`fa-solid ${isEditingReports ? 'fa-close' : 'fa-pencil'}`}></i>
+                  </button>
+                  <button className='card-button' onClick={() => {
+                    navigate(`/student/reports/${id}`);
+                  }}>
+                    <i className='fa-solid fa-circle-info'></i>
+                  </button>
+                </div>
               </div>
               <div className='card-body col' style={{ padding: '0.25rem' }}>
-                {documents.map((document: any, index: number) => {
-                  if (document.tipo === 0) {
-                    return (
-                      <div className='row report-row' key={index}>
-                        <div className='column'>
-                          <span className='data-name'>Motivo</span>
-                          <span className='data-name'>Profesor</span>
-                          <span className='data-name'>Asignatura</span>
-                          <span className='data-name'>Fecha</span>
-                        </div>
-                        <div className='column'>
-                          <span className='value'>{document.informacion.motivoReporte}</span>
-                          <span className='value'>{document.informacion.profesor}</span>
-                          <span className='value'>{document.informacion.asignatura}</span>
-                          <span className='value'>{formatDate(document.fecha)}</span>
-                        </div>
-                        <div className='column delete-column' style={{ maxWidth: isEditingReports ? '3rem' : '0rem' }}>
-                          <button onClick={() => { alert(`Not implemented: ${document.id}`); }}>
-                            <i className='fa-solid fa-trash'></i>
-                          </button>
-                        </div>
-                      </div>
-                    );
-                  } else {
-                    return null;
-                  }
-                })}
+                {
+                  documents.reduce((accumulator: number, currentDocument: any) => {
+                    if (currentDocument.tipo === 0) {
+                      accumulator += 1;
+                    }
+                    return accumulator;
+                  }, 0) === 0 ? (
+                    <div className='card-content'>
+                      Sin reportes registrados
+                    </div>
+                  ) : (
+                    documents.map((document: any, index: number) => {
+                      if (document.tipo === 0) {
+                        return (
+                          <div className='row report-row' key={index}>
+                            <div className='column'>
+                              <span className='data-name'>Motivo</span>
+                              <span className='data-name'>Profesor</span>
+                              <span className='data-name'>Asignatura</span>
+                              <span className='data-name'>Fecha</span>
+                            </div>
+                            <div className='column'>
+                              <span className='value'>{document.informacion.motivoReporte}</span>
+                              <span className='value'>{document.informacion.profesor}</span>
+                              <span className='value'>{document.informacion.asignatura}</span>
+                              <span className='value'>{formatDate(document.fecha)}</span>
+                            </div>
+                            <div className='column delete-column' style={{ maxWidth: isEditingReports ? '3rem' : '0rem' }}>
+                              <button onClick={() => { alert(`Not implemented: ${document.id}`); }}>
+                                <i className='fa-solid fa-trash'></i>
+                              </button>
+                            </div>
+                          </div>
+                        );
+                      } else {
+                        return null;
+                      }
+                    })
+                  )
+                }
+
               </div>
               <div className='card-footer'></div>
             </div>
             <div className='card'>
               <div className='card-header'>
                 <span className='card-title'>Calificaciones</span>
-                <button className='card-button' onClick={() => {
-                  const tempEditingGrades = isEditingGrades;
-                  setEditingGrades(!tempEditingGrades);
-                }}>
-                  <i className={`fa-solid ${isEditingGrades ? 'fa-close' : 'fa-pencil'}`}></i>
-                </button>
+                <div style={{ marginLeft: 'auto' }}>
+                  <button className='card-button' onClick={() => {
+                    const tempEditingGrades = isEditingGrades;
+                    setEditingGrades(!tempEditingGrades);
+                  }}>
+                    <i className={`fa-solid ${isEditingGrades ? 'fa-close' : 'fa-pencil'}`}></i>
+                  </button>
+                </div>
               </div>
               <div className='card-body col'>
-                <div className='row grade-row'>
-                  <div className='column'>
-                    {
-                      grades.map((grade: any, index: number) => {
-                        return (
-                          <span key={index} className='data-name'>{grade.asignatura}</span>
-                        );
-                      })
+                {
+                  documents.reduce((accumulator: number, currentDocument: any) => {
+                    if (currentDocument.tipo === 1) {
+                      accumulator += 1;
                     }
-                  </div>
-                  <div className='column'>
-                    {
-                      grades.map((grade: any, index: number) => {
-                        return (
-                          <span key={index} className='value'>{grade.calificacion}</span>
-                        );
-                      })
-                    }
-                  </div>
-                </div>
+                    return accumulator;
+                  }, 0) === 0 ? (
+                    <div className='card-content'>
+                      Sin calificaciones registradas
+                    </div>
+                  ) : (
+                    <div className='row grade-row'>
+                      <div className='column'>
+                        {
+                          grades.map((grade: any, index: number) => {
+                            return (
+                              <span key={index} className='data-name'>{grade.asignatura}</span>
+                            );
+                          })
+                        }
+                      </div>
+                      <div className='column'>
+                        {
+                          grades.map((grade: any, index: number) => {
+                            return (
+                              <span key={index} className='value'>{grade.calificacion}</span>
+                            );
+                          })
+                        }
+                      </div>
+                    </div>
+                  )
+                }
               </div>
               <div className='card-footer'></div>
             </div>
-            {student.miembrosFamilia ?
+            {student.informacion.estudioSoc.miembrosFamilia ?
               (
                 <div className='card'>
                   <div className='card-header'>
@@ -411,7 +443,7 @@ const Student: React.FC = () => {
               ) :
               (null)}
             {
-              student.miembrosFamilia ?
+              student.informacion.estudioSoc.miembrosFamilia ?
                 (
                   <div className='card'>
                     <div className='card-header'>
@@ -440,7 +472,7 @@ const Student: React.FC = () => {
             }
           </div>
           {
-            student.informacion.estudioSoc ?
+            Object.entries(student.informacion.estudioSoc).length > 0 ?
               (
                 <div className='card fade-in-up delay-3' style={{ marginTop: '1rem', opacity: '0' }}>
                   <div className='card-header'>
@@ -517,7 +549,7 @@ const Student: React.FC = () => {
         <button className='option-button' onClick={() => { addInformationOption(0); }}>Reporte</button>
         <button className='option-button' onClick={() => { addInformationOption(1); }}>Calificaciones</button>
         {
-          student.informacion.estudioSoc ?
+          Object.entries(student.informacion.estudioSoc).length > 0 ?
             (null) :
             (
               <button className='option-button' onClick={() => { addInformationOption(2); }}>Estudio socioeconómico</button>

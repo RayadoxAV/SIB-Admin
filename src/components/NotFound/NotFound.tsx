@@ -1,6 +1,8 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import './NotFound.css';
+
 const NotFound: React.FC = () => {
 
   const navigate = useNavigate();
@@ -10,9 +12,10 @@ const NotFound: React.FC = () => {
   }
 
   return (
-    <div className='not-found'>
-      <span className='title'>No encontrado</span>
-      <button onClick={handleClick}>Regresar</button>
+    <div className='not-found fade-in-up'>
+      <span className='title'>Ha habido un error</span>
+      <p>El componente ha fallado</p>
+      <button className='button-primary' onClick={handleClick}>Regresar</button>
     </div>
   );
 };

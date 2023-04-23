@@ -111,6 +111,10 @@ export interface GlobalSettings {
   categories: SettingsCategory[]
 };
 
+export interface Flags {
+  [key: string]: number | boolean | string;
+};
+
 export function parseBoolean(value: string) {
   value = value.toLowerCase();
   if (value === 'true') {
@@ -119,4 +123,29 @@ export function parseBoolean(value: string) {
     return false;
   }
   return false;
+}
+
+export function formatPerformance(value: string): string {
+
+  switch (value) {
+    case '0': {
+      return 'Excelente';
+    }
+
+    case '1': {
+      return 'Bueno';
+    }
+
+    case '2': {
+      return 'Regular';
+    }
+
+    case '3': {
+      return 'Malo';
+    }
+
+    default: {
+      return 'Desconocido';
+    }
+  }
 }

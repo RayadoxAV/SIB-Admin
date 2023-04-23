@@ -1,0 +1,30 @@
+.report-body {
+  opacity: 0;
+}
+
+.reports-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.report-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 0rem 1rem;
+}
+
+.report-row > .report-key {
+  font-weight: 500;
+  width: 50%;
+}
+
+.report-row > .report-value {
+  width: 50%;
+  text-align: end;
+}
+
+@media (max-width: 700px) {
+  .reports-container {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
