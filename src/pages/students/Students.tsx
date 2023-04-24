@@ -58,87 +58,85 @@ const Students: React.FC = () => {
   const [redirectLogin, setRedirectLogin] = useState(false);
 
   useEffect(() => {
-    dispatch({ type: 'setTitle', title: 'SI Estudiantes' });
+    // TODO: Sockets
+    // if (appContext.students.length === 0) {
+    //   setLoading(true);
 
-    if (appContext.students.length === 0) {
-      setLoading(true);
+    //   const token = localStorage.getItem('token');
+    //   if (!token) {
+    //     setRedirectLogin(true);
+    //     return;
+    //   }
 
-      const token = localStorage.getItem('token');
-      if (!token) {
-        setRedirectLogin(true);
-        return;
-      }
+    //   const requestOptions = {
+    //     method: 'GET',
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //       'Accept': 'application/json',
+    //       'Authorization': `Bearer ${token}`
+    //     }
+    //   };
 
-      const requestOptions = {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-          'Authorization': `Bearer ${token}`
-        }
-      };
+    //   fetch(`${SERVER_IP}/students`, requestOptions).then((res) => (res.json())).then((response) => {
+    //     if (response.queryStatusCode === 0) {
+    //       const queryStudents = response.result;
 
-      fetch(`${SERVER_IP}/students`, requestOptions).then((res) => (res.json())).then((response) => {
-        if (response.queryStatusCode === 0) {
-          const queryStudents = response.result;
+    //       for (let i = 0; i < queryStudents.length; i++) {
+    //         const student = queryStudents[i];
+    //         student.informacion = JSON.parse(student.informacion);
+    //         queryStudents[i] = student;
+    //       }
 
-          for (let i = 0; i < queryStudents.length; i++) {
-            const student = queryStudents[i];
-            student.informacion = JSON.parse(student.informacion);
-            queryStudents[i] = student;
-          }
+    //       dispatch({ type: 'setStudents', students: queryStudents });
+    //       setStudents(queryStudents);
 
-          dispatch({ type: 'setStudents', students: queryStudents });
-          setStudents(queryStudents);
+    //       if (appContext.documents.length === 0) {
+    //         const documentsRequestOptions = {
+    //           method: 'GET',
+    //           headers: {
+    //             'Content-Type': 'application/json',
+    //             'Accept': 'application/json',
+    //             'Authorization': `Bearer ${token}`
+    //           }
+    //         };
 
-          if (appContext.documents.length === 0) {
-            const documentsRequestOptions = {
-              method: 'GET',
-              headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-                'Authorization': `Bearer ${token}`
-              }
-            };
+    //         fetch(`${SERVER_IP}/documents`, documentsRequestOptions).then((res) => (res.json()).then((response) => {
+    //           if (response.queryStatusCode === 0) {
+    //             const queryDocuments = response.result;
 
-            fetch(`${SERVER_IP}/documents`, documentsRequestOptions).then((res) => (res.json()).then((response) => {
-              if (response.queryStatusCode === 0) {
-                const queryDocuments = response.result;
+    //             for (let i = 0; i < queryDocuments.length; i++) {
+    //               let document = queryDocuments[i];
+    //               const information = JSON.parse(document.informacion);
+    //               document.informacion = information;
 
-                for (let i = 0; i < queryDocuments.length; i++) {
-                  let document = queryDocuments[i];
-                  const information = JSON.parse(document.informacion);
-                  document.informacion = information;
+    //               queryDocuments[i] = document;
+    //             }
 
-                  queryDocuments[i] = document;
-                }
+    //             dispatch({ type: 'setDocuments', documents: queryDocuments });
+    //             setDocuments(queryDocuments);
+    //             setLoading(false);
+    //           } else if (response.queryStatusCode === 1) {
+    //             console.log('manejar el error');
+    //           }
+    //         }));
 
-                dispatch({ type: 'setDocuments', documents: queryDocuments });
-                setDocuments(queryDocuments);
-                setLoading(false);
-              } else if (response.queryStatusCode === 1) {
-                console.log('manejar el error');
-              }
-            }));
+    //       } else {
+    //         setLoading(false);
+    //         setDocuments(appContext.documents);
+    //       }
+    //       // setLoading(false);
+    //     } else if (response.queryStatusCode === 1) {
+    //       console.log('manejar error');
+    //     }
+    //   }).catch((error) => {
+    //     console.log('manejar el error');
+    //   });
+    // } else {
+    //   setLoading(false);
+    //   setStudents(appContext.students);
 
-          } else {
-            setLoading(false);
-            setDocuments(appContext.documents);
-          }
-          // setLoading(false);
-        } else if (response.queryStatusCode === 1) {
-          console.log('manejar error');
-        }
-      }).catch((error) => {
-        console.log('manejar el error');
-      });
-    } else {
-      setLoading(false);
-      setStudents(appContext.students);
+    // }
 
-    }
-
-    // console.log(appContext);
   }, []);
 
   if (redirectLogin) {

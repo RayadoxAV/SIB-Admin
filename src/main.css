@@ -74,7 +74,6 @@
 .divider {
   background-color: var(--tertiary-surface-color);
   height: 1px;
-  margin: 0.5rem 1rem;
 }
 
 .header {

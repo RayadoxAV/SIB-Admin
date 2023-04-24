@@ -51,14 +51,23 @@ function App() {
         }
       };
 
-      fetch(`${SERVER_IP}/validate_user_token`, requestOptions).then((res) => res.json()).then((response) => {
+      fetch(`${SERVER_IP}/validate_user_token`, requestOptions).then((res) => res.json()).then(async (response) => {
         setLoading(false);
         if (response) {
           if (!response.isTokenValid) {
             // Redirigir al login
             setRedirect(true);
           } else {
-            appWindow.setResizable(true);
+
+            try {
+
+              const responseStudents = await fetch(`${SERVER_IP}/students`, { method: 'GET' }).then((res) => res.json());
+
+            } catch (error: any) {
+              console.log(error);
+            }
+
+            console.log('consultar los cuatro tipos de objeto');
           }
         }
       }).catch((error) => {

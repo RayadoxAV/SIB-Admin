@@ -4,8 +4,9 @@ interface InitialAppState {
   title: string;
   settings: object;
   changedSetting: { settingName: string, value: any };
-  students: any[];
   reloadStudents: boolean;
+  students: any[];
+  controls: any[];
   documents: any[];
   users: any[];
 }
@@ -14,8 +15,9 @@ const initialState: InitialAppState = {
   title: '',
   settings: {},
   changedSetting: { settingName: '', value: '' },
-  students: [],
   reloadStudents: false,
+  students: [],
+  controls: [],
   documents: [],
   users: []
 };
@@ -37,13 +39,16 @@ const reducer = (state: any, action: any) => {
       return { ...state, students: action.students };
 
     case 'setReloadStudents':
-      return { ...state, reloadStudents: action.reloadStudents }
+      return { ...state, reloadStudents: action.reloadStudents };
 
     case 'setDocuments':
       return { ...state, documents: action.documents };
 
     case 'setUsers':
       return { ...state, users: action.users };
+    
+    case 'setControls':
+      return { ...state, controls: action.controls };
   }
 
   return state;

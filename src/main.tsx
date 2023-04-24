@@ -29,6 +29,7 @@ import './assets/styles/font.css';
 import './assets/animations/animations.css';
 import PrintingSettingsDispatcher from "./misc/settings/PrintingSettingsDispatcher";
 import Reports from "./pages/students/reports/Reports";
+import Actions from "./pages/actions/Actions";
 
 // Declarar variables globales para las configuraciones iniciales
 declare global {
@@ -85,8 +86,8 @@ const router = createBrowserRouter([
         element: <AddUser />
       },
       {
-        path: '/studies',
-        element: <Test />
+        path: '/actions',
+        element: <Actions />
       },
       {
         path: '/reports',

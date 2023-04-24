@@ -38,7 +38,7 @@ const Menu: React.FC = () => {
         <MenuItem className='scale-in' text='Controles' icon='fa-folder-tree' route='/controls' />
         <MenuItem className='scale-in delay-1' text='Estudiantes' icon='fa-graduation-cap' route='/students' />
         <MenuItem className='scale-in delay-3' text='Usuarios' icon='fa-users' route='/users' />
-        <MenuItem className='scale-in delay-5' text='Acciones' icon='fa-diagram-successor' route='/studies' />
+        <MenuItem className='scale-in delay-5' text='Acciones' icon='fa-diagram-successor' route='/actions' />
         <MenuItem className='scale-in delay-7' text='Reportes' icon='fa-chart-line' route='/reports' />
         <MenuItem className='scale-in delay-9' text='Configuración' icon='fa-gears' route='/settings' />
       </div>
