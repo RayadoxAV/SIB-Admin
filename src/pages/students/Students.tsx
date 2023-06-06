@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 
-import { Navigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import LoadingIndicator from '../../components/loading-indicator/LoadingIndicator';
 import Table from '../../components/table/Table';
 
@@ -57,86 +57,19 @@ const Students: React.FC = () => {
 
   const [redirectLogin, setRedirectLogin] = useState(false);
 
+  const navigate = useNavigate();
+
   useEffect(() => {
-    // TODO: Sockets
-    // if (appContext.students.length === 0) {
-    //   setLoading(true);
-
-    //   const token = localStorage.getItem('token');
-    //   if (!token) {
-    //     setRedirectLogin(true);
-    //     return;
-    //   }
-
-    //   const requestOptions = {
-    //     method: 'GET',
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //       'Accept': 'application/json',
-    //       'Authorization': `Bearer ${token}`
-    //     }
-    //   };
-
-    //   fetch(`${SERVER_IP}/students`, requestOptions).then((res) => (res.json())).then((response) => {
-    //     if (response.queryStatusCode === 0) {
-    //       const queryStudents = response.result;
-
-    //       for (let i = 0; i < queryStudents.length; i++) {
-    //         const student = queryStudents[i];
-    //         student.informacion = JSON.parse(student.informacion);
-    //         queryStudents[i] = student;
-    //       }
-
-    //       dispatch({ type: 'setStudents', students: queryStudents });
-    //       setStudents(queryStudents);
-
-    //       if (appContext.documents.length === 0) {
-    //         const documentsRequestOptions = {
-    //           method: 'GET',
-    //           headers: {
-    //             'Content-Type': 'application/json',
-    //             'Accept': 'application/json',
-    //             'Authorization': `Bearer ${token}`
-    //           }
-    //         };
-
-    //         fetch(`${SERVER_IP}/documents`, documentsRequestOptions).then((res) => (res.json()).then((response) => {
-    //           if (response.queryStatusCode === 0) {
-    //             const queryDocuments = response.result;
-
-    //             for (let i = 0; i < queryDocuments.length; i++) {
-    //               let document = queryDocuments[i];
-    //               const information = JSON.parse(document.informacion);
-    //               document.informacion = information;
-
-    //               queryDocuments[i] = document;
-    //             }
-
-    //             dispatch({ type: 'setDocuments', documents: queryDocuments });
-    //             setDocuments(queryDocuments);
-    //             setLoading(false);
-    //           } else if (response.queryStatusCode === 1) {
-    //             console.log('manejar el error');
-    //           }
-    //         }));
-
-    //       } else {
-    //         setLoading(false);
-    //         setDocuments(appContext.documents);
-    //       }
-    //       // setLoading(false);
-    //     } else if (response.queryStatusCode === 1) {
-    //       console.log('manejar error');
-    //     }
-    //   }).catch((error) => {
-    //     console.log('manejar el error');
-    //   });
-    // } else {
-    //   setLoading(false);
-    //   setStudents(appContext.students);
-
-    // }
-
+    if (appContext.students) {
+      if (appContext.students.length === 0) {
+        setLoading(false);
+      } else {
+        setLoading(false);
+        setStudents(appContext.students);
+      }
+    } else {
+      setLoading(false);
+    }
   }, []);
 
   if (redirectLogin) {
@@ -166,13 +99,17 @@ const Students: React.FC = () => {
               (
                 <Table
                   headers={headers}
-                  data={students}
+                  data={appContext.students}
                   informationRoute='/student'
                   searchable={true}
                   clickable={true}
                   selectable={true}
                   editable={true}
                   pageSize={8}
+                  performEdit={(student: any) => { 
+                    console.log(student);
+                    navigate(`/edit-student/:${student.id}`);
+                  }}
                   // searchParams={['nombres', 'pApellido', 'sApellido', 'matricula', 'CURP', 'grado:', 'grupo:', 'estado:']}
                   searchParams={
                     [

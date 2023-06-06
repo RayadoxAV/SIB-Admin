@@ -13,6 +13,7 @@ import './AddInformation.css';
 import Dialog from '../../../components/Dialog/Dialog';
 import Grade from './grade/Grade';
 import Breadcrumb from '../../../components/Breadcrumb/Breadcrumb';
+import SocStudy from './socStudy/SocStudy';
 
 
 const AddInformation: React.FC = () => {
@@ -97,7 +98,10 @@ const AddInformation: React.FC = () => {
       }
 
       case 'estudioSoc': {
-        component = <div>hola</div>;
+        component =
+          <SocStudy
+            student={student} 
+            onSuccess={() => { setSuccessDialogVisible(true); }} />;
         break;
       }
 

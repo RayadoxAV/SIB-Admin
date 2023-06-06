@@ -30,6 +30,7 @@ import './assets/animations/animations.css';
 import PrintingSettingsDispatcher from "./misc/settings/PrintingSettingsDispatcher";
 import Reports from "./pages/students/reports/Reports";
 import Actions from "./pages/actions/Actions";
+import EditStudent from "./pages/students/edit-student/EditStudent";
 
 // Declarar variables globales para las configuraciones iniciales
 declare global {
@@ -40,7 +41,6 @@ declare global {
 };
 
 globalThis.flags = new Map();
-PrintingSettingsDispatcher.setupFlags();
 
 // Crear las rutas de la aplicación
 const router = createBrowserRouter([
@@ -76,6 +76,10 @@ const router = createBrowserRouter([
       {
         path: '/add-student',
         element: <AddStudent />
+      },
+      {
+        path: '/edit-student/:id',
+        element: <EditStudent />
       },
       {
         path: '/users',

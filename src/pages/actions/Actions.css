@@ -25,7 +25,7 @@
 .section > .section-body .action-item {
   aspect-ratio: 1 / 1;
   background-color: var(--secondary-surface-color);
-  border: none;
+  border: 1px solid transparent;
   cursor: pointer;
   display: flex;
   flex-direction: column;
@@ -36,9 +36,18 @@
   transition: all 150ms cubic-bezier(0.2, 0, 0, 1);
 }
 
+.section > .section-body .action-item.dangerous {
+  border: 1px solid transparent;
+}
+
 .section > .section-body .action-item:hover {
   transform: scale(104%);
   background-color: var(--secondary-surface-hover-color);
+  border-color: var(--secondary-surface-active-color);
+}
+
+.section > .section-body .action-item.dangerous:hover {
+  border-color: red;
 }
 
 .action-item .icon {

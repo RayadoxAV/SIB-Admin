@@ -30,6 +30,7 @@ interface TableProps {
   editable?: boolean;
   addUrl?: string;
   performDelete?: Function;
+  performEdit?: Function;
   pageSize?: number;
 }
 
@@ -47,6 +48,7 @@ const Table: React.FC<TableProps> =
     editable = false,
     addUrl,
     performDelete,
+    performEdit,
     pageSize = 10
   }) => {
 
@@ -70,7 +72,7 @@ const Table: React.FC<TableProps> =
 
     useEffect(() => {
       generatePages();
-    }, [searchRows, pageSize]);
+    }, [data, searchRows, pageSize]);
 
     function handleSelection(index: number) {
       const tempSelectedRows = selectedRows;
@@ -256,11 +258,20 @@ const Table: React.FC<TableProps> =
       const result = await confirm('¿Está seguro que desea eliminar estos elementos? Esta acción no se puede deshacer.');
       if (result) {
         if (performDelete) {
+          console.log('asda');
           performDelete(selectedRows);
           setDeleteDialogVisible(true);
         }
       } else {
         alert('Acción cancelada');
+      }
+    }
+
+    function onEdit() {
+      if (performEdit) {
+        const index = selectedRows.values().next().value;
+        performEdit(data[index]);
+
       }
     }
 
@@ -314,7 +325,7 @@ const Table: React.FC<TableProps> =
             }
             {
               headers.map((header: any, cellIndex: number) => {
-                if (header.name === 'estado') {
+                if (header.name === 'status' || header.name === 'estado') {
                   return (
                     <td className='td' key={`${index}:${cellIndex}`}>
                       <span className={`${dataRow[header.name] === 0 ? 'active' : 'inactive'}`}>{dataRow[header.name] === 0 ? 'Activo' : 'Inactivo'}</span>
@@ -413,7 +424,8 @@ const Table: React.FC<TableProps> =
           editable={(editable && selectedQuantity === 1)}
           selectionQuantity={selectedQuantity}
           handleClose={removeSelection}
-          onDelete={onDelete} />
+          onDelete={onDelete}
+          onEdit={onEdit} />
 
         <Dialog
           visible={deleteDialogVisible}

@@ -19,7 +19,7 @@ const headers = [
     displayName: 'Nombre de usuario'
   },
   {
-    name: 'nombre',
+    name: 'nombres',
     displayName: 'Nombre'
   },
   {
@@ -27,7 +27,7 @@ const headers = [
     displayName: 'Rol'
   },
   {
-    name: 'estado',
+    name: 'status',
     displayName: 'Estado'
   }
 ];
@@ -42,49 +42,55 @@ const Users: React.FC = () => {
   const [redirectLogin, setRedirectLogin] = useState(false);
 
   useEffect(() => {
-    dispatch({ type: 'setTitle', title: 'SI Usuarios' });
-
     if (appContext.users.length === 0) {
       setLoading(true);
-
-      const token = localStorage.getItem('token');
-      if (!token) {
-        setRedirectLogin(true);
-        return;
-      }
-
-      const requestOptions = {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-          'Authorization': `Bearer ${token}`
-        }
-      };
-
-      fetch(`${SERVER_IP}/users`, requestOptions).then((res) => (res.json())).then((response) => {
-        if (response.queryStatusCode === 0) {
-          const queryUsers = response.result;
-
-          for (let i = 0; i < queryUsers.length; i++) {
-            const user = queryUsers[i];
-            user.nombre = `${user.nombres} ${user.pApellido} ${user.sApellido}`;
-          }
-
-          dispatch({ type: 'setUsers', users: [...queryUsers] });
-          setUsers([...queryUsers]);
-          setLoading(false);
-        } else if (response.queryStatusCode === 1) {
-          console.log('Manejar el error');
-        }
-      }).catch((error) => {
-        console.log('Manejar el error');
-      });
-
     } else {
       setLoading(false);
-      setUsers([...appContext.users]);
+      setUsers(appContext.users);
     }
+    // dispatch({ type: 'setTitle', title: 'SI Usuarios' });
+
+    // if (appContext.users.length === 0) {
+    //   setLoading(true);
+
+    //   const token = localStorage.getItem('token');
+    //   if (!token) {
+    //     setRedirectLogin(true);
+    //     return;
+    //   }
+
+    //   const requestOptions = {
+    //     method: 'GET',
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //       'Accept': 'application/json',
+    //       'Authorization': `Bearer ${token}`
+    //     }
+    //   };
+
+    //   fetch(`${SERVER_IP}/users`, requestOptions).then((res) => (res.json())).then((response) => {
+    //     if (response.queryStatusCode === 0) {
+    //       const queryUsers = response.result;
+
+    //       for (let i = 0; i < queryUsers.length; i++) {
+    //         const user = queryUsers[i];
+    //         user.nombre = `${user.nombres} ${user.pApellido} ${user.sApellido}`;
+    //       }
+
+    //       dispatch({ type: 'setUsers', users: [...queryUsers] });
+    //       setUsers([...queryUsers]);
+    //       setLoading(false);
+    //     } else if (response.queryStatusCode === 1) {
+    //       console.log('Manejar el error');
+    //     }
+    //   }).catch((error) => {
+    //     console.log('Manejar el error');
+    //   });
+
+    // } else {
+    //   setLoading(false);
+    //   setUsers([...appContext.users]);
+    // }
   }, []);
 
   function deleteUsers(rows: Set<number>) {

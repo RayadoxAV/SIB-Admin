@@ -7,7 +7,6 @@ class PrintingSettingsDispatcher {
   public static setupFlags() {
     
     let settingsCategory: SettingsCategory | undefined = undefined;
-
     for (let i = 0; i < globalThis.settings.categories.length; i++) {
       if (globalThis.settings.categories[i].name === PrintingSettingsDispatcher.CATEGORY_NAME) {
         settingsCategory = globalThis.settings.categories[i];

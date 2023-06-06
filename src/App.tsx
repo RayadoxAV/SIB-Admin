@@ -12,12 +12,14 @@ import { applySetting } from './misc/settings/SettingsDispatcher';
 
 import './main.css';
 import './App.css';
+import PrintingSettingsDispatcher from './misc/settings/PrintingSettingsDispatcher';
+import { socket } from './socket/Socket';
 
 function App() {
 
   const [appContext, dispatch] = useContext(AppContext);
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [redirectError, setRedirectError] = useState(false);
   const [redirect, setRedirect] = useState(false);
 
@@ -31,13 +33,14 @@ function App() {
   }
 
   useEffect(() => {
-
     // Si no existen las configuraciones, cargarlas en el state a partir del globalThis
     if (!appContext.settings.categories) {
       dispatch({ type: 'setSettings', settings: globalThis.settings });
+      PrintingSettingsDispatcher.setupFlags();
+      setLoading(true);
+
     }
 
-    setLoading(true);
 
     // Validar el token del usuario para confirmar su identidad de ser necesario
     if (localStorage.getItem('token')) {
@@ -52,22 +55,50 @@ function App() {
       };
 
       fetch(`${SERVER_IP}/validate_user_token`, requestOptions).then((res) => res.json()).then(async (response) => {
-        setLoading(false);
         if (response) {
           if (!response.isTokenValid) {
             // Redirigir al login
             setRedirect(true);
           } else {
+            // Si los objetos no han sido consultados, consultarlos
+            if (appContext.students.length < 1) {
+              try {
+                const options = {
+                  method: 'GET',
+                  headers: {
+                    'Authorization': `Bearer ${token}`
+                  }
+                };
 
-            try {
+                const responseStudents = (await fetch(`${SERVER_IP}/students`, options).then((res) => res.json())).result;
+                const responseControls = (await fetch(`${SERVER_IP}/controls`, options).then((res) => res.json())).result;
+                const responseDocuments = (await fetch(`${SERVER_IP}/documents`, options).then((res) => res.json())).result;
+                const responseUsers = (await fetch(`${SERVER_IP}/users`, options).then((res) => res.json())).result;
 
-              const responseStudents = await fetch(`${SERVER_IP}/students`, { method: 'GET' }).then((res) => res.json());
+                dispatch({ type: 'setStudents', students: responseStudents });
+                dispatch({ type: 'setControls', controls: responseControls });
+                dispatch({ type: 'setDocuments', documents: responseDocuments });
+                dispatch({ type: 'setUsers', users: responseUsers });
+                setLoading(false);
 
-            } catch (error: any) {
-              console.log(error);
+                socket.on('add-element', (args: any) => {
+                  onAddElement(args.type, args.list);
+                });
+                socket.on('update-element', (args: any) => {
+                  onAddElement(args.type, args.list);
+                });
+                socket.on('remove-element', (args: any) => {
+                  onAddElement(args.type, args.list);
+
+                });
+                socket.on('remove-elements', (args: any) => {
+
+                });
+
+              } catch (error: any) {
+                console.log(error);
+              }
             }
-
-            console.log('consultar los cuatro tipos de objeto');
           }
         }
       }).catch((error) => {
@@ -78,6 +109,76 @@ function App() {
 
     }
   }, []);
+
+  function onAddElement(type: number, list: any[]) {
+    switch (type) {
+      case 0:
+        dispatch({ type: 'setStudents', students: list });
+        break;
+
+      case 1:
+        dispatch({ type: 'setControls', controls: list });
+        break;
+
+      case 2:
+        dispatch({ type: 'setDocuments', documents: list });
+        break;
+
+      case 3:
+        dispatch({ type: 'setUsers', users: list });
+        break;
+
+      default:
+        break;
+    }
+  }
+
+  function onUpdateElement(type: any, list: any) {
+    // switch (type) {
+    //   case 0: {
+    //     console.log(appContext);
+    //     d
+    //     // const list = [...appContext.students];
+    //     // console.log(list, appContext);
+    //     // list[index] = element;
+    //     // console.log(list);
+    //     // dispatch({ type: 'setStudents', documents: list });
+    //   }
+    //   break;
+
+    //   case 1:{
+    //     const list = [...appContext.controls];
+    //     list[index] = element;
+    //     // dispatch({ type: 'setControls', documents: list });
+    //   }
+    //   break;
+
+    //   case 2: {
+    //     const list = [...appContext.documents];
+    //     list[index] = element;
+    //     // dispatch({ type: 'setDocuments', documents: list });
+    //   }
+    //   break;
+
+    //   case 3: {
+    //     const list = [...appContext.users];
+    //     list[index] = element;
+    //     // dispatch({ type: 'setUsers', documents: list });
+    //   }
+    //   break;
+
+    //   default:
+    //   break;
+    // }
+  }
+
+  function onRemoveElement() {
+
+  }
+
+  function onRemoveElements() {
+
+  }
 
   // Aplicar las configuraciones reaccionando al cambio de estado de las configuraciones
   useEffect(() => {

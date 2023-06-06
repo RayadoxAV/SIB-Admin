@@ -78,6 +78,16 @@
   border-color: var(--error-color);
 }
 
+.grade-row.row {
+  border: 1px solid transparent;
+  border-radius: 0.5rem 0.75rem 0.75rem 0.5rem;
+  height: 2rem;
+}
+
+.grade-row.row:has(button:hover) {
+  border-color: var(--error-color);
+}
+
 .column .data-name {
   font-weight: 500;
   overflow: hidden;
@@ -96,6 +106,10 @@
   padding: 0rem 1rem;
   font-size: 14px;
   color: var(--on-surface-color-dimmer);
+}
+
+.column.grade-center {
+  justify-content: center;
 }
 
 .actions-container {

@@ -1,0 +1,11 @@
+.control-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.control-container > .control-footer {
+  opacity: 0;
+  display: flex;
+  flex-direction: row-reverse;
+  padding: 1rem;
+}

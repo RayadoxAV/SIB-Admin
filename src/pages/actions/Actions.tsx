@@ -15,7 +15,7 @@ const Actions: React.FC = () => {
         crumbs={['Inicio', 'Acciones']}
         routes={['/', 'actions']} />
       <div className='c-body'>
-        <div className='section'>
+        <div className='section fade-in-up delay-3' style={{ opacity: '0' }}>
           <div className='section-header'>
             <span className='section-title'>Principales</span>
           </div>
@@ -31,15 +31,15 @@ const Actions: React.FC = () => {
             <ActionItem icon='fa-key' title='Cambiar código de acceso a plataforma' onClick={() => { }} />
           </div>
         </div>
-        <div className='section'>
+        <div className='section fade-in-up delay-5' style={{ opacity: '0' }}>
           <div className='section-header'>
             <span className='section-title'>Irreversibles</span>
             <span style={{ fontSize: '14px', fontWeight: '500', color: 'var(--error-color)', userSelect: 'none' }}>Atención: Estas acciones son irreversibles y podrían eliminar todos los datos del sistema. Utilícese bajo precaución</span>
           </div>
           <div className='section-body'>
-            <ActionItem icon='fa-rotate-left' title='Volver a configuración por defecto' onClick={() => { }} />
-            <ActionItem icon='fa-address-card' title='Borrar todos los alumnos' onClick={() => { }} />
-            <ActionItem icon='fa-trash' title='Borrado total' onClick={() => { }} />
+            <ActionItem dangerous={true} icon='fa-rotate-left' title='Volver a configuración por defecto' onClick={() => { }} />
+            <ActionItem dangerous={true} icon='fa-address-card' title='Borrar todos los alumnos' onClick={() => { }} />
+            <ActionItem dangerous={true} icon='fa-trash' title='Borrado total' onClick={() => { }} />
           </div>
         </div>
       </div>

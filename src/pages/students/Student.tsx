@@ -11,6 +11,7 @@ import { formatDate, formatoEscolaridad, formatoEstadoCivil, format, SERVER_IP }
 import Header from '../../components/Header/Header';
 import { printStudent } from '../../util/printing';
 import Breadcrumb from '../../components/Breadcrumb/Breadcrumb';
+import { E } from '@tauri-apps/api/path-e12e0e34';
 
 const Student: React.FC = () => {
 
@@ -38,134 +39,154 @@ const Student: React.FC = () => {
 
   useEffect(() => {
     setLoading(true);
-    dispatch({ type: 'setTitle', title: 'SI Estudiante' });
+    const students = appContext.students;
 
-    if (appContext.students.length === 0) {
-      const token = localStorage.getItem('token');
-      if (!token) {
-        setRedirectLogin(true);
-        return;
-      }
+    for (let i = 0; i < students.length; i++) {
+      const tempStudent = students[i];
 
-      const requestOptions = {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-          'Authorization': `Bearer ${token}`
-        }
-      };
+      if (tempStudent.id == id) {
+        setStudent(tempStudent);
 
-      fetch(`${SERVER_IP}/students`, requestOptions).then((res) => (res.json())).then((response) => {
-        if (response.queryStatusCode === 0) {
-          const queryStudents = response.result;
+        const tempDocuments = [];
 
-          for (let i = 0; i < queryStudents.length; i++) {
-            const student = queryStudents[i];
-            student.informacion = JSON.parse(student.informacion);
-            queryStudents[i] = student;
+        for (let j = 0; j < appContext.documents.length; j++) {
+          if (appContext.documents[j].idAlumno === tempStudent.id) {
+            tempDocuments.push(appContext.documents[j]);
           }
-
-          dispatch({ type: 'setStudents', students: queryStudents });
-
-          if (appContext.documents.length === 0) {
-            const documentsRequestOptions = {
-              method: 'GET',
-              headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-                'Authorization': `Bearer ${token}`
-              }
-            };
-
-            fetch(`${SERVER_IP}/documents`, documentsRequestOptions).then((res) => (res.json()).then((response) => {
-              if (response.queryStatusCode === 0) {
-                const queryDocuments = response.result;
-
-                for (let i = 0; i < queryDocuments.length; i++) {
-                  let document = queryDocuments[i];
-                  const information = JSON.parse(document.informacion);
-                  document.informacion = information;
-
-                  queryDocuments[i] = document;
-                }
-
-                dispatch({ type: 'setDocuments', documents: queryDocuments });
-
-                const students = queryStudents;
-
-                for (let i = 0; i < students.length; i++) {
-                  const tempStudent = students[i];
-
-                  if (tempStudent.id == id) {
-                    setStudent(tempStudent);
-
-                    const tempDocuments = [];
-
-                    const tempGrades = [];
-
-                    for (let j = 0; j < queryDocuments.length; j++) {
-                      if (queryDocuments[j].idAlumno === tempStudent.id) {
-                        tempDocuments.push(queryDocuments[j]);
-
-                        if (queryDocuments[j].tipo === 1) {
-                          tempGrades.push(...queryDocuments[j].informacion);
-                        }
-                      }
-                    }
-
-                    setLoading(false);
-                    setDocuments(tempDocuments);
-                    setGrades(tempGrades);
-                    break;
-                  }
-                }
-
-                // setDocuments(queryDocuments);
-                setLoading(false);
-              } else if (response.queryStatusCode === 1) {
-                console.log('manejar el error');
-              }
-            }));
-          }
-        } else if (response.queryStatusCode === 1) {
-          console.log('Manejar el error');
         }
-      }).catch((error) => {
-        console.log('Manejar el error peor');
-      });
+        setDocuments(tempDocuments);
+        setLoading(false);
 
-    } else {
-      const students = appContext.students;
 
-      for (let i = 0; i < students.length; i++) {
-        const tempStudent = students[i];
-
-        if (tempStudent.id == id) {
-          setStudent(tempStudent);
-
-          const tempDocuments = [];
-
-          const tempGrades = [];
-
-          for (let j = 0; j < appContext.documents.length; j++) {
-            if (appContext.documents[j].idAlumno === tempStudent.id) {
-              tempDocuments.push(appContext.documents[j]);
-
-              if (appContext.documents[j].tipo === 1) {
-                tempGrades.push(...appContext.documents[j].informacion);
-              }
-            }
-          }
-
-          setLoading(false);
-          setDocuments(tempDocuments);
-          setGrades(tempGrades);
-          break;
-        }
+        // generateGradeRows();
+        // setGrades(tempGrades);
+        break;
       }
     }
-  }, []);
+  }, [appContext.students, appContext.documents]);
+
+  useEffect(() => {
+    generateGradeRows();
+  }, [appContext.documents, isEditingGrades]);
+  // useEffect(() => {
+  //   setLoading(true);
+  //   dispatch({ type: 'setTitle', title: 'SI Estudiante' });
+
+  //   if (appContext.students.length === 0) {
+  //     const token = localStorage.getItem('token');
+  //     if (!token) {
+  //       setRedirectLogin(true);
+  //       return;
+  //     }
+
+  //     const requestOptions = {
+  //       method: 'GET',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //         'Accept': 'application/json',
+  //         'Authorization': `Bearer ${token}`
+  //       }
+  //     };
+
+  //     fetch(`${SERVER_IP}/students`, requestOptions).then((res) => (res.json())).then((response) => {
+  //       if (response.queryStatusCode === 0) {
+  //         const queryStudents = response.result;
+
+  //         for (let i = 0; i < queryStudents.length; i++) {
+  //           const student = queryStudents[i];
+  //           student.informacion = JSON.parse(student.informacion);
+  //           queryStudents[i] = student;
+  //         }
+
+  //         dispatch({ type: 'setStudents', students: queryStudents });
+
+  //         if (appContext.documents.length === 0) {
+  //           const documentsRequestOptions = {
+  //             method: 'GET',
+  //             headers: {
+  //               'Content-Type': 'application/json',
+  //               'Accept': 'application/json',
+  //               'Authorization': `Bearer ${token}`
+  //             }
+  //           };
+
+  //           fetch(`${SERVER_IP}/documents`, documentsRequestOptions).then((res) => (res.json()).then((response) => {
+  //             if (response.queryStatusCode === 0) {
+  //               const queryDocuments = response.result;
+
+  //               for (let i = 0; i < queryDocuments.length; i++) {
+  //                 let document = queryDocuments[i];
+  //                 const information = JSON.parse(document.informacion);
+  //                 document.informacion = information;
+
+  //                 queryDocuments[i] = document;
+  //               }
+
+  //               dispatch({ type: 'setDocuments', documents: queryDocuments });
+
+  //               const students = queryStudents;
+
+  //               for (let i = 0; i < students.length; i++) {
+  //                 const tempStudent = students[i];
+
+  //                 if (tempStudent.id == id) {
+  //                   setStudent(tempStudent);
+
+  //                   const tempDocuments = [];
+
+  //                   for (let j = 0; j < queryDocuments.length; j++) {
+  //                     if (queryDocuments[j].idAlumno === tempStudent.id) {
+  //                       tempDocuments.push(queryDocuments[j]);
+  //                     }
+  //                   }
+
+  //                   setLoading(false);
+  //                   setDocuments(tempDocuments);
+  //                   generateGradeRows();
+  //                   break;
+  //                 }
+  //               }
+
+  //               // setDocuments(queryDocuments);
+  //               setLoading(false);
+  //             } else if (response.queryStatusCode === 1) {
+  //               console.log('manejar el error');
+  //             }
+  //           }));
+  //         }
+  //       } else if (response.queryStatusCode === 1) {
+  //         console.log('Manejar el error');
+  //       }
+  //     }).catch((error) => {
+  //       console.log('Manejar el error peor');
+  //     });
+
+  //   } else {
+  //     const students = appContext.students;
+
+  //     for (let i = 0; i < students.length; i++) {
+  //       const tempStudent = students[i];
+
+  //       if (tempStudent.id == id) {
+  //         setStudent(tempStudent);
+
+  //         const tempDocuments = [];
+
+  //         for (let j = 0; j < appContext.documents.length; j++) {
+  //           if (appContext.documents[j].idAlumno === tempStudent.id) {
+  //             tempDocuments.push(appContext.documents[j]);
+  //           }
+  //         }
+
+  //         setLoading(false);
+  //         setDocuments(tempDocuments);
+  //         generateGradeRows();
+  //         // setGrades(tempGrades);
+  //         break;
+  //       }
+  //     }
+  //   }
+  // }, [appContext.students, appContext.documents]);
 
   function addInformationOption(index: number) {
     switch (index) {
@@ -194,6 +215,86 @@ const Student: React.FC = () => {
     // console.log('Generate page and print');
     printStudent(student, documents);
     // window.print();
+  }
+
+  function generateGradeRows() {
+
+    const tempGrades = [];
+
+    for (let i = 0; i < appContext.documents.length; i++) {
+      const document = appContext.documents[i];
+
+      if (document.tipo === 1) {
+        for (let j = 0; j < document.informacion.length; j++) {
+          const grade = document.informacion[j];
+          const row =
+            <div key={`${i}-${j}`} className='row grade-row'>
+              <div className='column grade-center'>
+                <span className='data-name'>{grade.asignatura}</span>
+              </div>
+              <div className='column grade-center'>
+                <span className='value'>{grade.calificacion}</span>
+              </div>
+              <div className='column delete-column' style={{ maxWidth: isEditingGrades ? '3rem' : '0rem' }}>
+                <button onClick={() => { deleteGrade(document.id) }}>
+                  <i className='fa-solid fa-trash'></i>
+                </button>
+              </div>
+            </div>;
+
+          tempGrades.push(row);
+        }
+      }
+    }
+    // console.log(tempGrades);
+    setGrades(tempGrades);
+
+  }
+
+  function deleteReport(id: number) {
+    console.log(id);
+    const requestOptions = {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
+    };
+
+    fetch(`${SERVER_IP}/document/${id}`, requestOptions).then((res) => res.json()).then((response: any) => {
+      if (response.requestStatus === 'SUCCESS' && response.deletionStatusCode === 0) {
+        alert('Reporte borrado exitosamente');
+        setEditingReports(false);
+      } else {
+        alert('No se pudo borrar el reporte')
+      }
+    });
+  }
+
+  async function deleteGrade(id: number) {
+    const answer = await confirm('¿Está seguro de que desea borrar la calificación? Borrará todas las calificaciones del documento');
+    
+    if (answer) {
+      console.log(id);
+      const requestOptions = {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
+      };
+  
+      fetch(`${SERVER_IP}/document/${id}`, requestOptions).then((res) => res.json()).then((response: any) => {
+        if (response.requestStatus === 'SUCCESS' && response.deletionStatusCode === 0) {
+          alert('Calificacion borrada exitosamente');
+          setEditingGrades(false);
+        } else {
+          alert('No se pudo borrar la calificacion');
+        }
+      });
+    }
   }
 
   if (redirect) {
@@ -238,7 +339,7 @@ const Student: React.FC = () => {
             </div>
             <div className='actions-container'>
               <button ref={addInformationButton} className='action fade-in-up' onClick={() => { setDialogVisible(true); }}><i className='fa-solid fa-add'></i></button>
-              <button className='action fade-in-up'><i className='fa-solid fa-pencil'></i> <span className='text'>Editar</span></button>
+              <button className='action fade-in-up' onClick={() => { navigate(`/edit-student/${student.id}`) }}><i className='fa-solid fa-pencil'></i> <span className='text'>Editar</span></button>
               <button className='action fade-in-up' onClick={print}><i className='fa-solid fa-print'></i> <span className='text'>Imprimir</span></button>
             </div>
           </div>
@@ -325,7 +426,7 @@ const Student: React.FC = () => {
                               <span className='value'>{formatDate(document.fecha)}</span>
                             </div>
                             <div className='column delete-column' style={{ maxWidth: isEditingReports ? '3rem' : '0rem' }}>
-                              <button onClick={() => { alert(`Not implemented: ${document.id}`); }}>
+                              <button onClick={() => { deleteReport(document.id); }}>
                                 <i className='fa-solid fa-trash'></i>
                               </button>
                             </div>
@@ -353,7 +454,7 @@ const Student: React.FC = () => {
                   </button>
                 </div>
               </div>
-              <div className='card-body col'>
+              <div className='card-body col' style={{ padding: '0.5rem' }}>
                 {
                   documents.reduce((accumulator: number, currentDocument: any) => {
                     if (currentDocument.tipo === 1) {
@@ -365,30 +466,10 @@ const Student: React.FC = () => {
                       Sin calificaciones registradas
                     </div>
                   ) : (
-                    <div className='row grade-row'>
-                      <div className='column'>
-                        {
-                          grades.map((grade: any, index: number) => {
-                            return (
-                              <span key={index} className='data-name'>{grade.asignatura}</span>
-                            );
-                          })
-                        }
-                      </div>
-                      <div className='column'>
-                        {
-                          grades.map((grade: any, index: number) => {
-                            return (
-                              <span key={index} className='value'>{grade.calificacion}</span>
-                            );
-                          })
-                        }
-                      </div>
-                    </div>
+                    grades
                   )
                 }
               </div>
-              <div className='card-footer'></div>
             </div>
             {student.informacion.estudioSoc.miembrosFamilia ?
               (
@@ -398,7 +479,7 @@ const Student: React.FC = () => {
                   </div>
                   <div className='card-body'>
                     <div className='vertical-container'>
-                      {student.miembrosFamilia.map((miembro: any, index: number) => (
+                      {student.informacion.estudioSoc.miembrosFamilia.map((miembro: any, index: number) => (
                         <div className='row' key={index}>
                           <div className='column'>
                             <span className='data-name'>{miembro.nombreMiembro}</span>
@@ -457,10 +538,10 @@ const Student: React.FC = () => {
                         <span className='data-name'>Cantidad de miembros que trabajan</span>
                       </div>
                       <div className='column'>
-                        <span className='value'>{format(student.cantidadMiembros)}</span>
-                        <span className='value'>{format(student.tipoFamilia)}</span>
-                        <span className='value'>{student.miembrosFamilia.length + 1}</span>
-                        <span className='value'>{student.totalMiembrosTrabajan}</span>
+                        <span className='value'>{format(student.informacion.estudioSoc.cantidadMiembros)}</span>
+                        <span className='value'>{format(student.informacion.estudioSoc.tipoFamilia)}</span>
+                        <span className='value'>{student.informacion.estudioSoc.miembrosFamilia.length + 1}</span>
+                        <span className='value'>{student.informacion.estudioSoc.totalMiembrosTrabajan}</span>
                       </div>
                     </div>
                     <div className='card-footer'></div>
@@ -493,15 +574,15 @@ const Student: React.FC = () => {
                     </div>
                     <div className='column'>
                       <span className='value'>&nbsp;</span>
-                      <span className='value'>${student.alimentacion}</span>
-                      <span className='value'>${student.medicamentos}</span>
-                      <span className='value'>${student.transporte}</span>
-                      <span className='value'>${student.gasolina}</span>
-                      <span className='value'>${student.educacion}</span>
-                      <span className='value'>${student.abono}</span>
-                      <span className='value'>${student.celulares}</span>
-                      <span className='value'>${student.servicioMedico}</span>
-                      <span className='value'>${student.guarderia}</span>
+                      <span className='value'>${student.informacion.estudioSoc.alimentacion}</span>
+                      <span className='value'>${student.informacion.estudioSoc.medicamentos}</span>
+                      <span className='value'>${student.informacion.estudioSoc.transporte}</span>
+                      <span className='value'>${student.informacion.estudioSoc.gasolina}</span>
+                      <span className='value'>${student.informacion.estudioSoc.educacion}</span>
+                      <span className='value'>${student.informacion.estudioSoc.abono}</span>
+                      <span className='value'>${student.informacion.estudioSoc.celulares}</span>
+                      <span className='value'>${student.informacion.estudioSoc.servicioMedico}</span>
+                      <span className='value'>${student.informacion.estudioSoc.guarderia}</span>
                     </div>
                     <div className='column'>
                       <span className='data-name'>&nbsp;</span>
@@ -517,15 +598,15 @@ const Student: React.FC = () => {
                     </div>
                     <div className='column'>
                       <span className='value'>&nbsp;</span>
-                      <span className='value'>${student.agua}</span>
-                      <span className='value'>${student.gasCilindro}</span>
-                      <span className='value'>${student.energiaElectrica}</span>
-                      <span className='value'>${student.telefonoInternet}</span>
-                      <span className='value'>${student.cable}</span>
-                      <span className='value'>${student.otros}</span>
-                      <span className='value'>${student.totalEgresos}</span>
-                      <span className='value'>{format(student.materialVivienda)}</span>
-                      <span className='value'>{format(student.estadoVivienda)}</span>
+                      <span className='value'>${student.informacion.estudioSoc.agua}</span>
+                      <span className='value'>${student.informacion.estudioSoc.gasCilindro}</span>
+                      <span className='value'>${student.informacion.estudioSoc.energiaElectrica}</span>
+                      <span className='value'>${student.informacion.estudioSoc.telefonoInternet}</span>
+                      <span className='value'>${student.informacion.estudioSoc.cable}</span>
+                      <span className='value'>${student.informacion.estudioSoc.otros}</span>
+                      <span className='value'>${student.informacion.estudioSoc.totalEgresos}</span>
+                      <span className='value'>{format(student.informacion.estudioSoc.materialVivienda)}</span>
+                      <span className='value'>{format(student.informacion.estudioSoc.estadoVivienda)}</span>
                     </div>
                   </div>
                   <div className='card-footer'>
