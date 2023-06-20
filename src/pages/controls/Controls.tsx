@@ -211,7 +211,7 @@ const Controls: React.FC = () => {
                 headers={headers}
                 data={verBien} />
               <div className='control-footer fade-in-up delay-7'>
-                <button className='button-primary' type='button' onClick={() => { addStudentDialog(2); }}>Agregar estudiante</button>
+                <button className='button-primary' type='button' onClick={() => { addStudentDialog(2) }}>Agregar estudiante</button>
               </div>
             </div>
             <div className='control-container'>
@@ -221,7 +221,7 @@ const Controls: React.FC = () => {
                 headers={headers}
                 data={situacionEspecial} />
               <div className='control-footer fade-in-up delay-7'>
-                <button className='button-primary' type='button' onClick={() => { addStudentDialog(3); }}>Agregar estudiante</button>
+                <button className='button-primary' type='button' onClick={() => { addStudentDialog(3) }}>Agregar estudiante</button>
               </div>
             </div>
           </TabPanel>

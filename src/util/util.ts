@@ -1,5 +1,5 @@
 
-export const SERVER_IP = import.meta.env.PROD ? 'https://sibserver.onrender.com' : 'http://localhost:3000';
+export const SERVER_IP = import.meta.env.PROD ? 'https://sib-server.onrender.com' : 'http://localhost:3000';
 
 export function format(type: any): string {
   switch (type) {

@@ -15,6 +15,9 @@
       "all": true
     },
     "bundle": {
+      "resources": [
+        "assets/*"
+      ],
       "active": true,
       "icon": [
         "icons/32x32.png",
@@ -30,7 +33,12 @@
       "csp": null
     },
     "updater": {
-      "active": false
+      "active": false,
+      "endpoints": [
+        "http://localhost:3000/releases/{{target}}/{{current_version}}"
+      ],
+      "dialog": true,
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDVDM0MyQTNEMkQ2QkJDNDkKUldSSnZHc3RQU284WEo5S3k3Q01BOXNLcFVEWFFqeWJTSFpTWDNNMkYySWxvaUczM0pFZGZWb0sK"
     },
     "windows": [
       {

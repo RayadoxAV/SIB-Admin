@@ -59,7 +59,7 @@ const GroupList: React.FC = () => {
 
     for (let i = 0; i < appContext.students.length; i++) {
       const student = { ...appContext.students[i] };
-      if (student.informacion.grado === values.grado && student.informacion.grupo.toUpperCase() === values.grupo) {
+      if (student.informacion.grado === values.grado && student.informacion.grupo.toUpperCase() === values.grupo && student.estado === 0 ) {
         tempStudents.push(student);
       }
 

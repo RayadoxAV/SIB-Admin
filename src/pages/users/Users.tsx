@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 
-import { Navigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 import Header from '../../components/Header/Header';
 import LoadingIndicator from '../../components/loading-indicator/LoadingIndicator';
@@ -41,12 +41,18 @@ const Users: React.FC = () => {
 
   const [redirectLogin, setRedirectLogin] = useState(false);
 
+  const navigate = useNavigate();
+
   useEffect(() => {
-    if (appContext.users.length === 0) {
-      setLoading(true);
+    if (appContext.users) {
+      if (appContext.users.length === 0) {
+        setLoading(true);
+      } else {
+        setLoading(false);
+        setUsers(appContext.users);
+      }
     } else {
       setLoading(false);
-      setUsers(appContext.users);
     }
     // dispatch({ type: 'setTitle', title: 'SI Usuarios' });
 
@@ -127,8 +133,8 @@ const Users: React.FC = () => {
 
     fetch(`${SERVER_IP}/users`, requestOptions).then((res) => (res.json())).then((response) => {
       if (response.deleteStatusCode === 0) {
-        setUsers(tempUsers);
-        dispatch({ type: 'setUsers', users: tempUsers });
+        // setUsers(tempUsers);
+        // dispatch({ type: 'setUsers', users: tempUsers });
       }
     }).catch((error) => {
       console.log(error);
@@ -158,6 +164,9 @@ const Users: React.FC = () => {
                 selectable={true}
                 searchable={true}
                 editable={true}
+                performEdit={(user: any) => {
+                  navigate(`/edit-user/${user.idUsuario}`);
+                }}
                 searchParams={
                   [
                     {
@@ -174,7 +183,7 @@ const Users: React.FC = () => {
                       nested: false
                     },
                     {
-                      name: 'estado:',
+                      name: 'status:',
                       nested: false
                     }
                   ]

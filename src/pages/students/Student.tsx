@@ -274,7 +274,7 @@ const Student: React.FC = () => {
 
   async function deleteGrade(id: number) {
     const answer = await confirm('¿Está seguro de que desea borrar la calificación? Borrará todas las calificaciones del documento');
-    
+
     if (answer) {
       console.log(id);
       const requestOptions = {
@@ -285,7 +285,7 @@ const Student: React.FC = () => {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
       };
-  
+
       fetch(`${SERVER_IP}/document/${id}`, requestOptions).then((res) => res.json()).then((response: any) => {
         if (response.requestStatus === 'SUCCESS' && response.deletionStatusCode === 0) {
           alert('Calificacion borrada exitosamente');

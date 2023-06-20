@@ -38,7 +38,9 @@ function App() {
       dispatch({ type: 'setSettings', settings: globalThis.settings });
       PrintingSettingsDispatcher.setupFlags();
       setLoading(true);
-
+      console.log('huh');
+    } else {
+      setLoading(false);
     }
 
 
@@ -92,7 +94,7 @@ function App() {
 
                 });
                 socket.on('remove-elements', (args: any) => {
-
+                  onAddElement(args.type, args.list);
                 });
 
               } catch (error: any) {

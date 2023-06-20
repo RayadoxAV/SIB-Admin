@@ -1199,7 +1199,8 @@ export function printStudent(student: any, documents: any) {
       {
         text: 'Información socioeconómica',
         style: 'header',
-        margin: [0, 12, 0, 4]
+        margin: [0, 12, 0, 4],
+        pageBreak: 'before'
       },
       !globalThis.flags.get('tonerSaving') ? (
         {
@@ -1220,6 +1221,59 @@ export function printStudent(student: any, documents: any) {
         null
       ),
       ...generateSocioeconomicInformation(),
+      {
+        text: 'Información de vivienda',
+        style: 'header',
+        margin: [0, 12, 0, 4]
+      },
+      !globalThis.flags.get('tonerSaving') ? (
+        {
+          canvas:
+            [
+              {
+                type: 'line',
+                x1: 0,
+                y1: 0,
+                x2: 515,
+                y2: 0,
+                lineWidth: 1
+              }
+            ],
+          margin: [0, 0, 0, 4]
+        }
+      ) : (
+        null
+      ),
+      {
+        columns: [
+          {
+            text: `Material`,
+            alignment: 'left',
+            width: '20%',
+            style: 'key'
+          },
+          {
+            text: `${format(student.informacion.estudioSoc.materialVivienda)}`,
+            alignment: 'right',
+            style: 'value'
+          }
+        ]
+      },
+      {
+        columns: [
+          {
+            text: `Condición`,
+            alignment: 'left',
+            width: '20%',
+            style: 'key'
+          },
+          {
+            text: `${format(student.informacion.estudioSoc.estadoVivienda)}`,
+            alignment: 'right',
+            style: 'value'
+          }
+        ]
+      },
     ],
     header: {
       columns: [
@@ -1425,8 +1479,51 @@ export function printStudent(student: any, documents: any) {
 
   function generateFamilyInformation(): any[] {
     const familyInformation = [];
-    if (Object.entries(student.informacion.estudioSoc).length > 0) {
-      console.log('simon');
+    if (student.informacion.estudioSoc.miembrosFamilia) {
+      for (let i = 0; i < student.informacion.estudioSoc.miembrosFamilia.length; i++) {
+        const member = student.informacion.estudioSoc.miembrosFamilia[i];
+        familyInformation.push(
+          {
+            columns: [
+              {
+                text: member.nombreMiembro,
+                alignment: 'left',
+                width: '70%',
+                style: 'key'
+              },
+              {
+                text: member.parentescoMiembro,
+                aligment: 'right',
+                width: '30%',
+                style: 'value'
+              }
+            ]
+          },
+          {
+            columns: [
+              {
+                text: `${member.edadMiembro} años`,
+                alignment: 'left',
+                width: '70%',
+                style: 'value'
+              },
+              {
+                text: `${member.ocupacionMiembro}`,
+                alignment: 'left',
+                width: '30%',
+                style: 'value'
+              }
+            ]
+          },
+          {
+            text: member.emergenciaMiembro ? 'Contacto de emergencia' : '',
+            style: 'danger'
+          },
+          {
+            text: '\n'
+          }
+        );
+      }
     } else {
       familyInformation.push(
         {
@@ -1434,13 +1531,328 @@ export function printStudent(student: any, documents: any) {
         }
       );
     }
+
+    familyInformation.push(
+      {
+        text: 'Tipo de familia',
+        style: 'subheader',
+        margin: [0, 8, 0, 8]
+      },
+      {
+        columns: [
+          {
+            text: 'Tamaño',
+            width: '20%',
+            alignment: 'left',
+            style: 'key'
+          },
+          {
+            text: `${format(student.informacion.estudioSoc.cantidadMiembros)}`,
+            alignment: 'right',
+            style: 'value'
+          },
+        ]
+      },
+      {
+        columns: [
+          {
+            text: 'Tipo',
+            width: '20%',
+            alignment: 'left',
+            style: 'key'
+          },
+          {
+            text: `${format(student.informacion.estudioSoc.tipoFamilia)}`,
+            alignment: 'right',
+            style: 'value'
+          },
+        ]
+      },
+      {
+        columns: [
+          {
+            text: 'Cantidad de miembros',
+            width: '30%',
+            alignment: 'left',
+            style: 'key'
+          },
+          {
+            text: `${student.informacion.estudioSoc.miembrosFamilia ? ( student.informacion.estudioSoc.miembrosFamilia.length + 1 ) : 1}`,
+            alignment: 'right',
+            style: 'value'
+          },
+        ]
+      },
+      {
+        columns: [
+          {
+            text: 'Cantidad de miembros que trabajan',
+            width: '40%',
+            alignment: 'left',
+            style: 'key'
+          },
+          {
+            text: `${student.informacion.estudioSoc.totalMiembrosTrabajan || 0}`,
+            alignment: 'right',
+            style: 'value'
+          },
+        ]
+      },
+    )
+
     return familyInformation;
   }
 
   function generateSocioeconomicInformation(): any[] {
     const socioeconomicInformation = [];
     if (Object.entries(student.informacion.estudioSoc).length > 0) {
-      console.log('simon');
+      socioeconomicInformation.push(
+        {
+          text: 'Egresos familiares',
+          style: 'subheader',
+          margin: [0, 8, 0, 8]
+        },
+        {
+          columns: [
+            {
+              text: `Alimentación`,
+              alignment: 'left',
+              width: '20%',
+              style: 'key'
+            },
+            {
+              text: `$${Intl.NumberFormat('en-US').format(student.informacion.estudioSoc.alimentacion)}`,
+              alignment: 'right',
+              style: 'value'
+            }
+          ]
+        },
+        {
+          columns: [
+            {
+              text: `Medicamentos`,
+              alignment: 'left',
+              width: '20%',
+              style: 'key'
+            },
+            {
+              text: `$${Intl.NumberFormat('en-US').format(student.informacion.estudioSoc.medicamentos)}`,
+              alignment: 'right',
+              style: 'value'
+            }
+          ]
+        },
+        {
+          columns: [
+            {
+              text: `Transporte`,
+              alignment: 'left',
+              width: '20%',
+              style: 'key'
+            },
+            {
+              text: `$${Intl.NumberFormat('en-US').format(student.informacion.estudioSoc.transporte)}`,
+              alignment: 'right',
+              style: 'value'
+            }
+          ]
+        },
+        {
+          columns: [
+            {
+              text: `Gasolina`,
+              alignment: 'left',
+              width: '20%',
+              style: 'key'
+            },
+            {
+              text: `$${Intl.NumberFormat('en-US').format(student.informacion.estudioSoc.gasolina)}`,
+              alignment: 'right',
+              style: 'value'
+            }
+          ]
+        },
+        {
+          columns: [
+            {
+              text: `Educación`,
+              alignment: 'left',
+              width: '20%',
+              style: 'key'
+            },
+            {
+              text: `$${Intl.NumberFormat('en-US').format(student.informacion.estudioSoc.educacion)}`,
+              alignment: 'right',
+              style: 'value'
+            }
+          ]
+        },
+        {
+          columns: [
+            {
+              text: `Abono`,
+              alignment: 'left',
+              width: '20%',
+              style: 'key'
+            },
+            {
+              text: `$${Intl.NumberFormat('en-US').format(student.informacion.estudioSoc.abono)}`,
+              alignment: 'right',
+              style: 'value'
+            }
+          ]
+        },
+        {
+          columns: [
+            {
+              text: `Celulares`,
+              alignment: 'left',
+              width: '20%',
+              style: 'key'
+            },
+            {
+              text: `$${Intl.NumberFormat('en-US').format(student.informacion.estudioSoc.celulares)}`,
+              alignment: 'right',
+              style: 'value'
+            }
+          ]
+        },
+        {
+          columns: [
+            {
+              text: `Servicio médico`,
+              alignment: 'left',
+              width: '20%',
+              style: 'key'
+            },
+            {
+              text: `$${Intl.NumberFormat('en-US').format(student.informacion.estudioSoc.servicioMedico)}`,
+              alignment: 'right',
+              style: 'value'
+            }
+          ]
+        },
+        {
+          columns: [
+            {
+              text: `Guardería`,
+              alignment: 'left',
+              width: '20%',
+              style: 'key'
+            },
+            {
+              text: `$${Intl.NumberFormat('en-US').format(student.informacion.estudioSoc.guarderia)}`,
+              alignment: 'right',
+              style: 'value'
+            }
+          ]
+        },
+        {
+          columns: [
+            {
+              text: `Agua`,
+              alignment: 'left',
+              width: '20%',
+              style: 'key'
+            },
+            {
+              text: `$${Intl.NumberFormat('en-US').format(student.informacion.estudioSoc.agua)}`,
+              alignment: 'right',
+              style: 'value'
+            }
+          ]
+        },
+        {
+          columns: [
+            {
+              text: `Gas cilíndro`,
+              alignment: 'left',
+              width: '20%',
+              style: 'key'
+            },
+            {
+              text: `$${Intl.NumberFormat('en-US').format(student.informacion.estudioSoc.gasCilindro)}`,
+              alignment: 'right',
+              style: 'value'
+            }
+          ]
+        },
+        {
+          columns: [
+            {
+              text: `Energía eléctrica`,
+              alignment: 'left',
+              width: '20%',
+              style: 'key'
+            },
+            {
+              text: `$${Intl.NumberFormat('en-US').format(student.informacion.estudioSoc.energiaElectrica)}`,
+              alignment: 'right',
+              style: 'value'
+            }
+          ]
+        },
+        {
+          columns: [
+            {
+              text: `Teléfono / Internet`,
+              alignment: 'left',
+              width: '20%',
+              style: 'key'
+            },
+            {
+              text: `$${Intl.NumberFormat('en-US').format(student.informacion.estudioSoc.telefonoInternet)}`,
+              alignment: 'right',
+              style: 'value'
+            }
+          ]
+        },
+        {
+          columns: [
+            {
+              text: `Cable`,
+              alignment: 'left',
+              width: '20%',
+              style: 'key'
+            },
+            {
+              text: `$${Intl.NumberFormat('en-US').format(student.informacion.estudioSoc.cable)}`,
+              alignment: 'right',
+              style: 'value'
+            }
+          ]
+        },
+        {
+          columns: [
+            {
+              text: `Otros`,
+              alignment: 'left',
+              width: '20%',
+              style: 'key'
+            },
+            {
+              text: `$${Intl.NumberFormat('en-US').format(student.informacion.estudioSoc.otros)}`,
+              alignment: 'right',
+              style: 'value'
+            }
+          ]
+        },
+        {
+          columns: [
+            {
+              text: `Total de egresos`,
+              alignment: 'left',
+              width: '20%',
+              style: 'key'
+            },
+            {
+              text: `$${Intl.NumberFormat('en-US').format(student.informacion.estudioSoc.totalEgresos)}`,
+              alignment: 'right',
+              style: 'value'
+            }
+          ]
+        },
+      );
     } else {
       socioeconomicInformation.push(
         {

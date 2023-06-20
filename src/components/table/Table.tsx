@@ -183,42 +183,42 @@ const Table: React.FC<TableProps> =
       //     }
       //   }
 
-        // if (searchParam.name.includes(':')) {
-        //   elegible = false;
-        // } else {
-        //   if (searchParam.nested) {
-        //     elegible = false;
-        //   } else {
-        //     // let elegible = 
-        //     return true;
-        //   }
-        // }
+      // if (searchParam.name.includes(':')) {
+      //   elegible = false;
+      // } else {
+      //   if (searchParam.nested) {
+      //     elegible = false;
+      //   } else {
+      //     // let elegible = 
+      //     return true;
+      //   }
+      // }
 
-        // if (!searchParam.name.includes(':')) {
-        //   if (searchParam.nested) {
-        //     elegible = `${dataRow[`${searchParam.parent}`][`${searchParam.name}`]}`.toLowerCase().includes(searchValue);
-        //   } else {
-        //     elegible = `${dataRow[`${searchParam.name}`]}`.toLowerCase().includes(searchValue);
-        //     if (elegible) {
-        //       return true;
-        //     }
-        //   }
+      // if (!searchParam.name.includes(':')) {
+      //   if (searchParam.nested) {
+      //     elegible = `${dataRow[`${searchParam.parent}`][`${searchParam.name}`]}`.toLowerCase().includes(searchValue);
+      //   } else {
+      //     elegible = `${dataRow[`${searchParam.name}`]}`.toLowerCase().includes(searchValue);
+      //     if (elegible) {
+      //       return true;
+      //     }
+      //   }
 
-        // } else {
-        //   if (searchParam.nested) {
-        //     // const param = searchValue.split(':')[0];
-        //     let elegible = `${searchParam.name.split(':')[0]}:${`${dataRow[`${searchParam.parent}`][`${searchParam.name}`]}`.toLowerCase()}`.includes(searchValue);
-        //     if (elegible) {
-        //       return true;
-        //     }
-        //   } else {
-        //     const param = searchValue.split(':')[0];
-        //     let elegible = `${searchParam.name.split(':')[0]}:${`${dataRow[param]}`.toLowerCase()}`.includes(searchValue);
-        //     if (elegible) {
-        //       return true;
-        //     }
-        //   }
-        // }
+      // } else {
+      //   if (searchParam.nested) {
+      //     // const param = searchValue.split(':')[0];
+      //     let elegible = `${searchParam.name.split(':')[0]}:${`${dataRow[`${searchParam.parent}`][`${searchParam.name}`]}`.toLowerCase()}`.includes(searchValue);
+      //     if (elegible) {
+      //       return true;
+      //     }
+      //   } else {
+      //     const param = searchValue.split(':')[0];
+      //     let elegible = `${searchParam.name.split(':')[0]}:${`${dataRow[param]}`.toLowerCase()}`.includes(searchValue);
+      //     if (elegible) {
+      //       return true;
+      //     }
+      //   }
+      // }
       // }
       // return false;
       // return true;
@@ -251,7 +251,7 @@ const Table: React.FC<TableProps> =
         case 5:
           return 'Invitado';
       }
-      return '';
+      return '';  
     }
 
     async function onDelete() {
@@ -341,7 +341,7 @@ const Table: React.FC<TableProps> =
                   return (
                     <td className='td' key={`${index}:${cellIndex}`}>
                       {(dataRow[header.name] === undefined || dataRow[header.name] === '')
-                        ? header.nested ? 
+                        ? header.nested ?
                           dataRow[header.parent][header.name] : '-'
                         : dataRow[header.name]}
                     </td>
@@ -374,14 +374,10 @@ const Table: React.FC<TableProps> =
                 <span className='input-label'>Buscar</span>
                 <input type='text' name='search' id='search' className='input search' onChange={search} autoComplete='off' />
               </div>
-              {addUrl ?
-                (
-                  <button className='button-primary' style={{ marginLeft: 'auto' }} onClick={handleAdd}>
-                    <i className='fa-solid fa-add icon'></i>
-                    Agregar
-                  </button>
-                ) :
-                (null)}
+              <button className='button-primary' style={{ marginLeft: 'auto' }} onClick={handleAdd}>
+                <i className='fa-solid fa-add icon'></i>
+                Agregar
+              </button>
             </div>) :
             (null)}
           <div className={`table-wrapper fade-in-up delay-3 ${className}`}>

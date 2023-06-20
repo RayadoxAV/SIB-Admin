@@ -31,6 +31,7 @@ import PrintingSettingsDispatcher from "./misc/settings/PrintingSettingsDispatch
 import Reports from "./pages/students/reports/Reports";
 import Actions from "./pages/actions/Actions";
 import EditStudent from "./pages/students/edit-student/EditStudent";
+import EditUser from "./pages/users/edit-user/EditUser";
 
 // Declarar variables globales para las configuraciones iniciales
 declare global {
@@ -88,6 +89,10 @@ const router = createBrowserRouter([
       {
         path: '/add-user',
         element: <AddUser />
+      },
+      {
+        path: '/edit-user/:id',
+        element: <EditUser />
       },
       {
         path: '/actions',

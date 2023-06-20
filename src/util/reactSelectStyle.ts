@@ -1,9 +1,9 @@
-import { CSSObjectWithLabel, ControlProps, StylesConfig, ContainerProps, MenuProps, SingleValueProps, OptionProps } from "react-select";
+import { CSSObjectWithLabel, ControlProps, StylesConfig, ContainerProps, MenuProps, SingleValueProps, OptionProps, } from "react-select";
 
 export const selectStyle: StylesConfig = {
   container: (baseStyles: CSSObjectWithLabel, props: ContainerProps) => ({
     ...baseStyles,
-    border: 'none'
+    border: 'none',
   }),
   control: (baseStyles: CSSObjectWithLabel, state: ControlProps) => ({
     ...baseStyles,
@@ -19,10 +19,10 @@ export const selectStyle: StylesConfig = {
   menu: (baseStyles: CSSObjectWithLabel, state: MenuProps) => ({
     ...baseStyles,
     backgroundColor: 'var(--surface-color)',
-    borderRadius: '0.5rem'
+    borderRadius: '0.5rem',
   }),
   option: (baseStyles: CSSObjectWithLabel, state: OptionProps) => ({
-  ...baseStyles,
+    ...baseStyles,
     transition: 'all 150ms ease',
     margin: '0.25rem 0.5rem 0.25rem 0.5rem',
     width: 'auto',
@@ -33,5 +33,8 @@ export const selectStyle: StylesConfig = {
     '&:hover': {
       backgroundColor: state.isSelected ? 'var(--primary-color)' : 'var(--tertiary-surface-color)'
     },
+  }),
+  menuPortal: (baseStyles: any, _) => ({
+    ...baseStyles,
   })
 };

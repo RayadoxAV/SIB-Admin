@@ -59,7 +59,7 @@ const AddUser: React.FC = () => {
         nombres: values.nombres,
         pApellido: values.pApellido,
         sApellido: values.sApellido,
-        role: values.rol
+        role: Number.parseInt(values.rol)
       }),
       headers: {
         'Content-Type': 'application/json',
@@ -81,7 +81,6 @@ const AddUser: React.FC = () => {
 
       resetForm();
       setSuccessDialogVisible(true);
-      dispatch({ type: 'setUsers', users: [] });
 
     });
   }
@@ -103,47 +102,44 @@ const AddUser: React.FC = () => {
             {({ values, errors, touched, handleChange, handleBlur, setFieldValue }) => (
               <Form className='form'>
                 <div className='form-body fade-in-up delay-3'>
-                  <div className='form-column'>
-                    <div className='input-column no-pad'>
-                      <span className='input-label'>Nombre de usuario</span>
-                      <input className='input' type='text' name='username' id='username' autoComplete='off' onChange={handleChange} onBlur={handleBlur} value={values.username} />
-                      <FormError text={errors.username} touched={touched.username} />
-                    </div>
-                    <div className='input-column no-pad'>
-                      <span className='input-label'>Contraseña</span>
-                      <input className='input' type='password' name='password' id='password' autoComplete='off' onChange={handleChange} onBlur={handleBlur} value={values.password} />
-                      <FormError text={errors.password} touched={touched.password} />
-                    </div>
-                    <div className='input-column no-pad'>
-                      <span className='input-label'>Nombres</span>
-                      <input className='input' type='text' name='nombres' id='nombres' autoComplete='off' onChange={handleChange} onBlur={handleBlur} value={values.nombres} />
-                      <FormError text={errors.nombres} touched={touched.nombres} />
-                    </div>
+                  <div className='input-column no-pad'>
+                    <span className='input-label'>Nombre de usuario</span>
+                    <input className='input' type='text' name='username' id='username' autoComplete='off' onChange={handleChange} onBlur={handleBlur} value={values.username} />
+                    <FormError text={errors.username} touched={touched.username} />
                   </div>
-                  <div className='form-column'>
-                    <div className='input-column no-pad'>
-                      <span className='input-label'>Primer apellido</span>
-                      <input className='input' type='text' name='pApellido' id='pApellido' autoComplete='off' onChange={handleChange} onBlur={handleBlur} value={values.pApellido} />
-                      <FormError text={errors.pApellido} touched={touched.pApellido} />
-                    </div>
-                    <div className='input-column no-pad'>
-                      <span className='input-label'>Segundo apellido</span>
-                      <input className='input' type='text' name='sApellido' id='sApellido' autoComplete='off' onChange={handleChange} onBlur={handleBlur} value={values.sApellido} />
-                      <FormError text={errors.sApellido} touched={touched.sApellido} />
-                    </div>
-                    <div className='input-column no-pad'>
-                      <span className='input-label'>Rol</span>
-                      <ReactSelect
-                        className='react-select'
-                        required={true}
-                        options={rolOptions}
-                        styles={selectStyle}
-                        value={rolOptions.find(option => option.value === values.rol)}
-                        onChange={(option: any) => {
-                          setFieldValue('rol', `${option.value}`);
-                        }} />
-                      <FormError text={errors.rol} touched={touched.rol} />
-                    </div>
+                  <div className='input-column no-pad'>
+                    <span className='input-label'>Contraseña</span>
+                    <input className='input' type='password' name='password' id='password' autoComplete='off' onChange={handleChange} onBlur={handleBlur} value={values.password} />
+                    <FormError text={errors.password} touched={touched.password} />
+                  </div>
+                  <div className='input-column no-pad'>
+                    <span className='input-label'>Nombres</span>
+                    <input className='input' type='text' name='nombres' id='nombres' autoComplete='off' onChange={handleChange} onBlur={handleBlur} value={values.nombres} />
+                    <FormError text={errors.nombres} touched={touched.nombres} />
+                  </div>
+                  <div className='input-column no-pad'>
+                    <span className='input-label'>Primer apellido</span>
+                    <input className='input' type='text' name='pApellido' id='pApellido' autoComplete='off' onChange={handleChange} onBlur={handleBlur} value={values.pApellido} />
+                    <FormError text={errors.pApellido} touched={touched.pApellido} />
+                  </div>
+                  <div className='input-column no-pad'>
+                    <span className='input-label'>Segundo apellido</span>
+                    <input className='input' type='text' name='sApellido' id='sApellido' autoComplete='off' onChange={handleChange} onBlur={handleBlur} value={values.sApellido} />
+                    <FormError text={errors.sApellido} touched={touched.sApellido} />
+                  </div>
+                  <div className='input-column no-pad'>
+                    <span className='input-label'>Rol</span>
+                    <ReactSelect
+                      menuPortalTarget={document.querySelector('body')}
+                      className='react-select'
+                      required={true}
+                      options={rolOptions}
+                      styles={selectStyle}
+                      value={rolOptions.find(option => option.value === values.rol)}
+                      onChange={(option: any) => {
+                        setFieldValue('rol', `${option.value}`);
+                      }} />
+                    <FormError text={errors.rol} touched={touched.rol} />
                   </div>
                 </div>
                 <div className='form-footer fade-in-up delay-5'>
