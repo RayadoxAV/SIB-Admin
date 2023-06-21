@@ -5,6 +5,8 @@ on:
       - "v*"
   workflow_dispatch:
 
+permissions: read-all|write-all
+
 jobs:
   release:
     strategy:
