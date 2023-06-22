@@ -381,6 +381,10 @@ const Student: React.FC = () => {
                               (null)}
                             <span className='data-name'>Ingreso mensual</span>
                             <span className='data-name'>Aporte al ingreso familiar</span>
+                            {miembro.telefonoMiembro ?
+                              (
+                                <span className='data-name'>Teléfono</span>
+                              ) : null}
                             {miembro.emergenciaMiembro ?
                               (
                                 <span className='data-name emergency'>Contacto de emergencia</span>
@@ -401,6 +405,10 @@ const Student: React.FC = () => {
                               (null)}
                             <span className='value'>${miembro.ingresoMiembro}</span>
                             <span className='value'>${miembro.aporteMiembro}</span>
+                            {miembro.telefonoMiembro ?
+                              (
+                                <span className='value'>{miembro.telefonoMiembro}</span>
+                              ) : null}
                           </div>
                         </div>
                       ))}

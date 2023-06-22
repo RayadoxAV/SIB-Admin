@@ -1,5 +1,6 @@
 import pdfMake from 'pdfmake/build/pdfmake';
-import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+// import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+import pdfFonts from './misc/vfs_fonts';
 import { format, formatDate, formatoEscolaridad, formatoEstadoCivil } from './util';
 
 export function printList(students: any[], grado: string, grupo: string) {
@@ -11,7 +12,7 @@ export function printList(students: any[], grado: string, grupo: string) {
     return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
   });
 
-  pdfMake.vfs = pdfFonts.pdfMake.vfs;
+  pdfMake.vfs = pdfFonts;
 
   pdfMake.fonts = {
     Roboto: {
@@ -21,8 +22,8 @@ export function printList(students: any[], grado: string, grupo: string) {
       bolditalics: 'Roboto-MediumItalic.ttf'
     },
     RobotoBold: {
-      normal: 'Roboto-Bold.ttf',
-      bold: 'http://localhost:1420/fonts/roboto/Roboto-Black.ttf'
+      normal: 'Roboto-Regular.ttf',
+      bold: 'Roboto-Medium.ttf'
     }
   };
 
@@ -146,7 +147,7 @@ export function printList(students: any[], grado: string, grupo: string) {
 }
 
 export function printStudent(student: any, documents: any) {
-  pdfMake.vfs = pdfFonts.pdfMake.vfs;
+  pdfMake.vfs = pdfFonts;
   pdfMake.fonts = {
     Roboto: {
       normal: 'Roboto-Regular.ttf',
@@ -155,8 +156,8 @@ export function printStudent(student: any, documents: any) {
       bolditalics: 'Roboto-MediumItalic.ttf'
     },
     RobotoBold: {
-      normal: 'http://localhost:1420/fonts/roboto/Roboto-Bold.ttf',
-      bold: 'http://localhost:1420/fonts/roboto/Roboto-Black.ttf'
+      normal: 'Roboto-Regular.ttf',
+      bold: 'Roboto-Medium.ttf'
     }
   };
 

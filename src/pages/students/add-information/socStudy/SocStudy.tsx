@@ -146,7 +146,8 @@ const SocStudy: React.FC<SocStudyProps> = ({ student, onSuccess }) => {
     empresa: '',
     ingreso: 0,
     aporte: 0,
-    emergencia: false
+    emergencia: false,
+    telefono: ''
   };
 
   const memberValidationSchema = Yup.object({
@@ -159,7 +160,8 @@ const SocStudy: React.FC<SocStudyProps> = ({ student, onSuccess }) => {
     empresa: Yup.string().notRequired(),
     ingreso: Yup.number().required('Ingrese un número').min(0, 'El ingreso no puede ser negativo'),
     aporte: Yup.number().required('Ingresa un número').min(0, 'El aporte no puede ser negativo'),
-    emergencia: Yup.boolean()
+    emergencia: Yup.boolean(),
+    telefono: Yup.string().matches(/^[0-9]{10}$/, 'Escribe un teléfono válido'),
   });
 
   function handleMemberSubmit(values: any, { resetForm }: any) {
@@ -173,6 +175,7 @@ const SocStudy: React.FC<SocStudyProps> = ({ student, onSuccess }) => {
       empresaMiembro: values.empresa,
       ingresoMiembro: values.ingreso,
       aporteMiembro: values.aporte,
+      telefonoMiembro: values.telefono,
       emergenciaMiembro: values.emergencia
     };
 
@@ -600,6 +603,11 @@ const SocStudy: React.FC<SocStudyProps> = ({ student, onSuccess }) => {
                   <input id='aporte' name='aporte' type='number' value={values.aporte} onChange={handleChange} onBlur={handleBlur} className='input' />
                   <FormError text={errors.aporte} touched={touched.aporte} />
                 </div>
+              </div>
+              <div className='input-column'>
+                <span className='input-label'>Teléfono <small>&#40;Opcional&#41;</small></span>
+                <input id='telefono' name='telefono' type='text' value={values.telefono} onChange={handleChange} onBlur={handleBlur} className='input' />
+                <FormError text={errors.telefono} touched={touched.telefono} />
               </div>
               <div className='input-row' style={{ justifyContent: 'center' }}>
                 <input id='emergencia' name='emergencia' type='checkbox' value={`${values.emergencia}`} onChange={handleChange} onBlur={handleBlur} />
