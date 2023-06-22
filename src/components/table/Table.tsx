@@ -247,18 +247,17 @@ const Table: React.FC<TableProps> =
         case 1:
           return 'Administrador';
         case 2:
-          return 'Usuario';
-        case 5:
-          return 'Invitado';
+          return 'Oficinista';
+        case 3:
+          return 'Docente';
       }
-      return '';  
+      return '';
     }
 
     async function onDelete() {
       const result = await confirm('¿Está seguro que desea eliminar estos elementos? Esta acción no se puede deshacer.');
       if (result) {
         if (performDelete) {
-          console.log('asda');
           performDelete(selectedRows);
           setDeleteDialogVisible(true);
         }
@@ -308,11 +307,12 @@ const Table: React.FC<TableProps> =
     }
 
     function generateRow(index: number, dataRow: any) {
+      const canSelect = JSON.parse(localStorage.getItem('user')!!).role < 3;
       let row =
         <tr id={`row-${index}`} className='tr' key={index}>
           <>
             {
-              selectable ?
+              selectable && canSelect ?
                 (
                   <td className='td'>
                     {/* <CheckBox key={`${resetPulse}`} onChange={(checked: boolean) => handleSelection(checked, index)} /> */}
@@ -374,10 +374,12 @@ const Table: React.FC<TableProps> =
                 <span className='input-label'>Buscar</span>
                 <input type='text' name='search' id='search' className='input search' onChange={search} autoComplete='off' />
               </div>
-              <button className='button-primary' style={{ marginLeft: 'auto' }} onClick={handleAdd}>
-                <i className='fa-solid fa-add icon'></i>
-                Agregar
-              </button>
+              {JSON.parse(localStorage.getItem('user')!!).role < 3 ? (
+                <button className='button-primary' style={{ marginLeft: 'auto' }} onClick={handleAdd}>
+                  <i className='fa-solid fa-add icon'></i>
+                  Agregar
+                </button>
+              ) : null }
             </div>) :
             (null)}
           <div className={`table-wrapper fade-in-up delay-3 ${className}`}>

@@ -22,9 +22,9 @@ interface FormValues {
 };
 
 const rolOptions = [
-  { value: '1', label: 'Administrador' },
-  { value: '2', label: 'Usuario' },
-  { value: '5', label: 'Invitado' }
+  { value: '1', label: 'Administrador' }, // Permiso para todo menos debug
+  { value: '2', label: 'Oficinista'}, // Permiso para alumnos y algunos controles
+  { value: '3', label: 'Docente' } // Permiso de lectura
 ];
 
 const AddUser: React.FC = () => {

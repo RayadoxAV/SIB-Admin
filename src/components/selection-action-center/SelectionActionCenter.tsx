@@ -26,6 +26,7 @@ const SelectionActionCenter: React.FC<SelectionActionCenterProps> = ({ className
 
   function handleDelete() {
     onDelete();
+    handleClose();
   }
 
   return (

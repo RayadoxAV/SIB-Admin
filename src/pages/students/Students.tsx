@@ -52,7 +52,7 @@ const Students: React.FC = () => {
   const [appContext, dispatch] = useContext(AppContext);
 
   const [loading, setLoading] = useState(true);
-  const [students, setStudents] = useState([]);
+  const [students, setStudents] = useState([] as any);
   const [documents, setDocuments] = useState([]);
 
   const [redirectLogin, setRedirectLogin] = useState(false);
@@ -71,6 +71,47 @@ const Students: React.FC = () => {
       setLoading(false);
     }
   }, []);
+
+  function deleteStudents(rows: Set<number>) {
+    const deleteRows = Array.from(rows);
+    deleteRows.sort((a, b) => (
+      b - a
+    ));
+
+    const tempStudents = [...students];
+    const deleteIds = [] as number[];
+
+    deleteRows.forEach((value: number) => {
+      deleteIds.push(students[value].id);
+      tempStudents.splice(value, 1);
+    });
+
+    const token = localStorage.getItem('token');
+    if (!token) {
+      setRedirectLogin(true);
+      return;
+    }
+
+    const requestOptions = {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify({
+        ids: deleteIds
+      })
+    };
+
+    fetch(`${SERVER_IP}/students`, requestOptions).then((res) => res.json()).then((response) => {
+      if (response.deleteStatusCode === 0) {
+
+      }
+    }).catch((error) => {
+      console.log(error);
+    });
+  }
 
   if (redirectLogin) {
     return (
@@ -106,10 +147,11 @@ const Students: React.FC = () => {
                   selectable={true}
                   editable={true}
                   pageSize={8}
-                  performEdit={(student: any) => { 
+                  performEdit={(student: any) => {
                     console.log(student);
                     navigate(`/edit-student/:${student.id}`);
                   }}
+                  performDelete={deleteStudents}
                   // searchParams={['nombres', 'pApellido', 'sApellido', 'matricula', 'CURP', 'grado:', 'grupo:', 'estado:']}
                   searchParams={
                     [

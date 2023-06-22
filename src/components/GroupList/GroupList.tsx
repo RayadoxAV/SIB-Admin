@@ -26,6 +26,7 @@ const grupoOptions = [
   { value: 'E', label: 'E' },
   { value: 'F', label: 'F' },
   { value: 'G', label: 'G' },
+  { value: 'H', label: 'H' },
 ];
 
 interface FormValues {

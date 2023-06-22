@@ -9,6 +9,8 @@ import { AppContext } from '../../../State';
 import FormError from '../../../components/form-error/FormError';
 import { SERVER_IP } from '../../../util/util';
 import Dialog from '../../../components/Dialog/Dialog';
+import ReactSelect from 'react-select';
+import { selectStyle } from '../../../util/reactSelectStyle';
 
 interface EditStudentValues { 
   nombres: string;
@@ -22,6 +24,7 @@ interface EditStudentValues {
   localidad: string;
   grado: number;
   grupo: string;
+  estado: string;
 };
 
 const initialValues: EditStudentValues = {
@@ -35,8 +38,14 @@ const initialValues: EditStudentValues = {
   colonia: '',
   localidad: '',
   grado: 1,
-  grupo: 'A'
+  grupo: 'A',
+  estado: ''
 }
+
+const estadoOptions = [
+  { value: '0', label: 'Activo' },
+  { value: '1', label: 'Inactivo' }
+];
 
 const validationSchema = Yup.object({
   nombres: Yup.string().required('Ingrese un nombre'),
@@ -50,6 +59,7 @@ const validationSchema = Yup.object({
   localidad: Yup.string().required('Ingrese una localidad'),
   grado: Yup.number().required('Ingrese un grado').min(1, 'Ingrese un grado válido').max(3, 'Ingrese un grado válido'),
   grupo: Yup.string().required('Escribe un grupo').matches(/^[A-H]{1}$/, 'Escribe un grupo válido'),
+  estado: Yup.string().required('Seleccione un estado')
 });
 
 const EditStudent: React.FC = () => {
@@ -86,6 +96,7 @@ const EditStudent: React.FC = () => {
         initialValues.localidad = tempStudent.informacion.localidad;
         initialValues.grado = tempStudent.informacion.grado;
         initialValues.grupo = tempStudent.informacion.grupo;
+        initialValues.estado = `${tempStudent.estado}`;
 
         setStudent(tempStudent);
         setLoading(false);
@@ -114,7 +125,8 @@ const EditStudent: React.FC = () => {
         colonia: values.colonia,
         localidad: values.localidad,
         grado: values.grado,
-        grupo: values.grupo
+        grupo: values.grupo,
+        estado: values.estado
       }),
       headers: {
         'Content-Type': 'application/json',
@@ -167,7 +179,7 @@ const EditStudent: React.FC = () => {
             initialValues={initialValues}
             validationSchema={validationSchema}
             onSubmit={handleSubmit}>
-            {({ values, errors, touched, handleChange, handleBlur }) => (
+            {({ values, errors, touched, handleChange, handleBlur, setFieldValue }) => (
               <Form className='form'>
                 <div className='form-body fade-in-up delay-3'>
                   <div className='input-column'>
@@ -224,6 +236,20 @@ const EditStudent: React.FC = () => {
                     <span className='input-label'>Grupo</span>
                     <input type='text' id='grupo' name='grupo' className='input' onChange={handleChange} onBlur={handleBlur} value={values.grupo} autoComplete='off' />
                     <FormError text={errors.grupo} touched={touched.grupo} />
+                  </div>
+                  <div className='input-column'>
+                    <span className='input-label'>Estado</span>
+                    <ReactSelect
+                      menuPortalTarget={document.querySelector('body')}
+                      className='react-select'
+                      required={true}
+                      options={estadoOptions}
+                      styles={selectStyle}
+                      value={estadoOptions.find(option => option.value === values.estado)}
+                      onChange={(option: any) => {
+                        setFieldValue('estado', `${option.value}`);
+                      }} />
+                      <FormError text={errors.estado} touched={touched.estado} />
                   </div>
                 </div>
                 <div className='form-footer fade-in-up delay-5'>

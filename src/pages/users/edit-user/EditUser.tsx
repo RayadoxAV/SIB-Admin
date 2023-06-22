@@ -24,8 +24,8 @@ interface EditUserValues {
 const rolOptions = [
   { value: '0', label: 'Root'},
   { value: '1', label: 'Administrador' },
-  { value: '2', label: 'Usuario' },
-  { value: '5', label: 'Invitado' }
+  { value: '2', label: 'Oficinista' },
+  { value: '3', label: 'Docente' }
 ];
 
 const estadoOptions = [
@@ -185,6 +185,7 @@ const EditUser: React.FC = () => {
                   <div className='input-column no-pad'>
                     <span className='input-label'>Estado</span>
                     <ReactSelect
+                      menuPortalTarget={document.querySelector('body')}
                       className='react-select'
                       required={true}
                       options={estadoOptions}

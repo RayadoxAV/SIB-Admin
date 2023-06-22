@@ -26,6 +26,9 @@ const AppContext = createContext(initialState as any);
 
 const reducer = (state: any, action: any) => {
   switch (action.type) {
+    case 'clean': {
+      return { ...initialState };
+    }
     case 'setTitle':
       return { ...state, title: action.title };
 

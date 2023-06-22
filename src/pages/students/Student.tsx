@@ -11,7 +11,6 @@ import { formatDate, formatoEscolaridad, formatoEstadoCivil, format, SERVER_IP }
 import Header from '../../components/Header/Header';
 import { printStudent } from '../../util/printing';
 import Breadcrumb from '../../components/Breadcrumb/Breadcrumb';
-import { E } from '@tauri-apps/api/path-e12e0e34';
 
 const Student: React.FC = () => {
 
@@ -68,125 +67,7 @@ const Student: React.FC = () => {
   useEffect(() => {
     generateGradeRows();
   }, [appContext.documents, isEditingGrades]);
-  // useEffect(() => {
-  //   setLoading(true);
-  //   dispatch({ type: 'setTitle', title: 'SI Estudiante' });
 
-  //   if (appContext.students.length === 0) {
-  //     const token = localStorage.getItem('token');
-  //     if (!token) {
-  //       setRedirectLogin(true);
-  //       return;
-  //     }
-
-  //     const requestOptions = {
-  //       method: 'GET',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //         'Accept': 'application/json',
-  //         'Authorization': `Bearer ${token}`
-  //       }
-  //     };
-
-  //     fetch(`${SERVER_IP}/students`, requestOptions).then((res) => (res.json())).then((response) => {
-  //       if (response.queryStatusCode === 0) {
-  //         const queryStudents = response.result;
-
-  //         for (let i = 0; i < queryStudents.length; i++) {
-  //           const student = queryStudents[i];
-  //           student.informacion = JSON.parse(student.informacion);
-  //           queryStudents[i] = student;
-  //         }
-
-  //         dispatch({ type: 'setStudents', students: queryStudents });
-
-  //         if (appContext.documents.length === 0) {
-  //           const documentsRequestOptions = {
-  //             method: 'GET',
-  //             headers: {
-  //               'Content-Type': 'application/json',
-  //               'Accept': 'application/json',
-  //               'Authorization': `Bearer ${token}`
-  //             }
-  //           };
-
-  //           fetch(`${SERVER_IP}/documents`, documentsRequestOptions).then((res) => (res.json()).then((response) => {
-  //             if (response.queryStatusCode === 0) {
-  //               const queryDocuments = response.result;
-
-  //               for (let i = 0; i < queryDocuments.length; i++) {
-  //                 let document = queryDocuments[i];
-  //                 const information = JSON.parse(document.informacion);
-  //                 document.informacion = information;
-
-  //                 queryDocuments[i] = document;
-  //               }
-
-  //               dispatch({ type: 'setDocuments', documents: queryDocuments });
-
-  //               const students = queryStudents;
-
-  //               for (let i = 0; i < students.length; i++) {
-  //                 const tempStudent = students[i];
-
-  //                 if (tempStudent.id == id) {
-  //                   setStudent(tempStudent);
-
-  //                   const tempDocuments = [];
-
-  //                   for (let j = 0; j < queryDocuments.length; j++) {
-  //                     if (queryDocuments[j].idAlumno === tempStudent.id) {
-  //                       tempDocuments.push(queryDocuments[j]);
-  //                     }
-  //                   }
-
-  //                   setLoading(false);
-  //                   setDocuments(tempDocuments);
-  //                   generateGradeRows();
-  //                   break;
-  //                 }
-  //               }
-
-  //               // setDocuments(queryDocuments);
-  //               setLoading(false);
-  //             } else if (response.queryStatusCode === 1) {
-  //               console.log('manejar el error');
-  //             }
-  //           }));
-  //         }
-  //       } else if (response.queryStatusCode === 1) {
-  //         console.log('Manejar el error');
-  //       }
-  //     }).catch((error) => {
-  //       console.log('Manejar el error peor');
-  //     });
-
-  //   } else {
-  //     const students = appContext.students;
-
-  //     for (let i = 0; i < students.length; i++) {
-  //       const tempStudent = students[i];
-
-  //       if (tempStudent.id == id) {
-  //         setStudent(tempStudent);
-
-  //         const tempDocuments = [];
-
-  //         for (let j = 0; j < appContext.documents.length; j++) {
-  //           if (appContext.documents[j].idAlumno === tempStudent.id) {
-  //             tempDocuments.push(appContext.documents[j]);
-  //           }
-  //         }
-
-  //         setLoading(false);
-  //         setDocuments(tempDocuments);
-  //         generateGradeRows();
-  //         // setGrades(tempGrades);
-  //         break;
-  //       }
-  //     }
-  //   }
-  // }, [appContext.students, appContext.documents]);
 
   function addInformationOption(index: number) {
     switch (index) {
@@ -339,7 +220,12 @@ const Student: React.FC = () => {
             </div>
             <div className='actions-container'>
               <button ref={addInformationButton} className='action fade-in-up' onClick={() => { setDialogVisible(true); }}><i className='fa-solid fa-add'></i></button>
-              <button className='action fade-in-up' onClick={() => { navigate(`/edit-student/${student.id}`) }}><i className='fa-solid fa-pencil'></i> <span className='text'>Editar</span></button>
+              {
+                JSON.parse(localStorage.getItem('user')!!).role < 3 ?
+                  (
+                    <button className='action fade-in-up' onClick={() => { navigate(`/edit-student/${student.id}`) }}><i className='fa-solid fa-pencil'></i> <span className='text'>Editar</span></button>
+                  ) : null
+              }
               <button className='action fade-in-up' onClick={print}><i className='fa-solid fa-print'></i> <span className='text'>Imprimir</span></button>
             </div>
           </div>

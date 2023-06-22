@@ -115,12 +115,31 @@ const Settings: React.FC = () => {
       <div className='c-body spaced'>
         <div className='settings-container'>
           <div className='categories'>
-            {appContext.settings.categories.map((category: SettingsCategory, index: number) => (
-              <button className={`setting-category fade-in-up delay-${(index + 1) * 2} ${selectedCategory === category ? 'active' : ''}`} key={index} onClick={() => { categorySelection(index); }}>
-                <i className={`fa-solid ${category.icon}`}></i>
-                <span className='setting-name'>{category.displayName}</span>
-              </button>
-            ))}
+            {appContext.settings.categories.map((category: SettingsCategory, index: number) => {
+              // console.log( JSON.parse(localStorage.getItem('user')!!).role === 0);
+              if (category.name === 'debug') {
+                if (JSON.parse(localStorage.getItem('user')!!).role === 0) {
+                  return (
+                    <button className={`setting-category fade-in-up delay-${(index + 1) * 2} ${selectedCategory === category ? 'active' : ''}`} key={index} onClick={() => { categorySelection(index); }}>
+                      <i className={`fa-solid ${category.icon}`}></i>
+                      <span className='setting-name'>{category.displayName}</span>
+                    </button>
+                  );
+                } else {
+                  return (
+                    null
+                  )
+                }
+                
+              } else {
+                return (
+                  <button className={`setting-category fade-in-up delay-${(index + 1) * 2} ${selectedCategory === category ? 'active' : ''}`} key={index} onClick={() => { categorySelection(index); }}>
+                    <i className={`fa-solid ${category.icon}`}></i>
+                    <span className='setting-name'>{category.displayName}</span>
+                  </button>
+                );
+              }
+            })}
           </div>
           <div className='categories-small'>
             {appContext.settings.categories.map((category: SettingsCategory, index: number) => (

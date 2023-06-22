@@ -14,13 +14,14 @@
 }
 
 .menu-header .clock {
+  display: flex;
   font-size: 14px;
   font-weight: 600;
   position: absolute;
   user-select: none;
   top: 1rem;
   left: 1rem;
-  line-height: 14px;
+  height: 2rem;
   color: var(--on-surface-color);
   opacity: 0;
   letter-spacing: -0.5px;
@@ -28,6 +29,21 @@
 
 .menu-header .header {
   margin: 2rem auto 2rem auto;
+  color: var(--on-surface-color);
+}
+
+.menu-header .user-name {
+  position: absolute;
+  top: 1rem;
+  right: 5rem;
+  height: 2rem;
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  user-select: none;
+  font-size: 15px;
+  font-weight: 500;
+  opacity: 0;
   color: var(--on-surface-color);
 }
 
